@@ -17,18 +17,18 @@ Generated from `umamusume/tables.py`.
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Support: ... | support_count | The SSR support card, by mail (a repeat is an uncap copy). |
 
-## Filler (mail) and boons (next career)
+## Filler
 
 | Item | Effect |
 |---|---|
-| 300 Carats | Mail. |
-| 5000 Support Points | Mail. |
-| 20000 Monies | Mail. |
-| 3 Alarm Clocks | Mail. |
-| Gold Uncap Crystal | Mail. |
-| Rainbow Uncap Crystal | Mail. |
+| Minor Starting Stats | +5 to every stat at career start, permanent (stacks). |
+| Minor Starting Skill Points | +50 skill points at career start, permanent (stacks). |
+| RP Refill | Team Trials RP to full, once (only with team_trials_checks). |
 | Pep Talk | Next career starts in Great mood. |
 | Lucky Charm | Next career starts Charming or with Practice Perfect. |
+
+Support cards from the multiworld arrive **maxed** (limit break 4, top level) when
+you claim them from the present box.
 
 ## Traps (next career, at most `trap_cap` per career)
 

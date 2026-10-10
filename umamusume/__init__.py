@@ -13,15 +13,13 @@ LOCATIONS = tables.location_name_to_id()
 TRAINING = [f"Progressive {s} Training" for s in tables.STATS]
 BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed career
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
+# Filler is small permanent buffs and next-career boons: support cards already
+# arrive maxed, and the mail items (Monies, clocks...) did nothing for a run.
 FILLER_WEIGHTS = {
-    "5000 Support Points": 25,
-    "3 Alarm Clocks": 20,
-    "Gold Uncap Crystal": 15,
-    "Rainbow Uncap Crystal": 10,
-    "Pep Talk": 10,
-    "Lucky Charm": 10,
-    "20000 Monies": 10,
-    "300 Carats": 5,
+    "Minor Starting Stats": 30,
+    "Minor Starting Skill Points": 25,
+    "Pep Talk": 15,
+    "Lucky Charm": 15,
 }
 TRAP_WEIGHTS = {
     "Bad Mood Trap": 15,
@@ -154,7 +152,10 @@ class UmamusumeWorld(World):
             if self.options.spicy_traps:
                 traps["Amnesia Trap"] = 5
             return self.random.choices(list(traps), list(traps.values()))[0]
-        return self.random.choices(list(FILLER_WEIGHTS), list(FILLER_WEIGHTS.values()))[0]
+        filler = dict(FILLER_WEIGHTS)
+        if self.options.team_trials_checks:
+            filler["RP Refill"] = 15
+        return self.random.choices(list(filler), list(filler.values()))[0]
 
     def create_items(self) -> None:
         names = list(tables.SCENARIO_ITEM.values()) + ["Dream's Luck"]

@@ -324,6 +324,13 @@ FILLER = {
     "Gold Uncap Crystal": (35, 164, 145, 1),
     "Rainbow Uncap Crystal": (36, 164, 144, 1),
 }
+# Small permanent buffs, the filler of new seeds (the mail filler above stays for
+# seeds made before; its ids must keep working).
+MINOR = {
+    "Minor Starting Stats": 60,  # +5 to every stat at career start
+    "Minor Starting Skill Points": 61,  # +50 SP at career start
+    "RP Refill": 62,  # Team Trials RP to full, once
+}
 # One-shot effects on the next career start (same queue as traps, never capped).
 BOONS = {"Pep Talk": 50, "Lucky Charm": 51}
 # One-shot effects on the next career; at most slot_data["trap_cap"] per career.
@@ -343,6 +350,7 @@ def item_name_to_id() -> dict:
     table = {name: sid for sid, name in SCENARIO_ITEM.items()}
     table.update(PROGRESSIVE)
     table.update({name: row[0] for name, row in FILLER.items()})
+    table.update(MINOR)
     table.update(BOONS)
     table.update(TRAPS)
     table.update({f"Trainee: {n}": TRAINEE_ITEM_BASE + c for c, n in TRAINEES.items()})
