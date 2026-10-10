@@ -72,13 +72,13 @@ class UmamusumeWorld(World):
             owned = scenario != 1
         return est + (SCENARIO_BONUS if owned else 0)
 
-    def max_estimate(self) -> int:
+    def max_estimate(self, scenario: int | None = None) -> int:
         return (
             BASE_SCORE[self.options.logic_difficulty.value]
             + 450 * 3 * len(TRAINING)
             + 400 * 5
             + 300 * self.caps
-            + SCENARIO_BONUS
+            + (0 if scenario == 1 else SCENARIO_BONUS)
         )
 
     def create_regions(self) -> None:
@@ -107,7 +107,7 @@ class UmamusumeWorld(World):
             add(tables.finish_location(sid), has)
             if o.scenario_rank_checks:
                 for tier, score in tables.RANK_TIERS:
-                    if score > cap:
+                    if score > cap or score > self.max_estimate(sid):  # e.g. URA UG on relaxed
                         continue
                     add(tables.rank_location(sid, tier),
                         lambda s, has=has, sid=sid, score=score: has(s) and self.estimate(s, sid) >= score)
@@ -128,8 +128,11 @@ class UmamusumeWorld(World):
                 add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
         # Team Trials needs a team of finished careers: past the first wins, logic
         # expects careers good enough to win against teams matched to yours.
+        # They only ever hold filler or traps (any game's): Team Trials is a slow RP grind,
+        # so nothing anyone needs waits behind it.
         for n in range(1, o.team_trials_checks.value + 1):
-            add(tables.team_trials_location(n), lambda s, n=n: self.estimate(s) >= 11000 + 300 * n)
+            loc = add(tables.team_trials_location(n), lambda s, n=n: self.estimate(s) >= 11000 + 300 * n)
+            loc.item_rule = lambda item: not item.classification & (IC.progression | IC.useful)
         for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.1
+- Team Trials checks only ever hold filler or traps (from any game), so nothing
+  anyone needs waits behind the RP grind.
+- A scenario's rank check is only generated if logic can reach it: on `relaxed`,
+  URA Finale: rank UG needs 19600 but URA tops out at 19250 with every item, so
+  it's gone there (it made the seed fail its accessibility check).
+
 ## 0.6.0
 - Legend Race rival ladder (`legend_ladder`, on by default): beat the B, A, S,
   SS and SS+ rivals in turn, 5 checks. The Archipelago save always sees its

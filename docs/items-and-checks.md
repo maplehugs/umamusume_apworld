@@ -120,6 +120,7 @@ opens the next. Entries there cost no ticket.
 ### Team Trials (team_trials_checks)
 
 - Team Trials: win 1 match ... win 10 matches (the first `team_trials_checks` of them)
+- These checks only hold filler or traps (from any game), never progression or useful items.
 
 ### Trainees
 
