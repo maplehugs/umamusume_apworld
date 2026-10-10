@@ -27,6 +27,7 @@ TRAP_WEIGHTS = {
     "Low Energy Trap": 10,
     "Tunnel Vision Trap": 15,
     "Butterfingers Trap": 15,
+    "Amnesia Trap": 0,  # spicy_traps or trap_weights turn it on
 }
 
 
@@ -50,13 +51,21 @@ class UmamusumeWorld(World):
     topology_present = False
 
     def generate_early(self) -> None:
-        if self.options.starting_trainees == self.options.starting_trainees.option_shuffled:
-            self.starters = self.random.sample(sorted(tables.TRAINEES), 5)
+        o = self.options
+        self.start_scenario = (
+            self.random.choice(sorted(tables.SCENARIOS)) if o.starting_scenario == o.starting_scenario.option_shuffled else 1
+        )
+        if o.starting_trainees == o.starting_trainees.option_shuffled:
+            self.starters = self.random.sample(sorted(tables.TRAINEES), o.starting_trainee_count.value)
         else:
             self.starters = list(tables.STARTING_TRAINEES)
         extra = sorted(set(tables.TRAINEES) - set(self.starters))
-        self.trainees = self.random.sample(extra, self.options.trainee_count.value)
-        self.supports = self.random.sample(sorted(tables.SSR_SUPPORTS), self.options.support_count.value)
+        self.trainees = self.random.sample(extra, min(o.trainee_count.value, len(extra)))
+        cards = self.random.sample(sorted(tables.SSR_SUPPORTS), min(len(tables.SSR_SUPPORTS),
+                                   o.starting_supports.value + o.support_count.value))
+        self.start_supports, self.supports = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
+        if o.goal == o.goal.option_legend_race and not o.legend_ladder:
+            raise Exception(f"{self.player_name}: the legend_race goal needs legend_ladder on")
         self.caps = 2 if self.options.goal_rank_score.value >= 21000 else 0
 
     # ---- logic: an estimated best rank score, like Yacht Dice's score estimate
@@ -67,7 +76,8 @@ class UmamusumeWorld(World):
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
         if scenario is None:  # any scenario: the best one owned
-            owned = any(state.has(n, p) for n in tables.SCENARIO_ITEM.values())
+            owned = self.start_scenario != 1 or any(
+                state.has(n, p) for sid, n in tables.SCENARIO_ITEM.items() if sid != 1)
         else:
             owned = scenario != 1
         return est + (SCENARIO_BONUS if owned else 0)
@@ -99,7 +109,7 @@ class UmamusumeWorld(World):
             for g1 in tables.G1_RACES:
                 add(tables.g1_location(g1))
         for sid in tables.SCENARIOS:
-            item = tables.SCENARIO_ITEM.get(sid)
+            item = None if sid == self.start_scenario else tables.SCENARIO_ITEM[sid]
 
             def has(s, i=item):
                 return i is None or s.has(i, p)
@@ -126,8 +136,9 @@ class UmamusumeWorld(World):
             for tier, rank_id, _row, _stats in tables.LEGEND_LADDER:
                 need = ladder_score[rank_id]
                 add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
-        # Team Trials needs a team of finished careers: past the first wins, logic
-        # expects careers good enough to win against teams matched to yours.
+        if o.fan_checks:  # ~250k fans per career
+            for i, n in enumerate(tables.FAN_MILESTONES):
+                add(tables.fans_location(n), lambda s, i=i: self.estimate(s) >= 9000 + 500 * i)
         # A support roulette: each win sends another player one of their useful items,
         # filler or traps, never progression (nobody waits on the RP grind). Alone in
         # the multiworld, it holds our own non-progression items instead.
@@ -143,8 +154,10 @@ class UmamusumeWorld(World):
             add(tables.trainee_location(card), lambda s, i=item: s.has(i, p))
 
         if o.goal == o.goal.option_all_scenarios:
-            scenarios = list(tables.SCENARIO_ITEM.values())
+            scenarios = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
             goal = add("Goal", lambda s: s.has_all(scenarios, p))
+        elif o.goal == o.goal.option_legend_race:
+            goal = add("Goal", lambda s: self.estimate(s) >= 19200)  # the SS+ rival's rank
         elif o.goal == o.goal.option_g1_collector:
             if not o.g1_checks:
                 raise Exception(f"{self.player_name}: g1_collector needs g1_checks on")
@@ -165,7 +178,7 @@ class UmamusumeWorld(World):
             "Progressive Stat Cap",
         ):
             cls = IC.progression
-        elif name.startswith("Support:") or name in tables.PROGRESSIVE:
+        elif name.startswith("Support:") or name in tables.PROGRESSIVE:  # Trainee Awakening too
             cls = IC.useful
         elif name in tables.TRAPS:
             cls = IC.trap
@@ -175,17 +188,19 @@ class UmamusumeWorld(World):
 
     def get_filler_item_name(self) -> str:
         if self.random.randrange(100) < self.options.trap_percentage.value:
-            traps = dict(TRAP_WEIGHTS)
-            if self.options.spicy_traps:
+            traps = {**TRAP_WEIGHTS, **self.options.trap_weights.value}
+            if self.options.spicy_traps and not traps.get("Amnesia Trap"):
                 traps["Amnesia Trap"] = 5
-            return self.random.choices(list(traps), list(traps.values()))[0]
+            if any(traps.values()):
+                return self.random.choices(list(traps), list(traps.values()))[0]
         filler = dict(FILLER_WEIGHTS)
         if self.options.team_trials_checks:
             filler["RP Refill"] = 15
         return self.random.choices(list(filler), list(filler.values()))[0]
 
     def create_items(self) -> None:
-        names = list(tables.SCENARIO_ITEM.values()) + ["Dream's Luck"]
+        names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
+        names += ["Dream's Luck"] + ["Trainee Awakening"] * self.options.trainee_awakenings.value
         names += [n for n in TRAINING for _ in range(3)]
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Starting Skill Points"] * 3
         names += ["Progressive Training Guard"] * 2 + ["Progressive Stat Cap"] * self.caps
@@ -211,4 +226,6 @@ class UmamusumeWorld(World):
             "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,
             "starting_trainees": self.starters,
+            "starting_scenario": self.start_scenario,
+            "starting_supports": self.start_supports,
         }

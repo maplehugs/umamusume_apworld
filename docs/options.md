@@ -7,7 +7,7 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
-| `goal` | **rank_score**, g1_collector, all_scenarios | Finish one career at `goal_rank_score` (rank checks above that score aren't generated, so nothing sits past the goal); win `goal_g1_count` different G1s across careers; or finish a career in each of the 4 scenarios. |
+| `goal` | **rank_score**, g1_collector, all_scenarios, legend_race | Finish one career at `goal_rank_score` (rank checks above that score aren't generated, so nothing sits past the goal); win `goal_g1_count` different G1s across careers; finish a career in each of the 4 scenarios; or beat the SS+ Legend Race rival (needs `legend_ladder`). |
 | `goal_rank_score` | 14500-23900 [**20000**] | S is 14500, SS 17500, UG 19600, UG1 20000. 21000+ adds 2 Progressive Stat Cap items. |
 | `goal_g1_count` | 5-34 [**24**] | For g1_collector (needs `g1_checks` on). |
 | `logic_difficulty` | relaxed, **normal**, expert | How strong logic expects an unbuffed career to be. relaxed puts more buffs before each rank. |
@@ -16,7 +16,11 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
-| `starting_trainees` | **shuffled**, default | Your Archipelago save starts with 5 random trainees, or a new account's usual five. (Don't write `random` here: in a yaml that picks one of the options at random.) |
+| `starting_scenario` | **ura**, shuffled | Start with URA Finale, or with one random scenario (the other 3, URA included, are items). |
+| `starting_trainees` | **shuffled**, default | Your Archipelago save starts with random trainees, or a new account's usual five. (Don't write `random` here: in a yaml that picks one of the options at random.) |
+| `starting_trainee_count` | 1-10 [**5**] | How many random trainees you start with (shuffled). |
+| `starting_supports` | 0-10 [**0**] | Random SSR support cards in your present box from the start, maxed. |
+| `trainee_awakenings` | 0-10 [**3**] | Trainee Awakening items: each takes a random trainee you own to 5 stars and potential 5. |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
 | `support_count` | 0-122 [**20**] | SSR support cards shuffled in (trimmed when there's no room). |
 
@@ -31,10 +35,11 @@ Turn whole groups off to make a shorter seed:
 | `global_rank_ladder` | on | 7: rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario |
 | `unique_race_checks` | on | 5: win 10/20/35/50/75 different races |
 | `legend_ladder` | on | 5: beat the B, A, S, SS and SS+ rivals in Legend Race, in turn (free entries on the Archipelago save) |
+| `fan_checks` | on | 5: reach 250k, 500k, 1M, 2M, 3M fans over all your careers (~250k per career) |
 | `team_trials_checks` | 10 (0-30) | win your 1st, 2nd... Team Trials match. Each sends another player one of their useful items, filler or traps (never progression). Adds up to 3 Progressive RP Recovery items. |
 
 Always on: finish a career in each scenario (4) and finish a career with each
-of your 5 starting trainees and each shuffled one (5 + `trainee_count`).
+of your starting trainees and each shuffled one (`starting_trainee_count` + `trainee_count`).
 
 A short seed (about 40 checks): `g1_checks: false`, `scenario_rank_checks: false`,
 `trainee_count: 8`.
@@ -46,6 +51,17 @@ A short seed (about 40 checks): `g1_checks: false`, `scenario_rank_checks: false
 | `trap_percentage` | 0-100 [**20**] | Percent of filler that becomes traps. |
 | `trap_cap` | 1-6 [**2**] | Most traps that hit one career; the rest wait for later careers. |
 | `spicy_traps` | on/[**off**] | Also shuffle Amnesia (no starting buffs for a career). |
+| `trap_weights` | see below | How often each trap is picked (relative; 0 = never). Leave a trap out to keep its default. |
+
+```yaml
+  trap_weights:
+    Bad Mood Trap: 15
+    Bad Condition Trap: 15
+    Low Energy Trap: 10
+    Tunnel Vision Trap: 15
+    Butterfingers Trap: 15
+    Amnesia Trap: 0
+```
 
 ## Excluding single checks
 

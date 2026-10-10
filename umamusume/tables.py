@@ -299,6 +299,8 @@ GLOBAL_RANKS = (
 )
 # "Win N different races" across all careers (any race, distinct race ids).
 UNIQUE_RACE_MILESTONES = (10, 20, 35, 50, 75)
+# Fans summed over every finished career on the save (~250k per career).
+FAN_MILESTONES = (250_000, 500_000, 1_000_000, 2_000_000, 3_000_000)
 # Legend Race rival ladder: (tier, single_mode_rank id, legend_race row, boss stats
 # speed/stamina/power/guts/wit). One rival per tier, each a real legend race row
 # (its own boss, longer each step); beating a tier is a check and opens the next.
@@ -314,7 +316,8 @@ TEAM_TRIALS_CHECKS = 30
 STATS = ("Speed", "Stamina", "Power", "Guts", "Wit")
 
 # ---- items: name -> id -------------------------------------------------------
-SCENARIO_ITEM = {sid: f"Scenario: {name}" for sid, name in SCENARIOS.items() if sid != 1}
+# Every scenario has an item; the seed's starting scenario (slot_data) is never in the pool.
+SCENARIO_ITEM = {sid: f"Scenario: {name}" for sid, name in SCENARIOS.items()}
 PROGRESSIVE = {
     "Progressive Stat Cap": 10,  # +50 to every stat cap
     "Progressive Starting Stats": 11,  # +20 to every stat at career start
@@ -322,6 +325,7 @@ PROGRESSIVE = {
     "Dream's Luck": 13,  # every support card in its own facility
     "Progressive Training Guard": 14,  # failure rate x0.75 per copy
     "Progressive RP Recovery": 15,  # Team Trials RP refills twice as fast per copy
+    "Trainee Awakening": 16,  # one random owned trainee to 5 stars and potential 5
     # +20% gain and +50 cap on that stat per copy
     **{f"Progressive {s} Training": 20 + i for i, s in enumerate(STATS)},
 }
@@ -375,6 +379,7 @@ RANK_LOCATION_BASE = 300  # + scenario * 10 + tier index
 UNIQUE_RACES_LOCATION_BASE = 400  # + index in UNIQUE_RACE_MILESTONES
 GLOBAL_RANK_LOCATION_BASE = 450  # + index in GLOBAL_RANKS
 TEAM_TRIALS_LOCATION_BASE = 600  # + wins - 1
+FAN_LOCATION_BASE = 700  # + index in FAN_MILESTONES
 LEGEND_LOCATION_BASE = 500  # + index in LEGEND_LADDER
 TRAINEE_LOCATION_BASE = 1_000_000  # + card_id
 
@@ -397,6 +402,10 @@ def global_rank_location(tier: str) -> str:
 
 def unique_races_location(count: int) -> str:
     return f"Win {count} different races"
+
+
+def fans_location(fans: int) -> str:
+    return f"Reach {fans:,} fans"
 
 
 def team_trials_location(wins: int) -> str:
@@ -425,6 +434,8 @@ def location_name_to_id() -> dict:
         table[legend_location(tier)] = LEGEND_LOCATION_BASE + i
     for n in range(1, TEAM_TRIALS_CHECKS + 1):
         table[team_trials_location(n)] = TEAM_TRIALS_LOCATION_BASE + n - 1
+    for i, n in enumerate(FAN_MILESTONES):
+        table[fans_location(n)] = FAN_LOCATION_BASE + i
     table.update({trainee_location(c): TRAINEE_LOCATION_BASE + c for c in TRAINEES})
     return table
 

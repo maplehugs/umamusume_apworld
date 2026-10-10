@@ -6,15 +6,20 @@ Umamusume Pretty Derby:
   goal_rank_score: 20000
   goal_g1_count: 24
   logic_difficulty: normal
+  starting_scenario: ura
   starting_trainees: shuffled
+  starting_trainee_count: 5
+  starting_supports: 0
   trainee_count: 15
   support_count: 20
+  trainee_awakenings: 3
   g1_checks: true
   scenario_rank_checks: true
   global_rank_ladder: true
   unique_race_checks: true
   legend_ladder: true
   team_trials_checks: 10
+  fan_checks: true
   trap_percentage: 20
   trap_cap: 2
   spicy_traps: false

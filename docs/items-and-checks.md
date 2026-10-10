@@ -6,7 +6,7 @@ Generated from `umamusume/tables.py`.
 
 | Item | Copies | Effect |
 |---|---|---|
-| Scenario: Unity Cup / Grand Live / Trackblazer | 1 each | Unlocks that scenario on the career screen (URA is always open). |
+| Scenario: URA Finale / Unity Cup / Grand Live / Trackblazer | 1 each, except your starting scenario | Unlocks that scenario on the career screen. |
 | Progressive Speed/Stamina/Power/Guts/Wit Training | 3 each | +20% that stat's training gain and +50 to its cap, per copy. |
 | Progressive Starting Stats | 5 | +20 to every stat at career start. |
 | Progressive Starting Skill Points | 3 | +200 skill points at career start. |
@@ -16,6 +16,7 @@ Generated from `umamusume/tables.py`.
 | Dream's Luck | 1 | Every support card shows up in its own facility every turn. |
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Support: ... | support_count | The SSR support card, by mail (a repeat is an uncap copy). |
+| Trainee Awakening | trainee_awakenings | A random trainee you own goes to 5 stars and potential level 5 (log in again to see it). |
 
 ## Filler
 
@@ -39,7 +40,7 @@ you claim them from the present box.
 | Low Energy Trap | Starts with 40 less energy. |
 | Tunnel Vision Trap | One random stat's Training items do nothing this career. |
 | Butterfingers Trap | Failure rate x1.5 in the Junior year. |
-| Amnesia Trap | No starting stats or skill point buffs this career (spicy_traps). |
+| Amnesia Trap | No starting stats or skill point buffs this career (spicy_traps, or a trap_weights entry). |
 
 ## Checks
 
@@ -116,6 +117,10 @@ opens the next. Entries there cost no ticket.
 - Legend Race: beat the S rival (2200 m)
 - Legend Race: beat the SS rival (2400 m)
 - Legend Race: beat the SS+ rival (3000 m)
+
+### Fans (fan_checks)
+
+- Reach 250,000 / 500,000 / 1,000,000 / 2,000,000 / 3,000,000 fans (summed over every finished career)
 
 ### Team Trials (team_trials_checks)
 

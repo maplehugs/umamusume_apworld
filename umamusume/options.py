@@ -1,18 +1,20 @@
 from dataclasses import dataclass
 
-from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Range, Toggle
+from Options import Choice, DefaultOnToggle, OptionDict, PerGameCommonOptions, Range, Toggle
 
 
 class Goal(Choice):
     """rank_score: finish one career at or above Goal Rank Score. Rank checks above
     that score aren't generated (nothing sits past the goal).
     g1_collector: win Goal G1 Count different G1s (across careers).
-    all_scenarios: finish a career in each of the 4 scenarios (needs all 3 unlocks)."""
+    all_scenarios: finish a career in each of the 4 scenarios (needs all 3 unlocks).
+    legend_race: beat the SS+ Legend Race rival (needs legend_ladder on). A short game."""
 
     display_name = "Goal"
     option_rank_score = 0
     option_g1_collector = 1
     option_all_scenarios = 2
+    option_legend_race = 3
     default = 0
 
 
@@ -47,7 +49,7 @@ class LogicDifficulty(Choice):
 
 
 class StartingTrainees(Choice):
-    """shuffled: your Archipelago save starts with 5 random trainees.
+    """shuffled: your Archipelago save starts with random trainees (starting_trainee_count).
     default: a new account's usual five (Vodka, Daiwa Scarlet, Gold Ship...).
     (Not "random": in a yaml that word picks one of the options at random.)"""
 
@@ -55,6 +57,52 @@ class StartingTrainees(Choice):
     option_shuffled = 0
     option_default = 1
     default = 0
+
+
+class StartingScenario(Choice):
+    """ura: you start with URA Finale; the other 3 scenarios are items.
+    shuffled: you start with one random scenario; the other 3 (URA included) are items."""
+
+    display_name = "Starting Scenario"
+    option_ura = 0
+    option_shuffled = 1
+    default = 0
+
+
+class StartingTraineeCount(Range):
+    """How many random trainees the save starts with (with starting_trainees: shuffled)."""
+
+    display_name = "Starting Trainee Count"
+    range_start = 1
+    range_end = 10
+    default = 5
+
+
+class StartingSupports(Range):
+    """Random SSR support cards in your present box from the start, maxed.
+    They're not among the shuffled ones."""
+
+    display_name = "Starting Support Cards"
+    range_start = 0
+    range_end = 10
+    default = 0
+
+
+class TraineeAwakenings(Range):
+    """Trainee Awakening items: each takes a random trainee you own to 5 stars and
+    potential level 5."""
+
+    display_name = "Trainee Awakenings"
+    range_start = 0
+    range_end = 10
+    default = 3
+
+
+class FanChecks(DefaultOnToggle):
+    """Checks for fans summed over every finished career: 250k, 500k, 1M, 2M, 3M
+    (a career brings ~250k)."""
+
+    display_name = "Fan Checks"
 
 
 class TraineeCount(Range):
@@ -136,9 +184,29 @@ class TrapCap(Range):
 
 
 class SpicyTraps(Toggle):
-    """Also shuffle Amnesia (no starting buffs for a career)."""
+    """Also shuffle Amnesia (no starting buffs for a career): sets its weight to 5
+    if trap_weights leaves it at 0."""
 
     display_name = "Spicy Traps"
+
+
+class TrapWeights(OptionDict):
+    """How often each trap is picked when a filler slot becomes a trap (relative
+    weights; 0 = never). Missing traps keep their default."""
+
+    display_name = "Trap Weights"
+    valid_keys = frozenset({
+        "Bad Mood Trap", "Bad Condition Trap", "Low Energy Trap",
+        "Tunnel Vision Trap", "Butterfingers Trap", "Amnesia Trap",
+    })
+    default = {
+        "Bad Mood Trap": 15,
+        "Bad Condition Trap": 15,
+        "Low Energy Trap": 10,
+        "Tunnel Vision Trap": 15,
+        "Butterfingers Trap": 15,
+        "Amnesia Trap": 0,
+    }
 
 
 @dataclass
@@ -147,15 +215,21 @@ class UmaOptions(PerGameCommonOptions):
     goal_rank_score: GoalRankScore
     goal_g1_count: GoalG1Count
     logic_difficulty: LogicDifficulty
+    starting_scenario: StartingScenario
     starting_trainees: StartingTrainees
+    starting_trainee_count: StartingTraineeCount
+    starting_supports: StartingSupports
     trainee_count: TraineeCount
     support_count: SupportCount
+    trainee_awakenings: TraineeAwakenings
     g1_checks: G1Checks
     scenario_rank_checks: ScenarioRankChecks
     global_rank_ladder: GlobalRankLadder
     unique_race_checks: UniqueRaceChecks
     legend_ladder: LegendLadder
     team_trials_checks: TeamTrialsChecks
+    fan_checks: FanChecks
     trap_percentage: TrapPercentage
     trap_cap: TrapCap
     spicy_traps: SpicyTraps
+    trap_weights: TrapWeights

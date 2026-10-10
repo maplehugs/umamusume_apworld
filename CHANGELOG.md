@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.0
+Needs the matching UmamusumeX server.
+- `starting_scenario: shuffled`: start with a random scenario; the others (URA
+  included, now an item) are found in the multiworld.
+- `starting_trainee_count` (1-10, default 5) random starting trainees.
+- `starting_supports` (0-10): random SSR support cards from the start, maxed.
+- Trainee Awakening item (`trainee_awakenings`, default 3): a random trainee you
+  own goes to 5 stars and potential level 5.
+- `fan_checks` (on): reach 250k, 500k, 1M, 2M and 3M fans over your careers.
+- New goal `legend_race`: beat the SS+ Legend Race rival.
+- `trap_weights`: how often each trap shows up (0 = never).
+
 ## 0.6.2
 - Team Trials is a support roulette: each win sends another player one of their
   useful items, filler or traps (never progression). Played alone, it holds your
