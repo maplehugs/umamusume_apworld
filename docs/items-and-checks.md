@@ -112,7 +112,7 @@ you claim them from the present box.
 
 ### Trainees
 
-Always: your 5 starting trainees (random per seed with `starting_trainees: random`; with `fixed`, these):
+Always: your 5 starting trainees (random per seed with `starting_trainees: shuffled`; with `default`, these):
 
 - Finish a career with [Red Strife] Gold Ship
 - Finish a career with [Wild Top Gear] Vodka

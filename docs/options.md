@@ -16,7 +16,7 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
-| `starting_trainees` | **random**, fixed | Your Archipelago save starts with 5 random trainees, or a new account's usual five. |
+| `starting_trainees` | **shuffled**, default | Your Archipelago save starts with 5 random trainees, or a new account's usual five. (Don't write `random` here: in a yaml that picks one of the options at random.) |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
 | `support_count` | 0-122 [**20**] | SSR support cards shuffled in (trimmed when there's no room). |
 

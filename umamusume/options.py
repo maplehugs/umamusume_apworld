@@ -47,12 +47,13 @@ class LogicDifficulty(Choice):
 
 
 class StartingTrainees(Choice):
-    """random: your Archipelago save starts with 5 random trainees.
-    fixed: a new account's usual five (Vodka, Daiwa Scarlet, Gold Ship...)."""
+    """shuffled: your Archipelago save starts with 5 random trainees.
+    default: a new account's usual five (Vodka, Daiwa Scarlet, Gold Ship...).
+    (Not "random": in a yaml that word picks one of the options at random.)"""
 
     display_name = "Starting Trainees"
-    option_random = 0
-    option_fixed = 1
+    option_shuffled = 0
+    option_default = 1
     default = 0
 
 

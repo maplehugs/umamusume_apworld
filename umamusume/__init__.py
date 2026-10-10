@@ -50,7 +50,7 @@ class UmamusumeWorld(World):
     topology_present = False
 
     def generate_early(self) -> None:
-        if self.options.starting_trainees == self.options.starting_trainees.option_random:
+        if self.options.starting_trainees == self.options.starting_trainees.option_shuffled:
             self.starters = self.random.sample(sorted(tables.TRAINEES), 5)
         else:
             self.starters = list(tables.STARTING_TRAINEES)
