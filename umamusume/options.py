@@ -59,6 +59,15 @@ class StartingTrainees(Choice):
     default = 0
 
 
+class G1Place(Range):
+    """The place a G1 check needs: 1 = win it, 2 = 2nd or better, 3 = top 3."""
+
+    display_name = "G1 Place"
+    range_start = 1
+    range_end = 3
+    default = 1
+
+
 class StartingScenario(Choice):
     """ura: you start with URA Finale; the other 3 scenarios are items.
     shuffled: you start with one random scenario; the other 3 (URA included) are items."""
@@ -223,6 +232,7 @@ class UmaOptions(PerGameCommonOptions):
     support_count: SupportCount
     trainee_awakenings: TraineeAwakenings
     g1_checks: G1Checks
+    g1_place: G1Place
     scenario_rank_checks: ScenarioRankChecks
     global_rank_ladder: GlobalRankLadder
     unique_race_checks: UniqueRaceChecks

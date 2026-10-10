@@ -31,6 +31,7 @@ Turn whole groups off to make a shorter seed:
 | Option | Default | Checks |
 |---|---|---|
 | `g1_checks` | on | 34: win each G1 |
+| `g1_place` | 1 (1-3) | The place a G1 check needs: 1 = win, 2 = 2nd or better, 3 = top 3. |
 | `scenario_rank_checks` | on | 20: rank B/A/S/SS/UG in each scenario |
 | `global_rank_ladder` | on | 7: rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario |
 | `unique_race_checks` | on | 5: win 10/20/35/50/75 different races |

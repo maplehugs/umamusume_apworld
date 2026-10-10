@@ -83,8 +83,10 @@ you claim them from the present box.
 
 ### Scenarios
 
-A career counts as finished once it reaches its last turn: losing the final race
-still counts (a goal missed mid-career, which ends the career early, does not).
+"Finish a <scenario> career" needs the scenario's final won: 1st place in the
+turn-78 race (URA's Finals; in Trackblazer the last Climax leg). "Finish a career
+with <trainee>" only needs the career to reach its last turn, final won or not.
+A goal missed mid-career ends the career early and counts for neither.
 
 - Finish a URA Finale career
 - Finish a Unity Cup career

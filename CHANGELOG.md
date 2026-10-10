@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+Needs the matching UmamusumeX server.
+- "Finish a <scenario> career" now needs the scenario's final won (1st in the
+  turn-78 race). The trainee checks still only need the last turn.
+- `g1_place` (1-3, default 1): a G1 check counts at that place or better.
+
 ## 0.7.1
 - Logic counts SSR support cards: +300 to the estimate per card, up to 6 (a deck).
   They're progression items now. Ranks and goals come into logic sooner, closer

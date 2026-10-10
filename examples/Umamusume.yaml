@@ -14,6 +14,7 @@ Umamusume Pretty Derby:
   support_count: 20
   trainee_awakenings: 3
   g1_checks: true
+  g1_place: 1
   scenario_rank_checks: true
   global_rank_ladder: true
   unique_race_checks: true

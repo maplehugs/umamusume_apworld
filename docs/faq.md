@@ -1,10 +1,11 @@
 # FAQ
 
 **Can the seed softlock me?**
-Goal races of a career are never locked, rank checks above a `rank_score` goal
-aren't generated, and a lost URA final still counts as reaching the end of the
-career (finish and trainee checks). If something hangs, the server log
-(dashboard **Saves & logs**) says what it served.
+No. Goal races of a career are never locked, rank checks a scenario can't reach
+(or above a `rank_score` goal) aren't generated, and Team Trials never holds
+progression. "Finish a <scenario> career" needs that scenario's final won; a lost
+final just means another career, and it still counts for the trainee's check.
+If something hangs, the server log (dashboard **Saves & logs**) says what it served.
 
 **What does a trap do, and for how long?**
 Traps hit your **next** career, at most `trap_cap` (default 2) per career; the
