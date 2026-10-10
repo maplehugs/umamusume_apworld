@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0
+- Legend Race rival ladder (`legend_ladder`, on by default): beat the B, A, S,
+  SS and SS+ rivals in turn, 5 checks. The Archipelago save always sees its
+  current rival and its entries cost no ticket, so it can't get stuck.
+
 ## 0.5.0
 - New goal `all_scenarios`: finish a career in each of the 4 scenarios.
 - With the `rank_score` goal, rank checks above the goal score are not generated,

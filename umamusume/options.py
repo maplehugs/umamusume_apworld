@@ -100,6 +100,13 @@ class UniqueRaceChecks(DefaultOnToggle):
     display_name = "Unique Race Checks"
 
 
+class LegendLadder(DefaultOnToggle):
+    """A rival ladder in Legend Race: beat the B, A, S, SS and SS+ rivals in turn
+    (5 checks). Entries are free on the Archipelago save, so it never runs out."""
+
+    display_name = "Legend Race Ladder"
+
+
 class TeamTrialsChecks(Range):
     """Team Trials match wins that are checks (the 1st win, the 2nd...). 0 = none."""
 
@@ -146,6 +153,7 @@ class UmaOptions(PerGameCommonOptions):
     scenario_rank_checks: ScenarioRankChecks
     global_rank_ladder: GlobalRankLadder
     unique_race_checks: UniqueRaceChecks
+    legend_ladder: LegendLadder
     team_trials_checks: TeamTrialsChecks
     trap_percentage: TrapPercentage
     trap_cap: TrapCap

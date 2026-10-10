@@ -106,6 +106,17 @@ you claim them from the present box.
 - Win 50 different races
 - Win 75 different races
 
+### Legend Race ladder (legend_ladder)
+
+On the Archipelago save, Legend Race always shows your current rival; beating it
+opens the next. Entries there cost no ticket.
+
+- Legend Race: beat the B rival (1600 m)
+- Legend Race: beat the A rival (2000 m)
+- Legend Race: beat the S rival (2200 m)
+- Legend Race: beat the SS rival (2400 m)
+- Legend Race: beat the SS+ rival (3000 m)
+
 ### Team Trials (team_trials_checks)
 
 - Team Trials: win 1 match ... win 10 matches (the first `team_trials_checks` of them)

@@ -299,6 +299,16 @@ GLOBAL_RANKS = (
 )
 # "Win N different races" across all careers (any race, distinct race ids).
 UNIQUE_RACE_MILESTONES = (10, 20, 35, 50, 75)
+# Legend Race rival ladder: (tier, single_mode_rank id, legend_race row, boss stats
+# speed/stamina/power/guts/wit). One rival per tier, each a real legend race row
+# (its own boss, longer each step); beating a tier is a check and opens the next.
+LEGEND_LADDER = (
+    ("B", 11, 22, (780, 560, 700, 400, 620)),  # 1600 m
+    ("A", 13, 29, (950, 700, 850, 450, 750)),  # 2000 m
+    ("S", 15, 19, (1100, 800, 1000, 500, 900)),  # 2200 m
+    ("SS", 17, 11, (1200, 900, 1100, 550, 1000)),  # 2400 m
+    ("SS+", 18, 26, (1200, 1000, 1150, 600, 1050)),  # 3000 m
+)
 # Team Trials: a check for each of the first N match wins (later wins: nothing).
 TEAM_TRIALS_CHECKS = 10
 STATS = ("Speed", "Stamina", "Power", "Guts", "Wit")
@@ -365,6 +375,7 @@ RANK_LOCATION_BASE = 300  # + scenario * 10 + tier index
 UNIQUE_RACES_LOCATION_BASE = 400  # + index in UNIQUE_RACE_MILESTONES
 GLOBAL_RANK_LOCATION_BASE = 450  # + index in GLOBAL_RANKS
 TEAM_TRIALS_LOCATION_BASE = 600  # + wins - 1
+LEGEND_LOCATION_BASE = 500  # + index in LEGEND_LADDER
 TRAINEE_LOCATION_BASE = 1_000_000  # + card_id
 
 
@@ -392,6 +403,10 @@ def team_trials_location(wins: int) -> str:
     return f"Team Trials: win {wins} match" + ("es" if wins > 1 else "")
 
 
+def legend_location(tier: str) -> str:
+    return f"Legend Race: beat the {tier} rival"
+
+
 def trainee_location(card_id: int) -> str:
     return f"Finish a career with {TRAINEES[card_id]}"
 
@@ -406,6 +421,8 @@ def location_name_to_id() -> dict:
         table[unique_races_location(n)] = UNIQUE_RACES_LOCATION_BASE + i
     for i, (tier, _score) in enumerate(GLOBAL_RANKS):
         table[global_rank_location(tier)] = GLOBAL_RANK_LOCATION_BASE + i
+    for i, (tier, *_rest) in enumerate(LEGEND_LADDER):
+        table[legend_location(tier)] = LEGEND_LOCATION_BASE + i
     for n in range(1, TEAM_TRIALS_CHECKS + 1):
         table[team_trials_location(n)] = TEAM_TRIALS_LOCATION_BASE + n - 1
     table.update({trainee_location(c): TRAINEE_LOCATION_BASE + c for c in TRAINEES})

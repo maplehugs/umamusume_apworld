@@ -18,6 +18,10 @@ screen: a screen already shown can't change (the game applies what it shows).
 **Do 2nd places count for a G1?**
 No, only wins. An Alarm Clock retry that wins does count.
 
+**Can I run out of Legend Race tickets?**
+Not on the Archipelago save: its ladder races are free. (The ticket's in-game
+maximum is 3; more would show as 0, so no extra tickets are handed out.)
+
 **Team Trials says it's tallying.**
 On the Archipelago save Team Trials is always open. On a normal save the
 official daily window applies.

@@ -119,6 +119,13 @@ class UmamusumeWorld(World):
         if o.unique_race_checks:
             for n in tables.UNIQUE_RACE_MILESTONES:  # ~8 wins per career
                 add(tables.unique_races_location(n), lambda s, n=n: self.estimate(s) >= 9000 + 100 * n)
+        if o.legend_ladder:
+            # The rival is raced with one of your trained umas: in logic once your
+            # careers are expected to reach that rival's rank.
+            ladder_score = {11: 6500, 13: 10000, 15: 14500, 17: 17500, 18: 19200}
+            for tier, rank_id, _row, _stats in tables.LEGEND_LADDER:
+                need = ladder_score[rank_id]
+                add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
         # Team Trials needs a team of finished careers: past the first wins, logic
         # expects careers good enough to win against teams matched to yours.
         for n in range(1, o.team_trials_checks.value + 1):
