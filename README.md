@@ -26,7 +26,7 @@ Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
    and put it in Archipelago's `Players/` folder with the other players' files.
 3. **Generate and host**: Launcher > *Generate*, then host the zip from
    `output/` (Launcher > *Host*, or upload it to archipelago.gg > Host Game).
-4. **Connect the server**: UmamusumeX dashboard > Settings > Mods: turn on
+4. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago: turn on
    `mod_archipelago`, fill in the room address, your slot name, the password and
    your viewer id. Start the game.
 

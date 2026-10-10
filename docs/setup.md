@@ -26,7 +26,7 @@ Archipelago's `Players/` folder together with everyone else's yaml.
 
 ## 4. Connect UmamusumeX
 
-Dashboard > **Settings > Mods**, with the game closed:
+Dashboard > **Game > Mods > Archipelago**, with the game closed:
 
 | Setting | Value |
 |---|---|
