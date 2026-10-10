@@ -4,12 +4,15 @@ from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Range, Toggle
 
 
 class Goal(Choice):
-    """rank_score: finish one career at or above Goal Rank Score.
-    g1_collector: win Goal G1 Count different G1s (across careers)."""
+    """rank_score: finish one career at or above Goal Rank Score. Rank checks above
+    that score aren't generated (nothing sits past the goal).
+    g1_collector: win Goal G1 Count different G1s (across careers).
+    all_scenarios: finish a career in each of the 4 scenarios (needs all 3 unlocks)."""
 
     display_name = "Goal"
     option_rank_score = 0
     option_g1_collector = 1
+    option_all_scenarios = 2
     default = 0
 
 
@@ -43,9 +46,19 @@ class LogicDifficulty(Choice):
     default = 1
 
 
+class StartingTrainees(Choice):
+    """random: your Archipelago save starts with 5 random trainees.
+    fixed: a new account's usual five (Vodka, Daiwa Scarlet, Gold Ship...)."""
+
+    display_name = "Starting Trainees"
+    option_random = 0
+    option_fixed = 1
+    default = 0
+
+
 class TraineeCount(Range):
     """Extra trainees shuffled in, each with a "Finish a career with ..." check.
-    The 5 a fresh account owns are always yours."""
+    Your 5 starting trainees are always yours."""
 
     display_name = "Trainee Count"
     range_start = 0
@@ -125,6 +138,7 @@ class UmaOptions(PerGameCommonOptions):
     goal_rank_score: GoalRankScore
     goal_g1_count: GoalG1Count
     logic_difficulty: LogicDifficulty
+    starting_trainees: StartingTrainees
     trainee_count: TraineeCount
     support_count: SupportCount
     g1_checks: G1Checks

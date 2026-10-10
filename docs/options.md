@@ -7,7 +7,7 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
-| `goal` | **rank_score**, g1_collector | Finish one career at `goal_rank_score`, or win `goal_g1_count` different G1s across careers. |
+| `goal` | **rank_score**, g1_collector, all_scenarios | Finish one career at `goal_rank_score` (rank checks above that score aren't generated, so nothing sits past the goal); win `goal_g1_count` different G1s across careers; or finish a career in each of the 4 scenarios. |
 | `goal_rank_score` | 14500-23900 [**20000**] | S is 14500, SS 17500, UG 19600, UG1 20000. 21000+ adds 2 Progressive Stat Cap items. |
 | `goal_g1_count` | 5-34 [**24**] | For g1_collector (needs `g1_checks` on). |
 | `logic_difficulty` | relaxed, **normal**, expert | How strong logic expects an unbuffed career to be. relaxed puts more buffs before each rank. |
@@ -16,6 +16,7 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
+| `starting_trainees` | **random**, fixed | Your Archipelago save starts with 5 random trainees, or a new account's usual five. |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
 | `support_count` | 0-122 [**20**] | SSR support cards shuffled in (trimmed when there's no room). |
 
@@ -32,7 +33,7 @@ Turn whole groups off to make a shorter seed:
 | `team_trials_checks` | 5 (0-10) | win your 1st, 2nd... Team Trials match. Adds up to 3 Progressive RP Recovery items. |
 
 Always on: finish a career in each scenario (4) and finish a career with each
-starting or shuffled trainee (5 + `trainee_count`).
+of your 5 starting trainees and each shuffled one (5 + `trainee_count`).
 
 A short seed (about 40 checks): `g1_checks: false`, `scenario_rank_checks: false`,
 `trainee_count: 8`.

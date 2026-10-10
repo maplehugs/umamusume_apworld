@@ -50,7 +50,11 @@ class UmamusumeWorld(World):
     topology_present = False
 
     def generate_early(self) -> None:
-        extra = sorted(set(tables.TRAINEES) - set(tables.STARTING_TRAINEES))
+        if self.options.starting_trainees == self.options.starting_trainees.option_random:
+            self.starters = self.random.sample(sorted(tables.TRAINEES), 5)
+        else:
+            self.starters = list(tables.STARTING_TRAINEES)
+        extra = sorted(set(tables.TRAINEES) - set(self.starters))
         self.trainees = self.random.sample(extra, self.options.trainee_count.value)
         self.supports = self.random.sample(sorted(tables.SSR_SUPPORTS), self.options.support_count.value)
         self.caps = 2 if self.options.goal_rank_score.value >= 21000 else 0
@@ -88,6 +92,9 @@ class UmamusumeWorld(World):
             menu.locations.append(loc)
             return loc
 
+        # A rank_score goal ends the game at that score: a rank check above it
+        # would hold its item past the goal.
+        cap = o.goal_rank_score.value if o.goal == o.goal.option_rank_score else 10**9
         if o.g1_checks:
             for g1 in tables.G1_RACES:
                 add(tables.g1_location(g1))
@@ -100,10 +107,14 @@ class UmamusumeWorld(World):
             add(tables.finish_location(sid), has)
             if o.scenario_rank_checks:
                 for tier, score in tables.RANK_TIERS:
+                    if score > cap:
+                        continue
                     add(tables.rank_location(sid, tier),
                         lambda s, has=has, sid=sid, score=score: has(s) and self.estimate(s, sid) >= score)
         if o.global_rank_ladder:
             for tier, score in tables.GLOBAL_RANKS:
+                if score > cap:
+                    continue
                 add(tables.global_rank_location(tier), lambda s, score=score: self.estimate(s) >= score)
         if o.unique_race_checks:
             for n in tables.UNIQUE_RACE_MILESTONES:  # ~8 wins per career
@@ -112,13 +123,16 @@ class UmamusumeWorld(World):
         # expects careers good enough to win against teams matched to yours.
         for n in range(1, o.team_trials_checks.value + 1):
             add(tables.team_trials_location(n), lambda s, n=n: self.estimate(s) >= 11000 + 300 * n)
-        for card in tables.STARTING_TRAINEES:
+        for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:
             item = f"Trainee: {tables.TRAINEES[card]}"
             add(tables.trainee_location(card), lambda s, i=item: s.has(i, p))
 
-        if o.goal == o.goal.option_g1_collector:
+        if o.goal == o.goal.option_all_scenarios:
+            scenarios = list(tables.SCENARIO_ITEM.values())
+            goal = add("Goal", lambda s: s.has_all(scenarios, p))
+        elif o.goal == o.goal.option_g1_collector:
             if not o.g1_checks:
                 raise Exception(f"{self.player_name}: g1_collector needs g1_checks on")
             need = o.goal_g1_count.value
@@ -176,11 +190,12 @@ class UmamusumeWorld(World):
     def fill_slot_data(self) -> dict:
         o = self.options
         return {
-            "goal": "g1_collector" if o.goal == o.goal.option_g1_collector else "rank_score",
+            "goal": o.goal.current_key,
             "goal_rank_score": o.goal_rank_score.value,
             "goal_g1_count": o.goal_g1_count.value,
             "trap_cap": o.trap_cap.value,
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
             "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,
+            "starting_trainees": self.starters,
         }
