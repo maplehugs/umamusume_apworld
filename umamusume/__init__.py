@@ -173,5 +173,6 @@ class UmamusumeWorld(World):
             "goal_rank_score": o.goal_rank_score.value,
             "goal_g1_count": o.goal_g1_count.value,
             "trap_cap": o.trap_cap.value,
+            "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
             "trainees": self.trainees,
         }
