@@ -13,6 +13,7 @@ LOCATIONS = tables.location_name_to_id()
 TRAINING = [f"Progressive {s} Training" for s in tables.STATS]
 BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed career
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
+SUPPORT_BONUS, SUPPORT_MAX = 300, 6  # each maxed SSR (a deck holds 6)
 # Filler is small permanent buffs and next-career boons: support cards already
 # arrive maxed, and the mail items (Monies, clocks...) did nothing for a run.
 FILLER_WEIGHTS = {
@@ -47,6 +48,7 @@ class UmamusumeWorld(World):
     options_dataclass = UmaOptions
     options: UmaOptions
     item_name_to_id = ITEMS
+    item_name_groups = {"Supports": {n for n in ITEMS if n.startswith("Support: ")}}
     location_name_to_id = LOCATIONS
     topology_present = False
 
@@ -75,6 +77,7 @@ class UmamusumeWorld(World):
         est += 450 * sum(state.count(n, p) for n in TRAINING)
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
+        est += SUPPORT_BONUS * min(SUPPORT_MAX, len(self.start_supports) + state.count_group("Supports", p))
         if scenario is None:  # any scenario: the best one owned
             owned = self.start_scenario != 1 or any(
                 state.has(n, p) for sid, n in tables.SCENARIO_ITEM.items() if sid != 1)
@@ -88,6 +91,7 @@ class UmamusumeWorld(World):
             + 450 * 3 * len(TRAINING)
             + 400 * 5
             + 300 * self.caps
+            + SUPPORT_BONUS * min(SUPPORT_MAX, len(self.start_supports) + len(self.supports))
             + (0 if scenario == 1 else SCENARIO_BONUS)
         )
 
@@ -173,12 +177,13 @@ class UmamusumeWorld(World):
         self.multiworld.regions.append(menu)
 
     def create_item(self, name: str) -> UmaItem:
-        if name in TRAINING or name.startswith(("Scenario:", "Trainee:")) or name in (
+        # Support cards count in logic (a maxed SSR deck is most of a good career).
+        if name in TRAINING or name.startswith(("Scenario:", "Trainee:", "Support:")) or name in (
             "Progressive Starting Stats",
             "Progressive Stat Cap",
         ):
             cls = IC.progression
-        elif name.startswith("Support:") or name in tables.PROGRESSIVE:  # Trainee Awakening too
+        elif name in tables.PROGRESSIVE:  # Trainee Awakening too
             cls = IC.useful
         elif name in tables.TRAPS:
             cls = IC.trap

@@ -15,7 +15,7 @@ Generated from `umamusume/tables.py`.
 | Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy. |
 | Dream's Luck | 1 | Every support card shows up in its own facility every turn. |
 | Trainee: ... | trainee_count | The trainee, by mail. |
-| Support: ... | support_count | The SSR support card, by mail (a repeat is an uncap copy). |
+| Support: ... | support_count | The SSR support card, by mail, maxed when claimed. Progression: up to 6 count toward the logic estimate. |
 | Trainee Awakening | trainee_awakenings | A random trainee you own goes to 5 stars and potential level 5 (log in again to see it). |
 
 ## Filler
@@ -82,6 +82,9 @@ you claim them from the present box.
 - Win Mile Championship Nambu Hai
 
 ### Scenarios
+
+A career counts as finished once it reaches its last turn: losing the final race
+still counts (a goal missed mid-career, which ends the career early, does not).
 
 - Finish a URA Finale career
 - Finish a Unity Cup career

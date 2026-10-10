@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.1
+- Logic counts SSR support cards: +300 to the estimate per card, up to 6 (a deck).
+  They're progression items now. Ranks and goals come into logic sooner, closer
+  to how fast a real player gets there.
+
 ## 0.7.0
 Needs the matching UmamusumeX server.
 - `starting_scenario: shuffled`: start with a random scenario; the others (URA
