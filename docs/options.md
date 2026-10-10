@@ -29,6 +29,7 @@ Turn whole groups off to make a shorter seed:
 | `scenario_rank_checks` | on | 20: rank B/A/S/SS/UG in each scenario |
 | `global_rank_ladder` | on | 7: rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario |
 | `unique_race_checks` | on | 5: win 10/20/35/50/75 different races |
+| `team_trials_checks` | 5 (0-10) | win your 1st, 2nd... Team Trials match. Adds up to 3 Progressive RP Recovery items. |
 
 Always on: finish a career in each scenario (4) and finish a career with each
 starting or shuffled trainee (5 + `trainee_count`).

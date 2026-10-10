@@ -299,6 +299,8 @@ GLOBAL_RANKS = (
 )
 # "Win N different races" across all careers (any race, distinct race ids).
 UNIQUE_RACE_MILESTONES = (10, 20, 35, 50, 75)
+# Team Trials: a check for each of the first N match wins (later wins: nothing).
+TEAM_TRIALS_CHECKS = 10
 STATS = ("Speed", "Stamina", "Power", "Guts", "Wit")
 
 # ---- items: name -> id -------------------------------------------------------
@@ -309,6 +311,7 @@ PROGRESSIVE = {
     "Progressive Starting Skill Points": 12,  # +200 SP at career start
     "Dream's Luck": 13,  # every support card in its own facility
     "Progressive Training Guard": 14,  # failure rate x0.75 per copy
+    "Progressive RP Recovery": 15,  # Team Trials RP refills twice as fast per copy
     # +20% gain and +50 cap on that stat per copy
     **{f"Progressive {s} Training": 20 + i for i, s in enumerate(STATS)},
 }
@@ -353,6 +356,7 @@ FINISH_LOCATION_BASE = 200  # + scenario id
 RANK_LOCATION_BASE = 300  # + scenario * 10 + tier index
 UNIQUE_RACES_LOCATION_BASE = 400  # + index in UNIQUE_RACE_MILESTONES
 GLOBAL_RANK_LOCATION_BASE = 450  # + index in GLOBAL_RANKS
+TEAM_TRIALS_LOCATION_BASE = 600  # + wins - 1
 TRAINEE_LOCATION_BASE = 1_000_000  # + card_id
 
 
@@ -376,6 +380,10 @@ def unique_races_location(count: int) -> str:
     return f"Win {count} different races"
 
 
+def team_trials_location(wins: int) -> str:
+    return f"Team Trials: win {wins} match" + ("es" if wins > 1 else "")
+
+
 def trainee_location(card_id: int) -> str:
     return f"Finish a career with {TRAINEES[card_id]}"
 
@@ -390,6 +398,8 @@ def location_name_to_id() -> dict:
         table[unique_races_location(n)] = UNIQUE_RACES_LOCATION_BASE + i
     for i, (tier, _score) in enumerate(GLOBAL_RANKS):
         table[global_rank_location(tier)] = GLOBAL_RANK_LOCATION_BASE + i
+    for n in range(1, TEAM_TRIALS_CHECKS + 1):
+        table[team_trials_location(n)] = TEAM_TRIALS_LOCATION_BASE + n - 1
     table.update({trainee_location(c): TRAINEE_LOCATION_BASE + c for c in TRAINEES})
     return table
 

@@ -12,6 +12,7 @@ Umamusume Pretty Derby:
   scenario_rank_checks: true
   global_rank_ladder: true
   unique_race_checks: true
+  team_trials_checks: 5
   trap_percentage: 20
   trap_cap: 2
   spicy_traps: false

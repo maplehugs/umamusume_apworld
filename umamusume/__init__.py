@@ -110,6 +110,10 @@ class UmamusumeWorld(World):
         if o.unique_race_checks:
             for n in tables.UNIQUE_RACE_MILESTONES:  # ~8 wins per career
                 add(tables.unique_races_location(n), lambda s, n=n: self.estimate(s) >= 9000 + 100 * n)
+        # Team Trials needs a team of finished careers: past the first wins, logic
+        # expects careers good enough to win against teams matched to yours.
+        for n in range(1, o.team_trials_checks.value + 1):
+            add(tables.team_trials_location(n), lambda s, n=n: self.estimate(s) >= 11000 + 300 * n)
         for card in tables.STARTING_TRAINEES:
             add(tables.trainee_location(card))
         for card in self.trainees:
@@ -157,6 +161,8 @@ class UmamusumeWorld(World):
         names += [n for n in TRAINING for _ in range(3)]
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Starting Skill Points"] * 3
         names += ["Progressive Training Guard"] * 2 + ["Progressive Stat Cap"] * self.caps
+        if o_tt := self.options.team_trials_checks.value:
+            names += ["Progressive RP Recovery"] * min(3, o_tt)
         names += [f"Trainee: {tables.TRAINEES[c]}" for c in self.trainees]
         room = len(self.multiworld.get_unfilled_locations(self.player)) - len(names)
         if room < 0:
@@ -174,5 +180,6 @@ class UmamusumeWorld(World):
             "goal_g1_count": o.goal_g1_count.value,
             "trap_cap": o.trap_cap.value,
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
+            "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,
         }

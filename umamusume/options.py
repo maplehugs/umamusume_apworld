@@ -86,6 +86,15 @@ class UniqueRaceChecks(DefaultOnToggle):
     display_name = "Unique Race Checks"
 
 
+class TeamTrialsChecks(Range):
+    """Team Trials match wins that are checks (the 1st win, the 2nd...). 0 = none."""
+
+    display_name = "Team Trials Checks"
+    range_start = 0
+    range_end = 10
+    default = 5
+
+
 class TrapPercentage(Range):
     """Percent of filler slots that become traps."""
 
@@ -122,6 +131,7 @@ class UmaOptions(PerGameCommonOptions):
     scenario_rank_checks: ScenarioRankChecks
     global_rank_ladder: GlobalRankLadder
     unique_race_checks: UniqueRaceChecks
+    team_trials_checks: TeamTrialsChecks
     trap_percentage: TrapPercentage
     trap_cap: TrapCap
     spicy_traps: SpicyTraps

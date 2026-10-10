@@ -39,8 +39,9 @@ While `mod_archipelago` is on, your account plays a **separate save**:
   player's collection (URA only, 5 trainees, R/SR cards);
 - scouting is closed there (cards come from the multiworld);
 - turning the mod off brings your normal save back (switch with the game closed);
-- a new seed wipes the Archipelago save and starts a new one. Your normal save
-  is never touched.
+- **each seed has its own save**: closing the server and coming back to the same
+  room resumes it; joining another seed starts a new save and keeps the old one,
+  so going back to the old room resumes it too. Your normal save is never touched.
 
 ## Logic
 

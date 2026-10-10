@@ -12,6 +12,7 @@ Generated from `umamusume/tables.py`.
 | Progressive Starting Skill Points | 3 | +200 skill points at career start. |
 | Progressive Stat Cap | 0 or 2 | +50 to every stat cap (only when goal_rank_score is 21000+). |
 | Progressive Training Guard | 2 | Training failure rate x0.75 per copy. |
+| Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy. |
 | Dream's Luck | 1 | Every support card shows up in its own facility every turn. |
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Support: ... | support_count | The SSR support card, by mail (a repeat is an uncap copy). |
@@ -104,6 +105,10 @@ Generated from `umamusume/tables.py`.
 - Win 35 different races
 - Win 50 different races
 - Win 75 different races
+
+### Team Trials (team_trials_checks)
+
+- Team Trials: win 1 match ... win 10 matches (the first `team_trials_checks` of them)
 
 ### Trainees
 
