@@ -1,7 +1,7 @@
 # Umamusume: Pretty Derby for Archipelago
 
 An [Archipelago](https://archipelago.gg) world for **Umamusume: Pretty Derby**,
-played on the [UmamusumeX](../UmamusumeX-Private) private server.
+played on the **UmamusumeX** private server (its Archipelago mod does the game side).
 
 Every career is a run. Winning G1s and finishing careers sends items to the
 other players in your multiworld; what comes back are scenarios, trainees,
@@ -15,7 +15,7 @@ save of the same account.
 ## Quick start
 
 1. **Install the world** (whoever generates the seed): download
-   `umamusume.apworld` from the releases (or build it, below) and double-click it,
+   `umamusume.apworld` from the [releases](../../releases/latest) (or build it, below) and double-click it,
    or Archipelago Launcher > *Install APWorld*.
 2. **Make your player file**: copy [`examples/Umamusume.yaml`](examples/Umamusume.yaml),
    set `name`, change options if you like (see [docs/options.md](docs/options.md)),
@@ -34,13 +34,24 @@ Full walkthrough: [docs/setup.md](docs/setup.md).
 - [Setup](docs/setup.md): from nothing to playing.
 - [Options](docs/options.md): every yaml option, and how to exclude checks.
 - [Items and checks](docs/items-and-checks.md): the full lists.
+- [Your saves](docs/saves.md): the Archipelago save, resuming, switching seeds, backups, editing.
+- [FAQ](docs/faq.md): softlocks, traps, Team Trials, common mistakes.
+- [Changelog](CHANGELOG.md)
 
 ## Building
 
 ```
 python tools/sync_tables.py ../UmamusumeX-Private   # take the server's ids
 python tools/build.py                                # -> dist/umamusume.apworld
+python tools/build.py 0.5.0                          # same, stamped with a release version
 ```
+
+## Versions
+
+`MAJOR.MINOR.PATCH`, as `world_version` in `umamusume/archipelago.json` and as git
+tags `vX.Y.Z` with a release each. A seed must be played with a server whose
+tables match the apworld that generated it; ids are never renumbered, so a newer
+server keeps working with older seeds. See [CHANGELOG.md](CHANGELOG.md).
 
 `umamusume/tables.py` is a copy of the server's
 `server/umaps/features/archipelago/tables.py`. Never edit it here: change the
