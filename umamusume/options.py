@@ -1,0 +1,127 @@
+from dataclasses import dataclass
+
+from Options import Choice, DefaultOnToggle, PerGameCommonOptions, Range, Toggle
+
+
+class Goal(Choice):
+    """rank_score: finish one career at or above Goal Rank Score.
+    g1_collector: win Goal G1 Count different G1s (across careers)."""
+
+    display_name = "Goal"
+    option_rank_score = 0
+    option_g1_collector = 1
+    default = 0
+
+
+class GoalRankScore(Range):
+    """Rank score the goal career needs. UG is 19600, UG1 20000, SS 17500, S 14500.
+    21000 or more adds two Progressive Stat Cap items so it stays reachable."""
+
+    display_name = "Goal Rank Score"
+    range_start = 14500
+    range_end = 23900
+    default = 20000
+
+
+class GoalG1Count(Range):
+    """Different G1s to win for the g1_collector goal (34 exist)."""
+
+    display_name = "Goal G1 Count"
+    range_start = 5
+    range_end = 34
+    default = 24
+
+
+class LogicDifficulty(Choice):
+    """How strong logic assumes an unbuffed career is. relaxed expects more buffs
+    before a rank is "in logic"; expert expects fewer."""
+
+    display_name = "Logic Difficulty"
+    option_relaxed = 0
+    option_normal = 1
+    option_expert = 2
+    default = 1
+
+
+class TraineeCount(Range):
+    """Extra trainees shuffled in, each with a "Finish a career with ..." check.
+    The 5 a fresh account owns are always yours."""
+
+    display_name = "Trainee Count"
+    range_start = 0
+    range_end = 103
+    default = 15
+
+
+class SupportCount(Range):
+    """SSR support cards shuffled in (trimmed if there is no room)."""
+
+    display_name = "Support Card Count"
+    range_start = 0
+    range_end = 122
+    default = 20
+
+
+class G1Checks(DefaultOnToggle):
+    """A check for winning each of the 34 G1s."""
+
+    display_name = "G1 Checks"
+
+
+class ScenarioRankChecks(DefaultOnToggle):
+    """Rank B/A/S/SS/UG checks in each of the 4 scenarios (20 checks)."""
+
+    display_name = "Scenario Rank Checks"
+
+
+class GlobalRankLadder(DefaultOnToggle):
+    """Rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario (7 checks)."""
+
+    display_name = "Global Rank Ladder"
+
+
+class UniqueRaceChecks(DefaultOnToggle):
+    """Win 10/20/35/50/75 different races across all careers (5 checks)."""
+
+    display_name = "Unique Race Checks"
+
+
+class TrapPercentage(Range):
+    """Percent of filler slots that become traps."""
+
+    display_name = "Trap Percentage"
+    range_start = 0
+    range_end = 100
+    default = 20
+
+
+class TrapCap(Range):
+    """Most traps that hit one career; the rest wait for the next ones."""
+
+    display_name = "Traps Per Career"
+    range_start = 1
+    range_end = 6
+    default = 2
+
+
+class SpicyTraps(Toggle):
+    """Also shuffle Amnesia (no starting buffs for a career)."""
+
+    display_name = "Spicy Traps"
+
+
+@dataclass
+class UmaOptions(PerGameCommonOptions):
+    goal: Goal
+    goal_rank_score: GoalRankScore
+    goal_g1_count: GoalG1Count
+    logic_difficulty: LogicDifficulty
+    trainee_count: TraineeCount
+    support_count: SupportCount
+    g1_checks: G1Checks
+    scenario_rank_checks: ScenarioRankChecks
+    global_rank_ladder: GlobalRankLadder
+    unique_race_checks: UniqueRaceChecks
+    trap_percentage: TrapPercentage
+    trap_cap: TrapCap
+    spicy_traps: SpicyTraps

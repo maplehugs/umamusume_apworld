@@ -1,0 +1,17 @@
+name: YourName
+game: Umamusume Pretty Derby
+description: Umamusume player file
+Umamusume Pretty Derby:
+  goal: rank_score
+  goal_rank_score: 20000
+  goal_g1_count: 24
+  logic_difficulty: normal
+  trainee_count: 15
+  support_count: 20
+  g1_checks: true
+  scenario_rank_checks: true
+  global_rank_ladder: true
+  unique_race_checks: true
+  trap_percentage: 20
+  trap_cap: 2
+  spicy_traps: false
