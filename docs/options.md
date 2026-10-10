@@ -31,7 +31,7 @@ Turn whole groups off to make a shorter seed:
 | `global_rank_ladder` | on | 7: rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario |
 | `unique_race_checks` | on | 5: win 10/20/35/50/75 different races |
 | `legend_ladder` | on | 5: beat the B, A, S, SS and SS+ rivals in Legend Race, in turn (free entries on the Archipelago save) |
-| `team_trials_checks` | 5 (0-10) | win your 1st, 2nd... Team Trials match. Adds up to 3 Progressive RP Recovery items. |
+| `team_trials_checks` | 10 (0-30) | win your 1st, 2nd... Team Trials match. Each sends another player one of their useful items, filler or traps (never progression). Adds up to 3 Progressive RP Recovery items. |
 
 Always on: finish a career in each scenario (4) and finish a career with each
 of your 5 starting trainees and each shuffled one (5 + `trainee_count`).

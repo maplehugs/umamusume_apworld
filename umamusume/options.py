@@ -108,12 +108,13 @@ class LegendLadder(DefaultOnToggle):
 
 
 class TeamTrialsChecks(Range):
-    """Team Trials match wins that are checks (the 1st win, the 2nd...). 0 = none."""
+    """Team Trials match wins that are checks (the 1st win, the 2nd...). 0 = none.
+    They're a support roulette: each holds another player's useful item, filler or trap."""
 
     display_name = "Team Trials Checks"
     range_start = 0
-    range_end = 10
-    default = 5
+    range_end = 30
+    default = 10
 
 
 class TrapPercentage(Range):

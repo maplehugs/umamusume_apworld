@@ -128,11 +128,14 @@ class UmamusumeWorld(World):
                 add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
         # Team Trials needs a team of finished careers: past the first wins, logic
         # expects careers good enough to win against teams matched to yours.
-        # They only ever hold filler or traps (any game's): Team Trials is a slow RP grind,
-        # so nothing anyone needs waits behind it.
+        # A support roulette: each win sends another player one of their useful items,
+        # filler or traps, never progression (nobody waits on the RP grind). Alone in
+        # the multiworld, it holds our own non-progression items instead.
+        solo = self.multiworld.players == 1
         for n in range(1, o.team_trials_checks.value + 1):
-            loc = add(tables.team_trials_location(n), lambda s, n=n: self.estimate(s) >= 11000 + 300 * n)
-            loc.item_rule = lambda item: not item.classification & (IC.progression | IC.useful)
+            loc = add(tables.team_trials_location(n),
+                      lambda s, n=n: self.estimate(s) >= 11000 + 300 * min(n, 10))
+            loc.item_rule = lambda item: not item.advancement and (solo or item.player != p)
         for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:

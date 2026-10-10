@@ -310,7 +310,7 @@ LEGEND_LADDER = (
     ("SS+", 18, 26, (1200, 1000, 1150, 600, 1050)),  # 3000 m
 )
 # Team Trials: a check for each of the first N match wins (later wins: nothing).
-TEAM_TRIALS_CHECKS = 10
+TEAM_TRIALS_CHECKS = 30
 STATS = ("Speed", "Stamina", "Power", "Guts", "Wit")
 
 # ---- items: name -> id -------------------------------------------------------
