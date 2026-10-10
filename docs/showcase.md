@@ -14,6 +14,12 @@ hidden until they arrive.
 
 ([mp4](media/scenario-select.mp4))
 
+**Each seed starts you with its own random trainees.** Only those, and the
+ones you receive as items (here Kitasan Black), can start a career; everyone
+else stays unscouted.
+
+![Trainee select: the seed's starters plus a received trainee](media/game-trainee-select.png)
+
 **Items arrive as presents.** Trainees and support cards land in the gift box,
 marked with who sent them.
 
