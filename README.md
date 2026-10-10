@@ -12,6 +12,10 @@ Nothing is installed in the game: the private server applies the items and
 reports the checks. Your normal save is untouched; the seed plays on a separate
 save of the same account.
 
+![The tracker in the UmamusumeX dashboard](docs/media/dashboard-tracker.png)
+
+Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
+
 ## Quick start
 
 1. **Install the world** (whoever generates the seed): download
@@ -30,6 +34,7 @@ Full walkthrough: [docs/setup.md](docs/setup.md).
 
 ## Docs
 
+- [Showcase](docs/showcase.md): screenshots of the game and the dashboard.
 - [How it works](docs/how-it-works.md): what an apworld is and how the pieces talk.
 - [Setup](docs/setup.md): from nothing to playing.
 - [Options](docs/options.md): every yaml option, and how to exclude checks.
