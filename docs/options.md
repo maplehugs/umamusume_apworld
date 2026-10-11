@@ -22,7 +22,7 @@ brackets.
 | `starting_supports` | 0-10 [**0**] | Random SSR support cards in your present box from the start, maxed. |
 | `trainee_awakenings` | 0-108 [**one_per_trainee**] | Trainee Awakening items: each takes a random trainee you own (not yet maxed) to 5 stars and potential 5; with all of them maxed it waits for your next trainee. At most one per trainee the seed gives you (starting + `trainee_count`), which `one_per_trainee` is. |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
-| `support_count` | 0-122 [**30**] | SSR support cards at least, dealt evenly by stat (30 = 6 of each; Friend/Group only past 100). Spare checks deal more: 1 card per 3 (54 with the defaults). |
+| `support_count` | 0-122 [**30**] | SSR support cards at least, dealt evenly by stat (30 = 6 of each; Friend/Group only past 100). Spare checks deal more: 1 card per 2 (67 with the defaults, every SSR at 358 checks). |
 
 ## Checks
 

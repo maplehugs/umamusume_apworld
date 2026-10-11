@@ -257,9 +257,9 @@ class UmamusumeWorld(World):
         names, self.start_items = names[:slots], names[slots:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
-        # Room left: 1 in 3 more SSR cards (still even by stat), the rest filler.
+        # Room left: half more SSR cards (still even by stat), half filler.
         room = slots - len(names)
-        extra = self.deck[len(self.supports):][:room // 3]
+        extra = self.deck[len(self.supports):][:room // 2]
         names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in extra]
         names += [self.get_filler_item_name() for _ in range(room - len(extra))]
         self.multiworld.itempool += [self.create_item(n) for n in names]

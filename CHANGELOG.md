@@ -1,11 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.11.0
+Needs the matching UmamusumeX server.
 - Any set of checks generates: items that don't fit are start inventory (most
   wanted stay in the pool: scenarios, trainees, cards, Progressive Training...).
   Everything off is a 24-check game that starts with the rest.
-- `support_count` is a floor: spare checks deal 1 more SSR card per 3, still even
-  by stat (54 cards with the defaults, 117 with everything on).
+- `support_count` is a floor: half the spare checks deal more SSR cards, still
+  even by stat (67 cards and 37 filler with the defaults, every SSR with
+  everything on).
 - `starting_scenario`: unity_cup, grand_live and trackblazer too.
 - items-and-checks.md: what a seed holds with checks turned on and off.
 

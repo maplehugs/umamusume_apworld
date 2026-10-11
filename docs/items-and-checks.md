@@ -22,27 +22,27 @@ YAML's defaults that is **170 checks out, 170 items in**:
 
 | Items you get, most first | Count | What it does |
 |---|---|---|
-| Support: SSR cards | 54 (even by stat) | Mailed, maxed on claim. Your career deck. |
+| Support: SSR cards | 67 (even by stat) | Mailed, maxed on claim. Your career deck. |
 | Trainee Awakening | 20 (one per trainee) | A trainee to 5 stars, potential 5. |
 | Trainee: ... | 15 | New trainees, each with its own "finish a career" check. |
 | Progressive Training | 15 (3 per stat) | +20% gain, +50 cap on that stat each. |
-| Minor Starting Stats | ~10 | +5 every stat at career start, forever. |
-| Pep Talk / Lucky Charm | ~9 / ~5 | Next career starts in Great mood / Charming or Practice Perfect. |
-| RP Refill | ~6 | Team Trials RP to full. |
+| Minor Starting Stats | ~6 | +5 every stat at career start, forever. |
+| Pep Talk / Lucky Charm | ~7 / ~4 | Next career starts in Great mood / Charming or Practice Perfect. |
+| RP Refill | ~4 | Team Trials RP to full. |
 | Progressive Starting Stats | 5 | +20 every stat at career start. |
-| Minor Starting Skill Points | ~4 | +50 SP at career start, forever. |
+| Minor Starting Skill Points | ~3 | +50 SP at career start, forever. |
 | Scenarios | 3 | Every scenario but your starting one. |
 | Progressive Starting Skill Points | 3 | +200 SP at career start. |
 | Progressive RP Recovery | 3 | Team Trials RP refills twice as fast each. |
 | Progressive Training Guard | 2 | Failure rate x0.75 each. |
-| Traps | ~16 (trap_percentage 20) | A bad start for one career, at most `trap_cap` per career. |
+| Traps | ~13 (trap_percentage 20) | A bad start for one career, at most `trap_cap` per career. |
 
 How the pool is built, most wanted first: scenarios, trainees, `support_count`
 cards, Progressive Training, Starting Stats, awakenings, RP Recovery, Starting
 Skill Points, Training Guard. Whatever doesn't fit in your checks is **start
 inventory** instead (you get it when you connect), so any set of checks
 generates: fewer checks is a shorter game that starts stronger. Spare checks
-after that deal 1 more SSR card per 3 (still even by stat), the rest is filler,
+after that are half more SSR cards (still even by stat), half filler,
 `trap_percentage` of it traps. "~" counts are rolled by the weights below.
 
 ### Turning checks on and off
@@ -53,9 +53,9 @@ Simulated seeds, everything else default:
 |---|---|---|---|---|
 | Nothing (only scenario finishes and trainees) | 24 | 30 (24 from the start) | 0 | 69: 24 cards, 20 awakenings, all Progressive buffs |
 | Only G1 | 58 | 30 | 0 | 35: 20 awakenings, 5 Progressive Training, the Starting buffs |
-| Everything but Team Trials | 120 | 39 | 18 (6) | nothing |
-| **Default** | **170** | **54** | **50 (16)** | nothing |
-| Everything, `g1_per_scenario`, Team Trials 100 | 358 | 117 | 175 (47) | nothing |
+| Everything but Team Trials | 120 | 43 | 14 (5) | nothing |
+| **Default** | **170** | **67** | **37 (13)** | nothing |
+| Everything, `g1_per_scenario`, Team Trials 100 | 358 | 122 (all of them) | 170 (44) | nothing |
 
 | Group | Checks | Option |
 |---|---|---|
