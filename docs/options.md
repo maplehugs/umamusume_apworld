@@ -67,13 +67,20 @@ A short seed (about 40 checks): `g1_checks: false`, `scenario_rank_checks: false
     Amnesia Trap: 0
 ```
 
-## Excluding single checks
+## Excluding checks
 
-Every Archipelago world supports these common options:
+Every Archipelago world supports these common options. They take check names or
+a whole group: `G1`, `G1 per scenario`, `Scenario finishes`, `Scenario ranks`,
+`Global ranks`, `Different races`, `Fans`, `Legend Race`, `Team Trials`,
+`Trainees`. Excluding a group keeps its checks but fills them only with filler
+and traps (from any game in the multiworld), so nobody waits on them; e.g.
+`exclude_locations: [Team Trials]` for a player who doesn't want the RP grind to
+hold anything important.
 
 ```yaml
 Umamusume Pretty Derby:
   exclude_locations:          # never anything important here (only filler/traps)
+    - Team Trials
     - Win Champions Cup
     - "Trackblazer: rank UG"
   priority_locations:         # something good is placed here

@@ -11,6 +11,20 @@ from .options import UmaOptions
 ITEMS = tables.item_name_to_id()
 LOCATIONS = tables.location_name_to_id()
 TRAINING = [f"Progressive {s} Training" for s in tables.STATS]
+T = tables
+# For exclude_locations / priority_locations in a YAML: "Team Trials" = all 100.
+LOCATION_GROUPS = {
+    "G1": {T.g1_location(g) for g in T.G1_RACES},
+    "G1 per scenario": {T.g1_scenario_location(g, s) for g in T.G1_RACES for s in T.SCENARIOS},
+    "Scenario finishes": {T.finish_location(s) for s in T.SCENARIOS},
+    "Scenario ranks": {T.rank_location(s, tier) for s in T.SCENARIOS for tier, _ in T.RANK_TIERS},
+    "Global ranks": {T.global_rank_location(tier) for tier, _ in T.GLOBAL_RANKS},
+    "Different races": {T.unique_races_location(n) for n in T.UNIQUE_RACE_MILESTONES},
+    "Fans": {T.fans_location(n) for n in T.FAN_MILESTONES},
+    "Legend Race": {T.legend_location(tier) for tier, *_ in T.LEGEND_LADDER},
+    "Team Trials": {T.team_trials_location(n) for n in range(1, T.TEAM_TRIALS_CHECKS + 1)},
+    "Trainees": {T.trainee_location(c) for c in T.TRAINEES},
+}
 BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed career
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
 SUPPORT_BONUS, SUPPORT_MAX = 300, 6  # each maxed SSR (a deck holds 6)
@@ -50,6 +64,7 @@ class UmamusumeWorld(World):
     item_name_to_id = ITEMS
     item_name_groups = {"Supports": {n for n in ITEMS if n.startswith("Support: ")}}
     location_name_to_id = LOCATIONS
+    location_name_groups = LOCATION_GROUPS
     topology_present = False
 
     def generate_early(self) -> None:

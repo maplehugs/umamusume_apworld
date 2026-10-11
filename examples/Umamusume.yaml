@@ -27,3 +27,9 @@ Umamusume Pretty Derby:
   trap_percentage: 20              # % of the other filler that becomes traps
   trap_cap: 2
   spicy_traps: false
+  # Checks that never hold anything important (only filler and traps, from any
+  # game): a group name or check names. Groups: G1, G1 per scenario, Scenario
+  # finishes, Scenario ranks, Global ranks, Different races, Fans, Legend Race,
+  # Team Trials, Trainees.
+  # exclude_locations:
+  #   - Team Trials

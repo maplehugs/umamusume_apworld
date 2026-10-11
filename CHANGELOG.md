@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+- Check groups for `exclude_locations` / `priority_locations`: `Team Trials`,
+  `G1`, `Fans`, `Legend Race`... (`exclude_locations: [Team Trials]` keeps the
+  Team Trials checks but only filler and traps land there).
+
 ## 0.10.0
 Needs the matching UmamusumeX server.
 - Team Trials checks hold multiworld items like any other check (50 more checks
