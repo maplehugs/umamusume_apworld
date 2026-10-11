@@ -6,6 +6,11 @@ Generated from master.mdb (global); ids must never be renumbered once a seed exi
 
 GAME = "Umamusume Pretty Derby"
 
+# The apworld release these tables ship with (the server's Archipelago mod and the
+# world are released together: a newer apworld needs the matching server).
+APWORLD_VERSION = "0.10.0"
+APWORLD_REPO = "maplehugs/umamusume_apworld"
+
 SCENARIOS = {1: "URA Finale", 2: "Unity Cup", 3: "Grand Live", 4: "Trackblazer"}
 
 # Trainees a fresh account already owns (data/seeds/load_index_fresh.json).
@@ -247,6 +252,41 @@ SSR_SUPPORTS = {
     30146: '[Run Forth! Dash On! Ever Forward!] Oguri Cap',
 }
 
+# SSR support card ids by type (support_card_data.command_id; Friend/Group by
+# support_card_type), so a seed can deal the stats out evenly.
+SUPPORT_TYPES = {
+    "Speed": (
+        30002, 30003, 30014, 30015, 30018, 30020, 30025, 30026, 30028, 30039,
+        30044, 30045, 30053, 30057, 30065, 30072, 30076, 30078, 30084, 30086,
+        30092, 30095, 30101, 30107, 30116, 30119, 30121, 30122,
+    ),
+    "Stamina": (
+        30004, 30008, 30009, 30016, 30022, 30023, 30029, 30038, 30043, 30046,
+        30059, 30062, 30069, 30075, 30079, 30087, 30090, 30099, 30104, 30110,
+        30113, 30115, 30118, 30125,
+    ),
+    "Power": (
+        30005, 30007, 30017, 30024, 30032, 30033, 30034, 30042, 30047, 30056,
+        30058, 30064, 30071, 30074, 30077, 30085, 30093, 30096, 30098, 30106,
+        30114, 30123, 30145,
+    ),
+    "Guts": (
+        30001, 30006, 30011, 30012, 30019, 30027, 30030, 30040, 30048, 30060,
+        30063, 30070, 30083, 30089, 30094, 30102, 30105, 30109, 30112, 30117,
+        30120,
+    ),
+    "Wit": (
+        30010, 30013, 30031, 30041, 30054, 30055, 30061, 30066, 30068, 30073,
+        30082, 30088, 30091, 30097, 30100, 30103, 30108, 30111, 30124, 30146,
+    ),
+    "Friend": (
+        30021, 30036, 30052, 30080,
+    ),
+    "Group": (
+        30067, 30081,
+    ),
+}
+
 # G1 name -> career race ids (a race run at another venue keeps its name).
 G1_RACES = {
     'February Stakes': (1001,),
@@ -337,17 +377,7 @@ PROGRESSIVE = {
     # +20% gain and +50 cap on that stat per copy
     **{f"Progressive {s} Training": 20 + i for i, s in enumerate(STATS)},
 }
-# Mail: name -> (id, present reward_type (item_data.item_category), reward id, count)
-FILLER = {
-    "300 Carats": (30, 90, 43, 300),
-    "5000 Support Points": (31, 30, 110, 5000),  # levels support cards
-    "20000 Monies": (32, 91, 59, 20000),
-    "3 Alarm Clocks": (33, 34, 95, 3),
-    "Gold Uncap Crystal": (35, 164, 145, 1),
-    "Rainbow Uncap Crystal": (36, 164, 144, 1),
-}
-# Small permanent buffs, the filler of new seeds (the mail filler above stays for
-# seeds made before; its ids must keep working).
+# 30-36 were mail items (Carats, Monies, Alarm Clocks...): retired, not loot.
 MINOR = {
     "Minor Starting Stats": 60,  # +5 to every stat at career start
     "Minor Starting Skill Points": 61,  # +50 SP at career start
@@ -371,7 +401,6 @@ SUPPORT_ITEM_BASE = 2_000_000  # + support_card_id
 def item_name_to_id() -> dict:
     table = {name: sid for sid, name in SCENARIO_ITEM.items()}
     table.update(PROGRESSIVE)
-    table.update({name: row[0] for name, row in FILLER.items()})
     table.update(MINOR)
     table.update(BOONS)
     table.update(TRAPS)

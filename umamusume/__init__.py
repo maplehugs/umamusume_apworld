@@ -15,10 +15,10 @@ BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed care
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
 SUPPORT_BONUS, SUPPORT_MAX = 300, 6  # each maxed SSR (a deck holds 6)
 # Filler is small permanent buffs and next-career boons: support cards already
-# arrive maxed, and the mail items (Monies, clocks...) did nothing for a run.
+# arrive maxed, and mail items (Monies, clocks...) did nothing for a run.
 FILLER_WEIGHTS = {
     "Minor Starting Stats": 30,
-    "Minor Starting Skill Points": 25,
+    "Minor Starting Skill Points": 10,
     "Pep Talk": 15,
     "Lucky Charm": 15,
 }
@@ -63,8 +63,15 @@ class UmamusumeWorld(World):
             self.starters = list(tables.STARTING_TRAINEES)
         extra = sorted(set(tables.TRAINEES) - set(self.starters))
         self.trainees = self.random.sample(extra, min(o.trainee_count.value, len(extra)))
-        cards = self.random.sample(sorted(tables.SSR_SUPPORTS), min(len(tables.SSR_SUPPORTS),
-                                   o.starting_supports.value + o.support_count.value))
+        # Dealt round by round, one of each stat per round in a random order, so any
+        # count is even (30 = 6 Speed, 6 Stamina...); Friend/Group only past 100.
+        pools = {k: self.random.sample(v, len(v)) for k, v in tables.SUPPORT_TYPES.items()}
+        stats = [pools[s] for s in tables.STATS]
+        cards = []
+        for i in range(max(map(len, stats))):
+            cards += [p[i] for p in self.random.sample(stats, len(stats)) if i < len(p)]
+        cards += self.random.sample(pools["Friend"] + pools["Group"], len(pools["Friend"] + pools["Group"]))
+        cards = cards[:o.starting_supports.value + o.support_count.value]
         self.start_supports, self.supports = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
         if o.goal == o.goal.option_legend_race and not o.legend_ladder:
             raise Exception(f"{self.player_name}: the legend_race goal needs legend_ladder on")
@@ -145,16 +152,20 @@ class UmamusumeWorld(World):
         if o.fan_checks:  # ~250k fans per career
             for n in tables.FAN_MILESTONES:
                 add(tables.fans_location(n), lambda s, n=n: self.estimate(s) >= tables.fans_logic(n))
-        # A roulette of our own filler, one race won per check: team_trials_trap_percentage
-        # of it traps, shuffled, never progression (nobody waits on the RP grind).
+        # One race won per check, in the multiworld like any other; with
+        # team_trials_roulette, our own filler instead (team_trials_trap_percentage
+        # of it traps, shuffled, never progression).
         tt = o.team_trials_checks.value
-        roulette = [self.trap_name() for _ in range(tt * o.team_trials_trap_percentage.value // 100)]
-        roulette += [self.good_filler_name() for _ in range(tt - len(roulette))]
-        self.random.shuffle(roulette)
-        for n, name in enumerate(roulette, 1):  # ~3 races won per match
+        roulette = []
+        if o.team_trials_roulette:
+            roulette = [self.trap_name() for _ in range(tt * o.team_trials_trap_percentage.value // 100)]
+            roulette += [self.good_filler_name() for _ in range(tt - len(roulette))]
+            self.random.shuffle(roulette)
+        for n in range(1, tt + 1):  # ~3 races won per match
             loc = add(tables.team_trials_location(n),
                       lambda s, n=n: self.estimate(s) >= 11000 + 300 * min(n // 3, 10))
-            loc.place_locked_item(self.create_item(name))
+            if roulette:
+                loc.place_locked_item(self.create_item(roulette[n - 1]))
         for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:
@@ -217,7 +228,8 @@ class UmamusumeWorld(World):
 
     def create_items(self) -> None:
         names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
-        names += ["Trainee Awakening"] * self.options.trainee_awakenings.value
+        names += ["Trainee Awakening"] * min(self.options.trainee_awakenings.value,
+                                             len(self.starters) + len(self.trainees))
         names += [n for n in TRAINING for _ in range(3)]
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Starting Skill Points"] * 3
         names += ["Progressive Training Guard"] * 2 + ["Progressive Stat Cap"] * self.caps
@@ -239,6 +251,7 @@ class UmamusumeWorld(World):
             "goal_rank_score": o.goal_rank_score.value,
             "goal_g1_count": o.goal_g1_count.value,
             "trap_cap": o.trap_cap.value,
+            "world_version": tables.APWORLD_VERSION,  # the server warns on a mismatch
             "g1_place": o.g1_place.value,
             "g1_per_scenario": bool(o.g1_checks and o.g1_per_scenario),
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker

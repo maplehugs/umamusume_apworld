@@ -2,6 +2,47 @@
 
 Generated from `umamusume/tables.py`.
 
+## Loot table at a glance
+
+A seed has one item per check: every check you can send holds something for
+someone in the multiworld, and as many items come back to you. With the example
+YAML's defaults that is **170 checks out, 170 items in**:
+
+| Checks you send | Count |
+|---|---|
+| Team Trials races won | 50 |
+| G1 wins | 34 |
+| Scenario ranks B/A/S/SS/UG (4 scenarios) | 20 |
+| Finish a career with a trainee (5 starting + 15) | 20 |
+| Different races won, every 5 | 15 |
+| Fans, every 250k | 12 |
+| Legend Race ladder C..SS+ | 10 |
+| Global rank B+..UG1 (up to the goal) | 5 |
+| Finish a scenario (final won) | 4 |
+
+| Items you get, most first | Count | What it does |
+|---|---|---|
+| Support: SSR cards | 30 (6 per stat) | Mailed, maxed on claim. Your career deck. |
+| Trainee Awakening | 20 (one per trainee) | A trainee to 5 stars, potential 5. |
+| Minor Starting Stats | ~18 | +5 every stat at career start, forever. |
+| Trainee: ... | 15 | New trainees, each with its own "finish a career" check. |
+| Progressive Training | 15 (3 per stat) | +20% gain, +50 cap on that stat each. |
+| Pep Talk / Lucky Charm | ~12 each | Next career starts in Great mood / Charming or Practice Perfect. |
+| RP Refill | ~8 | Team Trials RP to full. |
+| Minor Starting Skill Points | ~7 | +50 SP at career start, forever. |
+| Progressive Starting Stats | 5 | +20 every stat at career start. |
+| Scenarios | 3 | Every scenario but your starting one. |
+| Progressive Starting Skill Points | 3 | +200 SP at career start. |
+| Progressive RP Recovery | 3 | Team Trials RP refills twice as fast each. |
+| Progressive Training Guard | 2 | Failure rate x0.75 each. |
+| Traps | ~17 (trap_percentage 20) | A bad start for one career, at most `trap_cap` per career. |
+
+How the pool is built: the fixed items (scenarios, Progressive buffs, trainees,
+awakenings) go in first, then `support_count` SSR cards, and whatever room is
+left is filler, `trap_percentage` of it traps. "~" counts are rolled by the weights
+below, so they change a little per seed. More checks (say `g1_per_scenario`)
+means more filler; more trainees or supports means less.
+
 ## Progression and buffs
 
 | Item | Copies | Effect |
@@ -14,32 +55,36 @@ Generated from `umamusume/tables.py`.
 | Progressive Training Guard | 2 | Training failure rate x0.75 per copy. |
 | Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy (the 5-RP bar: 30 min, then 15, 7.5, ~4). |
 | Trainee: ... | trainee_count | The trainee, by mail. |
-| Support: ... | support_count | The SSR support card, by mail, maxed when claimed. Progression: up to 6 count toward the logic estimate. |
-| Trainee Awakening | trainee_awakenings | A random trainee you own goes to 5 stars and potential level 5 (log in again to see it). |
+| Support: ... | support_count | The SSR support card, by mail, maxed when claimed. Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: up to 6 count toward the logic estimate. |
+| Trainee Awakening | trainee_awakenings (one per trainee) | A random trainee you own, not yet maxed, goes to 5 stars and potential level 5 (log in again to see it). With all of them maxed it waits for the next trainee you claim. |
 
 ## Filler
 
-| Item | Effect |
-|---|---|
-| Minor Starting Stats | +5 to every stat at career start, permanent (stacks). |
-| Minor Starting Skill Points | +50 skill points at career start, permanent (stacks). |
-| RP Refill | Team Trials RP to full, once (only with team_trials_checks). |
-| Pep Talk | Next career starts in Great mood. |
-| Lucky Charm | Next career starts Charming or with Practice Perfect. |
+Rolled by weight for every leftover slot.
+
+| Item | Weight | Effect |
+|---|---|---|
+| Minor Starting Stats | 30 | +5 to every stat at career start, permanent (stacks). |
+| Pep Talk | 15 | Next career starts in Great mood. |
+| Lucky Charm | 15 | Next career starts Charming or with Practice Perfect. |
+| RP Refill | 15 | Team Trials RP to full, once (only with team_trials_checks). |
+| Minor Starting Skill Points | 10 | +50 skill points at career start, permanent (stacks). |
 
 Support cards from the multiworld arrive **maxed** (limit break 4, top level) when
 you claim them from the present box.
 
 ## Traps (next career, at most `trap_cap` per career)
 
-| Trap | Effect |
-|---|---|
-| Bad Condition Trap | Starts with a bad condition (Night Owl, Slacker, Skin Outbreak, Migraine or Practice Poor). |
-| Bad Mood Trap | Starts in Awful mood. |
-| Low Energy Trap | Starts with 40 less energy. |
-| Tunnel Vision Trap | One random stat loses its Progressive Training bonus (gain and cap) this career. The training itself still works. |
-| Butterfingers Trap | Failure rate x1.5 in the Junior year. |
-| Amnesia Trap | No starting stats or skill point buffs this career (spicy_traps, or a trap_weights entry). |
+Default weights (`trap_weights` changes them).
+
+| Trap | Weight | Effect |
+|---|---|---|
+| Bad Condition Trap | 15 | Starts with a bad condition (Night Owl, Slacker, Skin Outbreak, Migraine or Practice Poor). |
+| Bad Mood Trap | 15 | Starts in Awful mood. |
+| Low Energy Trap | 10 | Starts with 40 less energy. |
+| Tunnel Vision Trap | 15 | One random stat loses its Progressive Training bonus (gain and cap) this career. The training itself still works. |
+| Butterfingers Trap | 15 | Failure rate x1.5 in the Junior year. |
+| Amnesia Trap | 0 | No starting stats or skill point buffs this career (spicy_traps, or a trap_weights entry). |
 
 ## Checks
 
@@ -133,7 +178,7 @@ opens the next. Entries there cost no ticket.
 ### Team Trials (team_trials_checks)
 
 - Team Trials: win 1 race ... win 50 races (the first `team_trials_checks` of them; every race won of a match's 5 counts, lost match or not)
-- A roulette of your own good filler and traps, `team_trials_trap_percentage` of them traps (25: 38 good, 12 traps of 50), never progression.
+- Multiworld items like any other check. With `team_trials_roulette`, a roulette of your own good filler and traps instead, `team_trials_trap_percentage` of them traps (25: 38 good, 12 traps of 50), never progression.
 
 ### Trainees
 

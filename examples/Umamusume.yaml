@@ -12,7 +12,7 @@ Umamusume Pretty Derby:
   starting_supports: 0
   trainee_count: 15
   support_count: 30
-  trainee_awakenings: 3
+  trainee_awakenings: one_per_trainee  # or a number (capped at your trainees)
   g1_checks: true
   g1_place: 1
   g1_per_scenario: false           # true: each G1 in each scenario too (+136 checks)
@@ -21,7 +21,8 @@ Umamusume Pretty Derby:
   unique_race_checks: true
   legend_ladder: true
   team_trials_checks: 50           # races won that are checks; 0 = Team Trials off
-  team_trials_trap_percentage: 25  # of those, % that are traps (the rest good filler)
+  team_trials_roulette: false      # true: they hold your own filler/traps, not multiworld items
+  team_trials_trap_percentage: 25  # with the roulette, % that are traps (the rest good filler)
   fan_checks: true
   trap_percentage: 20              # % of the other filler that becomes traps
   trap_cap: 2

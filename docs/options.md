@@ -20,9 +20,9 @@ brackets.
 | `starting_trainees` | **shuffled**, default | Your Archipelago save starts with random trainees, or a new account's usual five. (Don't write `random` here: in a yaml that picks one of the options at random.) |
 | `starting_trainee_count` | 1-10 [**5**] | How many random trainees you start with (shuffled). |
 | `starting_supports` | 0-10 [**0**] | Random SSR support cards in your present box from the start, maxed. |
-| `trainee_awakenings` | 0-10 [**3**] | Trainee Awakening items: each takes a random trainee you own to 5 stars and potential 5. |
+| `trainee_awakenings` | 0-108 [**one_per_trainee**] | Trainee Awakening items: each takes a random trainee you own (not yet maxed) to 5 stars and potential 5; with all of them maxed it waits for your next trainee. At most one per trainee the seed gives you (starting + `trainee_count`), which `one_per_trainee` is. |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
-| `support_count` | 0-122 [**30**] | SSR support cards shuffled in (trimmed when there's no room). |
+| `support_count` | 0-122 [**30**] | SSR support cards shuffled in, dealt evenly by stat (30 = 6 of each; Friend/Group only past 100). Trimmed when there's no room. |
 
 ## Checks
 
@@ -38,8 +38,9 @@ Turn whole groups off to make a shorter seed:
 | `unique_race_checks` | on | 15: win 5, 10, 15 ... 75 different races |
 | `legend_ladder` | on | 10: beat the C, C+, B, B+, A, A+, S, S+, SS and SS+ rivals in Legend Race, in turn (free entries on the Archipelago save) |
 | `fan_checks` | on | 12: reach 250k, 500k, 750k ... 3M fans over all your careers (~250k per career) |
-| `team_trials_checks` | 50 (0-100) | win your 1st, 2nd... Team Trials race (each match has 5; a lost match's wins count too); 0 turns Team Trials checks off. They hold your own good filler and traps (`team_trials_trap_percentage`), never progression. Adds up to 3 Progressive RP Recovery items. |
-| `team_trials_trap_percentage` | 25 (0-100) | Percent of the Team Trials checks that hold a trap (25 with 50 checks = 12 traps, 38 good). |
+| `team_trials_checks` | 50 (0-100) | win your 1st, 2nd... Team Trials race (each match has 5; a lost match's wins count too); 0 turns Team Trials checks off. They hold multiworld items like any other check (or your own filler with `team_trials_roulette`). Adds up to 3 Progressive RP Recovery items. |
+| `team_trials_roulette` | **false** | true: Team Trials checks hold your own good filler and traps instead of multiworld items (never progression). |
+| `team_trials_trap_percentage` | 25 (0-100) | With `team_trials_roulette`: percent of the Team Trials checks that hold a trap (25 with 50 checks = 12 traps, 38 good). |
 
 Always on: finish a career in each scenario (4) and finish a career with each
 of your starting trainees and each shuffled one (`starting_trainee_count` + `trainee_count`).
@@ -51,7 +52,7 @@ A short seed (about 40 checks): `g1_checks: false`, `scenario_rank_checks: false
 
 | Option | Values | What it does |
 |---|---|---|
-| `trap_percentage` | 0-100 [**20**] | Percent of the rest of your filler that becomes traps (Team Trials has its own, above). |
+| `trap_percentage` | 0-100 [**20**] | Percent of the rest of your filler that becomes traps (the Team Trials roulette has its own, above). |
 | `trap_cap` | 1-6 [**2**] | Most traps that hit one career (one of each); the rest and repeats wait for later careers. |
 | `spicy_traps` | on/[**off**] | Also shuffle Amnesia (no starting buffs for a career). |
 | `trap_weights` | see below | How often each trap is picked (relative; 0 = never). Leave a trap out to keep its default. |

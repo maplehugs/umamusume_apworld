@@ -38,7 +38,7 @@ Full walkthrough: [docs/setup.md](docs/setup.md).
 - [How it works](docs/how-it-works.md): what an apworld is and how the pieces talk.
 - [Setup](docs/setup.md): from nothing to playing.
 - [Options](docs/options.md): every yaml option, and how to exclude checks.
-- [Items and checks](docs/items-and-checks.md): the full lists.
+- [Items and checks](docs/items-and-checks.md): the loot table (what a seed holds and what each item does) and the full lists.
 - [Your saves](docs/saves.md): the Archipelago save, resuming, switching seeds, backups, editing.
 - [FAQ](docs/faq.md): softlocks, traps, Team Trials, common mistakes.
 - [Changelog](CHANGELOG.md)

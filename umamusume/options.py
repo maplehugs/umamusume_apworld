@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, DefaultOnToggle, OptionDict, PerGameCommonOptions, Range, Toggle
+from Options import Choice, DefaultOnToggle, NamedRange, OptionDict, PerGameCommonOptions, Range, Toggle
 
 
 class Goal(Choice):
@@ -105,14 +105,17 @@ class StartingSupports(Range):
     default = 0
 
 
-class TraineeAwakenings(Range):
-    """Trainee Awakening items: each takes a random trainee you own to 5 stars and
-    potential level 5."""
+class TraineeAwakenings(NamedRange):
+    """Trainee Awakening items: each takes a random trainee you own, not yet maxed,
+    to 5 stars and potential level 5; with every one maxed it waits for your next
+    trainee. At most one per trainee the seed gives you (starting ones plus
+    trainee_count); one_per_trainee = exactly that."""
 
     display_name = "Trainee Awakenings"
     range_start = 0
-    range_end = 10
-    default = 3
+    range_end = 108
+    default = 108
+    special_range_names = {"one_per_trainee": 108}
 
 
 class FanChecks(DefaultOnToggle):
@@ -174,8 +177,8 @@ class LegendLadder(DefaultOnToggle):
 
 class TeamTrialsChecks(Range):
     """Team Trials races won that are checks (the 1st, the 2nd... of each match's 5,
-    lost match or not). 0 = off. A roulette of your own filler and traps (see
-    team_trials_trap_percentage), never progression."""
+    lost match or not). 0 = off. They hold multiworld items like any other check,
+    or your own filler with team_trials_roulette."""
 
     display_name = "Team Trials Checks"
     range_start = 0
@@ -183,9 +186,16 @@ class TeamTrialsChecks(Range):
     default = 50
 
 
+class TeamTrialsRoulette(Toggle):
+    """Team Trials checks hold your own good filler and traps instead of multiworld
+    items: never progression, nobody waits on your RP."""
+
+    display_name = "Team Trials Roulette"
+
+
 class TeamTrialsTrapPercentage(Range):
-    """Percent of the Team Trials checks that hold a trap; the rest hold good filler
-    (25 with 50 checks = 12 traps, 38 good)."""
+    """With team_trials_roulette: percent of the Team Trials checks that hold a trap;
+    the rest hold good filler (25 with 50 checks = 12 traps, 38 good)."""
 
     display_name = "Team Trials Trap Percentage"
     range_start = 0
@@ -258,6 +268,7 @@ class UmaOptions(PerGameCommonOptions):
     unique_race_checks: UniqueRaceChecks
     legend_ladder: LegendLadder
     team_trials_checks: TeamTrialsChecks
+    team_trials_roulette: TeamTrialsRoulette
     team_trials_trap_percentage: TeamTrialsTrapPercentage
     fan_checks: FanChecks
     trap_percentage: TrapPercentage

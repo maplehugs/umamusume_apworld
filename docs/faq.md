@@ -2,8 +2,9 @@
 
 **Can the seed softlock me?**
 No. Goal races of a career are never locked, rank checks a scenario can't reach
-(or above a `rank_score` goal) aren't generated, and Team Trials never holds
-progression. "Finish a <scenario> career" needs that scenario's final won; a lost
+(or above a `rank_score` goal) aren't generated, and Team Trials checks only
+ask for what your careers are expected to reach (with `team_trials_roulette` they
+never hold progression). "Finish a <scenario> career" needs that scenario's final won; a lost
 final just means another career, and it still counts for the trainee's check.
 If something hangs, the server log (dashboard **Saves & logs**) says what it served.
 

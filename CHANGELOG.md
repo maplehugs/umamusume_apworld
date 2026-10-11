@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.10.0
+Needs the matching UmamusumeX server.
+- Team Trials checks hold multiworld items like any other check (50 more checks
+  in the pool by default). `team_trials_roulette: true` brings back the old
+  roulette of your own filler and traps (`team_trials_trap_percentage`).
+- Trainee Awakening: one per trainee the seed gives you by default
+  (`trainee_awakenings: one_per_trainee`, 20 with the defaults; was 3). One that
+  arrives with every trainee maxed waits for the next trainee you claim.
+- SSR support cards are dealt evenly by stat: 30 = 6 each of Speed, Stamina,
+  Power, Guts and Wit (Friend/Group cards only past 100).
+- Minor Starting Skill Points is rarer in the filler (weight 10, was 25).
+- items-and-checks.md opens with the loot table: what a default seed holds, how
+  many of each and what they do.
+- The seed records its apworld version; the server's dashboard warns when it
+  doesn't match.
+
 ## 0.9.0
 Needs the matching UmamusumeX server.
 - Team Trials checks are per race won (each of a match's 5, lost match or not),
