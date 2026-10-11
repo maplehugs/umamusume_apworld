@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.1
 - Check groups for `exclude_locations` / `priority_locations`: `Team Trials`,
   `G1`, `Fans`, `Legend Race`... (`exclude_locations: [Team Trials]` keeps the
   Team Trials checks but only filler and traps land there).
