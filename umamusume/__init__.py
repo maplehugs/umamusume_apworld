@@ -28,6 +28,7 @@ LOCATION_GROUPS = {
 BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed career
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
 SUPPORT_BONUS, SUPPORT_MAX = 300, 6  # each maxed SSR (a deck holds 6)
+CRYSTAL = "Rainbow Uncap Crystal"  # one SSR limit break: 4 max a card
 # Filler is small permanent buffs and next-career boons: support cards already
 # arrive maxed, and mail items (Monies, clocks...) did nothing for a run.
 FILLER_WEIGHTS = {
@@ -99,7 +100,11 @@ class UmamusumeWorld(World):
         est += 450 * sum(state.count(n, p) for n in TRAINING)
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
-        est += SUPPORT_BONUS * min(SUPPORT_MAX, len(self.start_supports) + state.count_group("Supports", p))
+        cards = min(SUPPORT_MAX, len(self.start_supports) + state.count_group("Supports", p))
+        if self.options.maxed_supports:
+            est += SUPPORT_BONUS * cards
+        else:  # half for the card, half once 4 crystals can max it
+            est += SUPPORT_BONUS // 2 * (cards + min(SUPPORT_MAX, state.count(CRYSTAL, p) // 4))
         if scenario is None:  # any scenario: the best one owned
             owned = self.start_scenario != 1 or any(
                 state.has(n, p) for sid, n in tables.SCENARIO_ITEM.items() if sid != 1)
@@ -113,9 +118,18 @@ class UmamusumeWorld(World):
             + 450 * 3 * len(TRAINING)
             + 400 * 5
             + 300 * self.caps
-            + SUPPORT_BONUS * min(SUPPORT_MAX, len(self.start_supports) + len(self.supports))
+            + self.max_support_bonus()
             + (0 if scenario == 1 else SCENARIO_BONUS)
         )
+
+    def max_support_bonus(self) -> int:
+        cards = min(SUPPORT_MAX, len(self.start_supports) + len(self.supports))
+        if self.options.maxed_supports:
+            return SUPPORT_BONUS * cards
+        return SUPPORT_BONUS // 2 * (cards + min(SUPPORT_MAX, self.crystals() // 4))
+
+    def crystals(self) -> int:
+        return 0 if self.options.maxed_supports else self.options.uncap_crystals.value
 
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
@@ -209,6 +223,7 @@ class UmamusumeWorld(World):
     def create_item(self, name: str) -> UmaItem:
         # Support cards count in logic (a maxed SSR deck is most of a good career).
         if name in TRAINING or name.startswith(("Scenario:", "Trainee:", "Support:")) or name in (
+            CRYSTAL,
             "Progressive Starting Stats",
             "Progressive Stat Cap",
         ):
@@ -248,6 +263,7 @@ class UmamusumeWorld(World):
         names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
         names += [f"Trainee: {tables.TRAINEES[c]}" for c in self.trainees]
         names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in self.supports]
+        names += [CRYSTAL] * self.crystals()
         names += TRAINING * 3  # stat by stat, so a cut hits them evenly
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Stat Cap"] * self.caps
         names += ["Trainee Awakening"] * min(o.trainee_awakenings.value, len(self.starters) + len(self.trainees))
@@ -257,8 +273,12 @@ class UmamusumeWorld(World):
         names, self.start_items = names[:slots], names[slots:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
-        # Room left: half more SSR cards (still even by stat), half filler.
+        # Room left: up to half as many more crystals (random), then half more SSR
+        # cards (still even by stat), half filler.
         room = slots - len(names)
+        more = min(room, self.random.randint(0, self.crystals() // 2))
+        names += [CRYSTAL] * more
+        room -= more
         extra = self.deck[len(self.supports):][:room // 2]
         names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in extra]
         names += [self.get_filler_item_name() for _ in range(room - len(extra))]
@@ -273,6 +293,7 @@ class UmamusumeWorld(World):
             "trap_cap": o.trap_cap.value,
             "world_version": tables.APWORLD_VERSION,  # the server warns on a mismatch
             "g1_place": o.g1_place.value,
+            "maxed_supports": bool(o.maxed_supports),
             "g1_per_scenario": bool(o.g1_checks and o.g1_per_scenario),
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
             "team_trials_checks": o.team_trials_checks.value,

@@ -148,6 +148,25 @@ class SupportCount(Range):
     default = 30
 
 
+class MaxedSupports(Toggle):
+    """Support cards arrive maxed (limit break 4, top level). Off (default): they
+    arrive at limit break 0 and Rainbow Uncap Crystals uncap them; the Archipelago
+    save has Support Pt and Monies to the cap, so leveling is free."""
+
+    display_name = "Maxed Support Cards"
+
+
+class UncapCrystals(Range):
+    """Rainbow Uncap Crystals in the pool at least (4 max one SSR: 24 = a deck of
+    6). Spare checks add up to half as many more, at random. Ignored with
+    maxed_supports."""
+
+    display_name = "Uncap Crystals"
+    range_start = 0
+    range_end = 200
+    default = 24
+
+
 class G1Checks(DefaultOnToggle):
     """A check for winning each of the 34 G1s."""
 
@@ -263,6 +282,8 @@ class UmaOptions(PerGameCommonOptions):
     starting_supports: StartingSupports
     trainee_count: TraineeCount
     support_count: SupportCount
+    maxed_supports: MaxedSupports
+    uncap_crystals: UncapCrystals
     trainee_awakenings: TraineeAwakenings
     g1_checks: G1Checks
     g1_place: G1Place

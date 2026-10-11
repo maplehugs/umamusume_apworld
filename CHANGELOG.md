@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.0
+Needs the matching UmamusumeX server.
+- Support cards arrive at limit break 0 instead of maxed. New item: Rainbow Uncap
+  Crystal, one limit break for any SSR you pick (4 max a card). `uncap_crystals`
+  (default 24, a deck of 6) are always in the pool; spare checks add up to half as
+  many more at random.
+- The Archipelago save has Support Pt and Monies to the game's cap, so leveling
+  cards is free: the cards and crystals are the loot.
+- `maxed_supports: true` keeps the old maxed cards (no crystals). Seeds from
+  0.11.0 and older keep maxed cards too.
+- Logic: a card counts half, the other half once 4 crystals can max it.
+- Default seed: 51 cards, ~31 crystals, ~25 filler.
+
 ## 0.11.0
 Needs the matching UmamusumeX server.
 - Any set of checks generates: items that don't fit are start inventory (most

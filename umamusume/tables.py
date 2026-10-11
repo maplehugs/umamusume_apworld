@@ -8,7 +8,7 @@ GAME = "Umamusume Pretty Derby"
 
 # The apworld release these tables ship with (the server's Archipelago mod and the
 # world are released together: a newer apworld needs the matching server).
-APWORLD_VERSION = "0.11.0"
+APWORLD_VERSION = "0.12.0"
 APWORLD_REPO = "maplehugs/umamusume_apworld"
 
 SCENARIOS = {1: "URA Finale", 2: "Unity Cup", 3: "Grand Live", 4: "Trackblazer"}
@@ -377,7 +377,9 @@ PROGRESSIVE = {
     # +20% gain and +50 cap on that stat per copy
     **{f"Progressive {s} Training": 20 + i for i, s in enumerate(STATS)},
 }
-# 30-36 were mail items (Carats, Monies, Alarm Clocks...): retired, not loot.
+# 30-35 were mail items (Carats, Monies, Alarm Clocks...): retired, not loot.
+# Mailed items: name -> (id, present reward_type (item_category), reward id, count).
+MAIL = {"Rainbow Uncap Crystal": (36, 164, 144, 1)}  # one SSR limit break, any card
 MINOR = {
     "Minor Starting Stats": 60,  # +5 to every stat at career start
     "Minor Starting Skill Points": 61,  # +50 SP at career start
@@ -402,6 +404,7 @@ def item_name_to_id() -> dict:
     table = {name: sid for sid, name in SCENARIO_ITEM.items()}
     table.update(PROGRESSIVE)
     table.update(MINOR)
+    table.update({name: row[0] for name, row in MAIL.items()})
     table.update(BOONS)
     table.update(TRAPS)
     table.update({f"Trainee: {n}": TRAINEE_ITEM_BASE + c for c, n in TRAINEES.items()})

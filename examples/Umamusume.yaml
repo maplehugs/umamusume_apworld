@@ -12,6 +12,8 @@ Umamusume Pretty Derby:
   starting_supports: 0
   trainee_count: 15
   support_count: 30
+  maxed_supports: false            # true: cards arrive maxed, no crystals
+  uncap_crystals: 24               # at least; up to half as many more with spare checks
   trainee_awakenings: one_per_trainee  # or a number (capped at your trainees)
   g1_checks: true
   g1_place: 1

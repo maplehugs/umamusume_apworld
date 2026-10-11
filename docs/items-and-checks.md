@@ -22,40 +22,42 @@ YAML's defaults that is **170 checks out, 170 items in**:
 
 | Items you get, most first | Count | What it does |
 |---|---|---|
-| Support: SSR cards | 67 (even by stat) | Mailed, maxed on claim. Your career deck. |
+| Support: SSR cards | 51 (even by stat) | Mailed at limit break 0 (maxed with `maxed_supports`). Your career deck. |
+| Rainbow Uncap Crystal | 24 + up to 12 (~31) | One limit break for any SSR you pick; 4 max a card. |
 | Trainee Awakening | 20 (one per trainee) | A trainee to 5 stars, potential 5. |
 | Trainee: ... | 15 | New trainees, each with its own "finish a career" check. |
 | Progressive Training | 15 (3 per stat) | +20% gain, +50 cap on that stat each. |
-| Minor Starting Stats | ~6 | +5 every stat at career start, forever. |
-| Pep Talk / Lucky Charm | ~7 / ~4 | Next career starts in Great mood / Charming or Practice Perfect. |
-| RP Refill | ~4 | Team Trials RP to full. |
+| Minor Starting Stats | ~3 | +5 every stat at career start, forever. |
+| Pep Talk / Lucky Charm | ~3 / ~1 | Next career starts in Great mood / Charming or Practice Perfect. |
+| RP Refill | ~5 | Team Trials RP to full. |
 | Progressive Starting Stats | 5 | +20 every stat at career start. |
 | Minor Starting Skill Points | ~3 | +50 SP at career start, forever. |
 | Scenarios | 3 | Every scenario but your starting one. |
 | Progressive Starting Skill Points | 3 | +200 SP at career start. |
 | Progressive RP Recovery | 3 | Team Trials RP refills twice as fast each. |
 | Progressive Training Guard | 2 | Failure rate x0.75 each. |
-| Traps | ~13 (trap_percentage 20) | A bad start for one career, at most `trap_cap` per career. |
+| Traps | ~7 (trap_percentage 20) | A bad start for one career, at most `trap_cap` per career. |
 
 How the pool is built, most wanted first: scenarios, trainees, `support_count`
-cards, Progressive Training, Starting Stats, awakenings, RP Recovery, Starting
+cards, `uncap_crystals` crystals, Progressive Training, Starting Stats, awakenings, RP Recovery, Starting
 Skill Points, Training Guard. Whatever doesn't fit in your checks is **start
 inventory** instead (you get it when you connect), so any set of checks
 generates: fewer checks is a shorter game that starts stronger. Spare checks
-after that are half more SSR cards (still even by stat), half filler,
+after that hold up to half as many more crystals (a random amount), then half
+more SSR cards (still even by stat), half filler,
 `trap_percentage` of it traps. "~" counts are rolled by the weights below.
 
 ### Turning checks on and off
 
 Simulated seeds, everything else default:
 
-| Checks on | Checks | Cards | Filler (traps) | From the start |
-|---|---|---|---|---|
-| Nothing (only scenario finishes and trainees) | 24 | 30 (24 from the start) | 0 | 69: 24 cards, 20 awakenings, all Progressive buffs |
-| Only G1 | 58 | 30 | 0 | 35: 20 awakenings, 5 Progressive Training, the Starting buffs |
-| Everything but Team Trials | 120 | 43 | 14 (5) | nothing |
-| **Default** | **170** | **67** | **37 (13)** | nothing |
-| Everything, `g1_per_scenario`, Team Trials 100 | 358 | 122 (all of them) | 170 (44) | nothing |
+| Checks on | Checks | Cards | Crystals | Filler (traps) | From the start |
+|---|---|---|---|---|---|
+| Nothing (only scenario finishes and trainees) | 24 | 30 (24 from the start) | 24 (all from the start) | 0 | 93: 24 cards, 24 crystals, 20 awakenings, all Progressive buffs |
+| Only G1 | 58 | 30 | 24 (14 from the start) | 0 | 59: 14 crystals, 20 awakenings, all Progressive Training, the Starting buffs |
+| Everything but Team Trials | 120 | 30 | 27 | 0 | nothing |
+| **Default** | **170** | **51** | **31** | **25 (7)** | nothing |
+| Everything, `g1_per_scenario`, Team Trials 100 | 358 | 122 (all of them) | 31 | 142 (38) | nothing |
 
 | Group | Checks | Option |
 |---|---|---|
@@ -85,7 +87,8 @@ see [options](options.md#excluding-checks).
 | Progressive Training Guard | 2 | Training failure rate x0.75 per copy. |
 | Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy (the 5-RP bar: 30 min, then 15, 7.5, ~4). |
 | Trainee: ... | trainee_count | The trainee, by mail. |
-| Support: ... | support_count | The SSR support card, by mail, maxed when claimed. Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: up to 6 count toward the logic estimate. |
+| Rainbow Uncap Crystal | uncap_crystals (+ up to half more) | One limit break for any SSR support card (Enhance > Support Cards > Limit Break); 4 max a card. Not with maxed_supports. |
+| Support: ... | support_count | The SSR support card, by mail, at limit break 0 (maxed when claimed with maxed_supports). Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: up to 6 count toward the logic estimate. |
 | Trainee Awakening | trainee_awakenings (one per trainee) | A random trainee you own, not yet maxed, goes to 5 stars and potential level 5 (log in again to see it). With all of them maxed it waits for the next trainee you claim. |
 
 ## Filler
@@ -100,8 +103,9 @@ Rolled by weight for every leftover slot.
 | RP Refill | 15 | Team Trials RP to full, once (only with team_trials_checks). |
 | Minor Starting Skill Points | 10 | +50 skill points at career start, permanent (stacks). |
 
-Support cards from the multiworld arrive **maxed** (limit break 4, top level) when
-you claim them from the present box.
+Support cards arrive at limit break 0: Rainbow Uncap Crystals uncap them, and the
+Archipelago save has Support Pt and Monies to the cap for leveling. With
+`maxed_supports` they arrive **maxed** (limit break 4, top level) instead.
 
 ## Traps (next career, at most `trap_cap` per career)
 
