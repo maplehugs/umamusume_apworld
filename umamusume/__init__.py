@@ -69,9 +69,8 @@ class UmamusumeWorld(World):
 
     def generate_early(self) -> None:
         o = self.options
-        self.start_scenario = (
-            self.random.choice(sorted(tables.SCENARIOS)) if o.starting_scenario == o.starting_scenario.option_shuffled else 1
-        )
+        pick = o.starting_scenario.value  # 0 ura, 1 shuffled, 2-4 that scenario
+        self.start_scenario = self.random.choice(sorted(tables.SCENARIOS)) if pick == 1 else max(1, pick)
         if o.starting_trainees == o.starting_trainees.option_shuffled:
             self.starters = self.random.sample(sorted(tables.TRAINEES), o.starting_trainee_count.value)
         else:
@@ -86,8 +85,9 @@ class UmamusumeWorld(World):
         for i in range(max(map(len, stats))):
             cards += [p[i] for p in self.random.sample(stats, len(stats)) if i < len(p)]
         cards += self.random.sample(pools["Friend"] + pools["Group"], len(pools["Friend"] + pools["Group"]))
-        cards = cards[:o.starting_supports.value + o.support_count.value]
-        self.start_supports, self.supports = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
+        # support_count is the floor; create_items deals more from the deck with room.
+        self.start_supports, self.deck = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
+        self.supports = self.deck[:o.support_count.value]
         if o.goal == o.goal.option_legend_race and not o.legend_ladder:
             raise Exception(f"{self.player_name}: the legend_race goal needs legend_ladder on")
         self.caps = 2 if self.options.goal_rank_score.value >= 21000 else 0
@@ -242,21 +242,26 @@ class UmamusumeWorld(World):
         return self.random.choices(list(filler), list(filler.values()))[0]
 
     def create_items(self) -> None:
+        o = self.options
+        # The most wanted first: whatever doesn't fit in the checks is start
+        # inventory instead (any set of checks generates; fewer = a shorter game).
         names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
-        names += ["Trainee Awakening"] * min(self.options.trainee_awakenings.value,
-                                             len(self.starters) + len(self.trainees))
-        names += [n for n in TRAINING for _ in range(3)]
-        names += ["Progressive Starting Stats"] * 5 + ["Progressive Starting Skill Points"] * 3
-        names += ["Progressive Training Guard"] * 2 + ["Progressive Stat Cap"] * self.caps
-        if o_tt := self.options.team_trials_checks.value:
-            names += ["Progressive RP Recovery"] * min(3, o_tt)
         names += [f"Trainee: {tables.TRAINEES[c]}" for c in self.trainees]
-        room = len(self.multiworld.get_unfilled_locations(self.player)) - len(names)
-        if room < 0:
-            raise Exception(f"{self.player_name}: {-room} more items than checks; turn checks on")
-        supports = self.supports[:room]
-        names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in supports]
-        names += [self.get_filler_item_name() for _ in range(room - len(supports))]
+        names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in self.supports]
+        names += TRAINING * 3  # stat by stat, so a cut hits them evenly
+        names += ["Progressive Starting Stats"] * 5 + ["Progressive Stat Cap"] * self.caps
+        names += ["Trainee Awakening"] * min(o.trainee_awakenings.value, len(self.starters) + len(self.trainees))
+        names += ["Progressive RP Recovery"] * min(3, o.team_trials_checks.value)
+        names += ["Progressive Starting Skill Points"] * 3 + ["Progressive Training Guard"] * 2
+        slots = len(self.multiworld.get_unfilled_locations(self.player))
+        names, self.start_items = names[:slots], names[slots:]
+        for n in self.start_items:
+            self.multiworld.push_precollected(self.create_item(n))
+        # Room left: 1 in 3 more SSR cards (still even by stat), the rest filler.
+        room = slots - len(names)
+        extra = self.deck[len(self.supports):][:room // 3]
+        names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in extra]
+        names += [self.get_filler_item_name() for _ in range(room - len(extra))]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
     def fill_slot_data(self) -> dict:

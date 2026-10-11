@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+- Any set of checks generates: items that don't fit are start inventory (most
+  wanted stay in the pool: scenarios, trainees, cards, Progressive Training...).
+  Everything off is a 24-check game that starts with the rest.
+- `support_count` is a floor: spare checks deal 1 more SSR card per 3, still even
+  by stat (54 cards with the defaults, 117 with everything on).
+- `starting_scenario`: unity_cup, grand_live and trackblazer too.
+- items-and-checks.md: what a seed holds with checks turned on and off.
+
 ## 0.10.1
 - Check groups for `exclude_locations` / `priority_locations`: `Team Trials`,
   `G1`, `Fans`, `Legend Race`... (`exclude_locations: [Team Trials]` keeps the

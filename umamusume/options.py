@@ -77,12 +77,15 @@ class G1PerScenario(Toggle):
 
 
 class StartingScenario(Choice):
-    """ura: you start with URA Finale; the other 3 scenarios are items.
-    shuffled: you start with one random scenario; the other 3 (URA included) are items."""
+    """The scenario you start with; the other 3 are items. shuffled: one picked at
+    random (so does `random`, the YAML's own random pick)."""
 
     display_name = "Starting Scenario"
     option_ura = 0
     option_shuffled = 1
+    option_unity_cup = 2
+    option_grand_live = 3
+    option_trackblazer = 4
     default = 0
 
 
@@ -136,7 +139,8 @@ class TraineeCount(Range):
 
 
 class SupportCount(Range):
-    """SSR support cards shuffled in (trimmed if there is no room)."""
+    """SSR support cards in the pool at least (dealt evenly by stat: 30 = 6 of each).
+    A seed with more checks than items deals 1 more card per 3 spare checks."""
 
     display_name = "Support Card Count"
     range_start = 0

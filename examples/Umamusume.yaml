@@ -6,7 +6,7 @@ Umamusume Pretty Derby:
   goal_rank_score: 20000
   goal_g1_count: 24
   logic_difficulty: normal
-  starting_scenario: ura
+  starting_scenario: ura           # ura, unity_cup, grand_live, trackblazer or shuffled
   starting_trainees: shuffled
   starting_trainee_count: 5
   starting_supports: 0
