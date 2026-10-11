@@ -12,8 +12,7 @@ Generated from `umamusume/tables.py`.
 | Progressive Starting Skill Points | 3 | +200 skill points at career start. |
 | Progressive Stat Cap | 0 or 2 | +50 to every stat cap (only when goal_rank_score is 21000+). |
 | Progressive Training Guard | 2 | Training failure rate x0.75 per copy. |
-| Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy. |
-| Dream's Luck | 1 | Every support card shows up in its own facility every turn. |
+| Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy (the 5-RP bar: 30 min, then 15, 7.5, ~4). |
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Support: ... | support_count | The SSR support card, by mail, maxed when claimed. Progression: up to 6 count toward the logic estimate. |
 | Trainee Awakening | trainee_awakenings | A random trainee you own goes to 5 stars and potential level 5 (log in again to see it). |
@@ -38,13 +37,16 @@ you claim them from the present box.
 | Bad Condition Trap | Starts with a bad condition (Night Owl, Slacker, Skin Outbreak, Migraine or Practice Poor). |
 | Bad Mood Trap | Starts in Awful mood. |
 | Low Energy Trap | Starts with 40 less energy. |
-| Tunnel Vision Trap | One random stat's Training items do nothing this career. |
+| Tunnel Vision Trap | One random stat loses its Progressive Training bonus (gain and cap) this career. The training itself still works. |
 | Butterfingers Trap | Failure rate x1.5 in the Junior year. |
 | Amnesia Trap | No starting stats or skill point buffs this career (spicy_traps, or a trap_weights entry). |
 
 ## Checks
 
 ### G1 wins (g1_checks)
+
+With `g1_per_scenario` there is also "Win <G1> in <scenario>" for each G1 below in
+each of the 4 scenarios (136 more).
 
 - Win February Stakes
 - Win Takamatsunomiya Kinen
@@ -106,31 +108,32 @@ A goal missed mid-career ends the career early and counts for neither.
 
 ### Different races (unique_race_checks)
 
-- Win 10 different races
-- Win 20 different races
-- Win 35 different races
-- Win 50 different races
-- Win 75 different races
+- Win 5, 10, 15 ... 75 different races (every 5)
 
 ### Legend Race ladder (legend_ladder)
 
 On the Archipelago save, Legend Race always shows your current rival; beating it
 opens the next. Entries there cost no ticket.
 
+- Legend Race: beat the C rival (1200 m)
+- Legend Race: beat the C+ rival (1600 m)
 - Legend Race: beat the B rival (1600 m)
+- Legend Race: beat the B+ rival (2000 m)
 - Legend Race: beat the A rival (2000 m)
+- Legend Race: beat the A+ rival (2200 m)
 - Legend Race: beat the S rival (2200 m)
+- Legend Race: beat the S+ rival (2500 m)
 - Legend Race: beat the SS rival (2400 m)
 - Legend Race: beat the SS+ rival (3000 m)
 
 ### Fans (fan_checks)
 
-- Reach 250,000 / 500,000 / 1,000,000 / 2,000,000 / 3,000,000 fans (summed over every finished career)
+- Reach 250,000, 500,000, 750,000 ... 3,000,000 fans, every 250k (summed over every finished career)
 
 ### Team Trials (team_trials_checks)
 
-- Team Trials: win 1 match ... win 10 matches (the first `team_trials_checks` of them)
-- A support roulette: each holds another player's useful item, filler or trap, never progression. Played alone, your own non-progression items.
+- Team Trials: win 1 race ... win 50 races (the first `team_trials_checks` of them; every race won of a match's 5 counts, lost match or not)
+- A roulette of your own good filler and traps, `team_trials_trap_percentage` of them traps (25: 38 good, 12 traps of 50), never progression.
 
 ### Trainees
 

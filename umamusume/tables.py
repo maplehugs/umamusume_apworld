@@ -298,21 +298,29 @@ GLOBAL_RANKS = (
     ("UG3", 20800),
 )
 # "Win N different races" across all careers (any race, distinct race ids).
-UNIQUE_RACE_MILESTONES = (10, 20, 35, 50, 75)
+UNIQUE_RACE_MILESTONES = tuple(range(5, 80, 5))  # 5, 10 ... 75
 # Fans summed over every finished career on the save (~250k per career).
-FAN_MILESTONES = (250_000, 500_000, 1_000_000, 2_000_000, 3_000_000)
+FAN_MILESTONES = tuple(range(250_000, 3_000_001, 250_000))  # every 250k to 3M
 # Legend Race rival ladder: (tier, single_mode_rank id, legend_race row, boss stats
 # speed/stamina/power/guts/wit). One rival per tier, each a real legend race row
 # (its own boss, longer each step); beating a tier is a check and opens the next.
 LEGEND_LADDER = (
+    ("C", 9, 6, (600, 420, 540, 350, 480)),  # 1200 m
+    ("C+", 10, 37, (690, 490, 620, 375, 550)),  # 1600 m
     ("B", 11, 22, (780, 560, 700, 400, 620)),  # 1600 m
+    ("B+", 12, 41, (865, 630, 775, 425, 685)),  # 2000 m
     ("A", 13, 29, (950, 700, 850, 450, 750)),  # 2000 m
+    ("A+", 14, 48, (1025, 750, 925, 475, 825)),  # 2200 m
     ("S", 15, 19, (1100, 800, 1000, 500, 900)),  # 2200 m
+    ("S+", 16, 33, (1150, 850, 1050, 525, 950)),  # 2500 m
     ("SS", 17, 11, (1200, 900, 1100, 550, 1000)),  # 2400 m
     ("SS+", 18, 26, (1200, 1000, 1150, 600, 1050)),  # 3000 m
 )
-# Team Trials: a check for each of the first N match wins (later wins: nothing).
-TEAM_TRIALS_CHECKS = 30
+# single_mode_rank min_value per rank id: logic expects careers at that rank first.
+LEGEND_RANK_SCORE = {9: 3500, 10: 4900, 11: 6500, 12: 8200, 13: 10000, 14: 12100,
+                     15: 14500, 16: 15900, 17: 17500, 18: 19200}
+# Team Trials: a check for each of the first N races won (later wins: nothing).
+TEAM_TRIALS_CHECKS = 100  # ids 600-699
 STATS = ("Speed", "Stamina", "Power", "Guts", "Wit")
 
 # ---- items: name -> id -------------------------------------------------------
@@ -322,7 +330,7 @@ PROGRESSIVE = {
     "Progressive Stat Cap": 10,  # +50 to every stat cap
     "Progressive Starting Stats": 11,  # +20 to every stat at career start
     "Progressive Starting Skill Points": 12,  # +200 SP at career start
-    "Dream's Luck": 13,  # every support card in its own facility
+    # 13 was Dream's Luck (retired: the separate mod covers it)
     "Progressive Training Guard": 14,  # failure rate x0.75 per copy
     "Progressive RP Recovery": 15,  # Team Trials RP refills twice as fast per copy
     "Trainee Awakening": 16,  # one random owned trainee to 5 stars and potential 5
@@ -352,7 +360,7 @@ TRAPS = {
     "Bad Condition Trap": 40,
     "Bad Mood Trap": 41,
     "Low Energy Trap": 42,
-    "Tunnel Vision Trap": 43,  # one stat's training items do nothing this career
+    "Tunnel Vision Trap": 43,  # one stat's Progressive Training bonus is off this career
     "Butterfingers Trap": 44,  # failure rate x1.5 in the Junior year
     "Amnesia Trap": 45,  # no starting stats / SP buffs this career
 }
@@ -378,9 +386,10 @@ FINISH_LOCATION_BASE = 200  # + scenario id
 RANK_LOCATION_BASE = 300  # + scenario * 10 + tier index
 UNIQUE_RACES_LOCATION_BASE = 400  # + index in UNIQUE_RACE_MILESTONES
 GLOBAL_RANK_LOCATION_BASE = 450  # + index in GLOBAL_RANKS
-TEAM_TRIALS_LOCATION_BASE = 600  # + wins - 1
+TEAM_TRIALS_LOCATION_BASE = 600  # + races won - 1
 FAN_LOCATION_BASE = 700  # + index in FAN_MILESTONES
 LEGEND_LOCATION_BASE = 500  # + index in LEGEND_LADDER
+G1_SCENARIO_LOCATION_BASE = 2000  # + scenario * 100 + index in G1_RACES
 TRAINEE_LOCATION_BASE = 1_000_000  # + card_id
 
 
@@ -409,7 +418,16 @@ def fans_location(fans: int) -> str:
 
 
 def team_trials_location(wins: int) -> str:
-    return f"Team Trials: win {wins} match" + ("es" if wins > 1 else "")
+    return f"Team Trials: win {wins} race" + ("s" if wins > 1 else "")
+
+
+def g1_scenario_location(name: str, scenario_id: int) -> str:
+    return f"Win {name} in {SCENARIOS[scenario_id]}"
+
+
+def fans_logic(fans: int) -> int:
+    """The rank score logic expects before a fan milestone (~250k per career)."""
+    return 9000 + fans // 1500
 
 
 def legend_location(tier: str) -> str:
@@ -436,6 +454,9 @@ def location_name_to_id() -> dict:
         table[team_trials_location(n)] = TEAM_TRIALS_LOCATION_BASE + n - 1
     for i, n in enumerate(FAN_MILESTONES):
         table[fans_location(n)] = FAN_LOCATION_BASE + i
+    for sid in SCENARIOS:
+        for i, n in enumerate(G1_RACES):
+            table[g1_scenario_location(n, sid)] = G1_SCENARIO_LOCATION_BASE + sid * 100 + i
     table.update({trainee_location(c): TRAINEE_LOCATION_BASE + c for c in TRAINEES})
     return table
 

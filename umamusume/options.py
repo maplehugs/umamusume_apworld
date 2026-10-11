@@ -68,6 +68,14 @@ class G1Place(Range):
     default = 1
 
 
+class G1PerScenario(Toggle):
+    """Also a check for winning each G1 in each scenario (34 x 4 = 136 more), each
+    in logic once you have that scenario. Needs g1_checks; the plain G1 checks (and
+    the g1_collector goal) still count a G1 won in any scenario."""
+
+    display_name = "G1 Per Scenario"
+
+
 class StartingScenario(Choice):
     """ura: you start with URA Finale; the other 3 scenarios are items.
     shuffled: you start with one random scenario; the other 3 (URA included) are items."""
@@ -108,8 +116,8 @@ class TraineeAwakenings(Range):
 
 
 class FanChecks(DefaultOnToggle):
-    """Checks for fans summed over every finished career: 250k, 500k, 1M, 2M, 3M
-    (a career brings ~250k)."""
+    """Checks for fans summed over every finished career, every 250k up to 3M
+    (12; a career brings ~250k)."""
 
     display_name = "Fan Checks"
 
@@ -130,7 +138,7 @@ class SupportCount(Range):
     display_name = "Support Card Count"
     range_start = 0
     range_end = 122
-    default = 20
+    default = 30
 
 
 class G1Checks(DefaultOnToggle):
@@ -152,26 +160,37 @@ class GlobalRankLadder(DefaultOnToggle):
 
 
 class UniqueRaceChecks(DefaultOnToggle):
-    """Win 10/20/35/50/75 different races across all careers (5 checks)."""
+    """Win 5, 10, 15 ... 75 different races across all careers (15 checks)."""
 
     display_name = "Unique Race Checks"
 
 
 class LegendLadder(DefaultOnToggle):
-    """A rival ladder in Legend Race: beat the B, A, S, SS and SS+ rivals in turn
-    (5 checks). Entries are free on the Archipelago save, so it never runs out."""
+    """A rival ladder in Legend Race: beat the C, C+, B, B+ ... SS and SS+ rivals in
+    turn (10 checks). Entries are free on the Archipelago save, so it never runs out."""
 
     display_name = "Legend Race Ladder"
 
 
 class TeamTrialsChecks(Range):
-    """Team Trials match wins that are checks (the 1st win, the 2nd...). 0 = none.
-    They're a support roulette: each holds another player's useful item, filler or trap."""
+    """Team Trials races won that are checks (the 1st, the 2nd... of each match's 5,
+    lost match or not). 0 = off. A roulette of your own filler and traps (see
+    team_trials_trap_percentage), never progression."""
 
     display_name = "Team Trials Checks"
     range_start = 0
-    range_end = 30
-    default = 10
+    range_end = 100
+    default = 50
+
+
+class TeamTrialsTrapPercentage(Range):
+    """Percent of the Team Trials checks that hold a trap; the rest hold good filler
+    (25 with 50 checks = 12 traps, 38 good)."""
+
+    display_name = "Team Trials Trap Percentage"
+    range_start = 0
+    range_end = 100
+    default = 25
 
 
 class TrapPercentage(Range):
@@ -233,11 +252,13 @@ class UmaOptions(PerGameCommonOptions):
     trainee_awakenings: TraineeAwakenings
     g1_checks: G1Checks
     g1_place: G1Place
+    g1_per_scenario: G1PerScenario
     scenario_rank_checks: ScenarioRankChecks
     global_rank_ladder: GlobalRankLadder
     unique_race_checks: UniqueRaceChecks
     legend_ladder: LegendLadder
     team_trials_checks: TeamTrialsChecks
+    team_trials_trap_percentage: TeamTrialsTrapPercentage
     fan_checks: FanChecks
     trap_percentage: TrapPercentage
     trap_cap: TrapCap

@@ -119,6 +119,9 @@ class UmamusumeWorld(World):
                 return i is None or s.has(i, p)
 
             add(tables.finish_location(sid), has)
+            if o.g1_checks and o.g1_per_scenario:
+                for g1 in tables.G1_RACES:
+                    add(tables.g1_scenario_location(g1, sid), has)
             if o.scenario_rank_checks:
                 for tier, score in tables.RANK_TIERS:
                     if score > cap or score > self.max_estimate(sid):  # e.g. URA UG on relaxed
@@ -136,21 +139,22 @@ class UmamusumeWorld(World):
         if o.legend_ladder:
             # The rival is raced with one of your trained umas: in logic once your
             # careers are expected to reach that rival's rank.
-            ladder_score = {11: 6500, 13: 10000, 15: 14500, 17: 17500, 18: 19200}
             for tier, rank_id, _row, _stats in tables.LEGEND_LADDER:
-                need = ladder_score[rank_id]
+                need = tables.LEGEND_RANK_SCORE[rank_id]
                 add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
         if o.fan_checks:  # ~250k fans per career
-            for i, n in enumerate(tables.FAN_MILESTONES):
-                add(tables.fans_location(n), lambda s, i=i: self.estimate(s) >= 9000 + 500 * i)
-        # A support roulette: each win sends another player one of their useful items,
-        # filler or traps, never progression (nobody waits on the RP grind). Alone in
-        # the multiworld, it holds our own non-progression items instead.
-        solo = self.multiworld.players == 1
-        for n in range(1, o.team_trials_checks.value + 1):
+            for n in tables.FAN_MILESTONES:
+                add(tables.fans_location(n), lambda s, n=n: self.estimate(s) >= tables.fans_logic(n))
+        # A roulette of our own filler, one race won per check: team_trials_trap_percentage
+        # of it traps, shuffled, never progression (nobody waits on the RP grind).
+        tt = o.team_trials_checks.value
+        roulette = [self.trap_name() for _ in range(tt * o.team_trials_trap_percentage.value // 100)]
+        roulette += [self.good_filler_name() for _ in range(tt - len(roulette))]
+        self.random.shuffle(roulette)
+        for n, name in enumerate(roulette, 1):  # ~3 races won per match
             loc = add(tables.team_trials_location(n),
-                      lambda s, n=n: self.estimate(s) >= 11000 + 300 * min(n, 10))
-            loc.item_rule = lambda item: not item.advancement and (solo or item.player != p)
+                      lambda s, n=n: self.estimate(s) >= 11000 + 300 * min(n // 3, 10))
+            loc.place_locked_item(self.create_item(name))
         for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:
@@ -193,11 +197,19 @@ class UmamusumeWorld(World):
 
     def get_filler_item_name(self) -> str:
         if self.random.randrange(100) < self.options.trap_percentage.value:
-            traps = {**TRAP_WEIGHTS, **self.options.trap_weights.value}
-            if self.options.spicy_traps and not traps.get("Amnesia Trap"):
-                traps["Amnesia Trap"] = 5
-            if any(traps.values()):
-                return self.random.choices(list(traps), list(traps.values()))[0]
+            return self.trap_name()
+        return self.good_filler_name()
+
+    def trap_name(self) -> str:
+        """A trap by trap_weights; good filler if every weight is 0."""
+        traps = {**TRAP_WEIGHTS, **self.options.trap_weights.value}
+        if self.options.spicy_traps and not traps.get("Amnesia Trap"):
+            traps["Amnesia Trap"] = 5
+        if any(traps.values()):
+            return self.random.choices(list(traps), list(traps.values()))[0]
+        return self.good_filler_name()
+
+    def good_filler_name(self) -> str:
         filler = dict(FILLER_WEIGHTS)
         if self.options.team_trials_checks:
             filler["RP Refill"] = 15
@@ -205,7 +217,7 @@ class UmamusumeWorld(World):
 
     def create_items(self) -> None:
         names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
-        names += ["Dream's Luck"] + ["Trainee Awakening"] * self.options.trainee_awakenings.value
+        names += ["Trainee Awakening"] * self.options.trainee_awakenings.value
         names += [n for n in TRAINING for _ in range(3)]
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Starting Skill Points"] * 3
         names += ["Progressive Training Guard"] * 2 + ["Progressive Stat Cap"] * self.caps
@@ -228,6 +240,7 @@ class UmamusumeWorld(World):
             "goal_g1_count": o.goal_g1_count.value,
             "trap_cap": o.trap_cap.value,
             "g1_place": o.g1_place.value,
+            "g1_per_scenario": bool(o.g1_checks and o.g1_per_scenario),
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
             "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,

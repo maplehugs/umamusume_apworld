@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.9.0
+Needs the matching UmamusumeX server.
+- Team Trials checks are per race won (each of a match's 5, lost match or not),
+  not per match: "Team Trials: win N races". Default 50 (was 10), up to 100.
+- They hold your own filler now, `team_trials_trap_percentage` of it traps
+  (default 25: 38 good, 12 traps of 50), instead of other players' items.
+- Traps and boons stay queued until a career reaches its final (any place): a
+  career given up or lost before it hands them back. Repeats of the same one wait
+  for the next career instead of being used up together.
+- Dream's Luck is no longer an item (too strong; it stays a separate server mod,
+  off on the Archipelago save).
+- Legend Race ladder: 10 rivals, C, C+, B, B+, A, A+, S, S+, SS, SS+ (was 5),
+  each its own boss and course.
+- Fan checks every 250k up to 3M (12, was 5).
+- `g1_per_scenario` (off by default): win each G1 in each scenario, 136 more checks.
+- Different races checks every 5 wins (5, 10 ... 75: 15 checks, was 5).
+- `support_count` default 30 (was 20): more SSR cards, less filler.
+- Team Trials RP on the Archipelago save: the 5-RP bar refills in 30 min (was
+  10 h), halved per Progressive RP Recovery (15, 7.5, ~4 min).
+- Tunnel Vision Trap's text: it turns off one stat's Progressive Training bonus;
+  the training still gives its normal points.
+- Dashboard tracker: each G1 shows its course, which of your trainees has it as a
+  goal race (and which shuffled ones don't belong to you yet), and who has A
+  aptitude for it; hinted checks show it too.
+
 ## 0.8.0
 Needs the matching UmamusumeX server.
 - "Finish a <scenario> career" now needs the scenario's final won (1st in the
