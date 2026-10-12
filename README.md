@@ -26,9 +26,9 @@ Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
    and put it in Archipelago's `Players/` folder with the other players' files.
 3. **Generate and host**: Launcher > *Generate*, then host the zip from
    `output/` (Launcher > *Host*, or upload it to archipelago.gg > Host Game).
-4. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago: turn on
-   `mod_archipelago`, fill in the room address, your slot name, the password and
-   your viewer id. Start the game.
+4. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago, with the
+   game closed: turn on `mod_archipelago`, fill in the room address, your slot name,
+   the password and your viewer id. Start the game.
 
 Full walkthrough: [docs/setup.md](docs/setup.md).
 
@@ -46,9 +46,8 @@ Full walkthrough: [docs/setup.md](docs/setup.md).
 ## Building
 
 ```
-python tools/sync_tables.py ../UmamusumeX-Private   # take the server's ids
-python tools/build.py                                # -> dist/umamusume.apworld
-python tools/build.py 0.5.0                          # same, stamped with a release version
+python tools/build.py          # -> dist/umamusume.apworld
+python tools/build.py 0.5.0    # same, stamped with a release version
 ```
 
 ## Versions
@@ -58,6 +57,7 @@ tags `vX.Y.Z` with a release each. A seed must be played with a server whose
 tables match the apworld that generated it; ids are never renumbered, so a newer
 server keeps working with older seeds. See [CHANGELOG.md](CHANGELOG.md).
 
-`umamusume/tables.py` is a copy of the server's
-`server/umaps/features/archipelago/tables.py`. Never edit it here: change the
-server's copy and sync, so the server and the world always agree on every id.
+`umamusume/tables.py` is the source of truth for every item and check id. The
+server mirrors it: edit `tables.py` here, make the same change on the server, and
+never renumber an id. With this repo cloned next to the server, the server's
+Archipelago tests fail if the two differ.

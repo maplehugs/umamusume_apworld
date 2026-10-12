@@ -4,7 +4,10 @@
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.7 or
   newer, only on the PC that **generates** the seed.
-- The UmamusumeX server running, with the game connected to it.
+- The UmamusumeX server running, with the game connected to it. Its panel does
+  the one-time setup (certificate, port 443, the redirect): Windows asks once
+  through UAC; on Linux one desktop password prompt (pkexec) covers the
+  certificate in the Proton prefix, port 443 and the hosts redirect.
 
 ## 1. Install the world
 
@@ -36,9 +39,14 @@ Dashboard > **Game > Mods > Archipelago**, with the game closed:
 | `archipelago_password` | the room's password, if any |
 | `archipelago_viewer_id` | your account's viewer id (dashboard > Accounts) |
 
-Save. Within a few seconds the dashboard Logs show
-`archipelago: connected as <slot>`. Start the game: you are on your Archipelago
+Save. Within a few seconds the page's **Connection** section (and the server log,
+**System > Backups & logs**) shows `connected as <slot>`. Saving the switch also
+starts the Legend Race ladder events. Start the game: you are on your Archipelago
 save.
+
+Why the game must be closed: the switch changes the game's `master.mdb` (the
+ladder's Legend races), and the server can't write it while the game reads it.
+The game shows the change after a restart.
 
 ## Playing
 
@@ -51,7 +59,8 @@ save.
 ## Back to your normal save
 
 Close the game, turn `mod_archipelago` off, start the game. Turn it on again to
-continue the seed.
+continue the seed. Custom banners and Legend races (dashboard **Custom**) are for
+your normal save; they never apply on the Archipelago ladder.
 
 ## Troubleshooting
 
@@ -59,3 +68,6 @@ continue the seed.
 - **"cannot reach"**: check the address and port; archipelago.gg rooms change
   port when they restart after inactivity.
 - **A trainee from mail doesn't appear**: restart the game once.
+- **No Legend Race ladder in the game**: the game was open when you saved the
+  switch. Close it, save the switch again, start it.
+- **"The game is reading its data (master.mdb)"**: close the game and try again.

@@ -1,6 +1,6 @@
 """Umamusume: Pretty Derby, played on the UmamusumeX private server, whose
-Archipelago mod applies the items and reports the checks. tables.py is the
-server's own table (tools/sync_tables.py), so both sides agree on every id."""
+Archipelago mod applies the items and reports the checks. tables.py holds
+every id; the server mirrors it, so both sides agree on every id."""
 
 from BaseClasses import Item, ItemClassification as IC, Location, Region
 from worlds.AutoWorld import World

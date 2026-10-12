@@ -31,17 +31,22 @@ one zip file. The apworld isn't used again after that.
 - The **game** needs nothing. It just sees mail in the present box, a new
   scenario on the career screen, or bigger numbers in training.
 
+Both sides share one id table: `umamusume/tables.py` here is the source of truth,
+and the server mirrors it.
+
 ## Your saves
 
 While `mod_archipelago` is on, your account plays a **separate save**:
 
 - made the first time you connect, with your name and profile but a new
-  player's collection (URA only, 5 trainees, R/SR cards);
+  player's collection (URA only, 5 trainees, R/SR cards), with Support Pt and
+  Monies at the cap;
 - scouting is closed there (cards come from the multiworld);
 - turning the mod off brings your normal save back (switch with the game closed);
 - **each seed has its own save**: closing the server and coming back to the same
   room resumes it; joining another seed starts a new save and keeps the old one,
-  so going back to the old room resumes it too. Your normal save is never touched.
+  so going back to the old room resumes it too. Deleting a seed's save starts that
+  seed over. Your normal save is never touched.
 
 ## Logic
 

@@ -1,7 +1,9 @@
-"""Archipelago tables shared by the server and the apworld (mods/archipelago).
+"""Archipelago tables shared by the apworld and the UmamusumeX server.
 
-Pure data, no imports: build_apworld.py copies this file into the .apworld.
-Generated from master.mdb (global); ids must never be renumbered once a seed exists.
+The source of truth for every id: the server mirrors it, and its tests check that
+the two agree.
+Pure data, no imports. Generated from master.mdb (global); ids must never be
+renumbered once a seed exists.
 """
 
 GAME = "Umamusume Pretty Derby"

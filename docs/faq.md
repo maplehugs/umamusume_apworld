@@ -6,7 +6,7 @@ No. Goal races of a career are never locked, rank checks a scenario can't reach
 ask for what your careers are expected to reach (with `team_trials_roulette` they
 never hold progression). "Finish a <scenario> career" needs that scenario's final won; a lost
 final just means another career, and it still counts for the trainee's check.
-If something hangs, the server log (dashboard **Saves & logs**) says what it served.
+If something hangs, the server log (dashboard **System > Backups & logs**) says what it served.
 
 **What does a trap do, and for how long?**
 Traps hit your **next** career, at most `trap_cap` (default 2) per career; the
@@ -23,6 +23,14 @@ No, only wins. An Alarm Clock retry that wins does count.
 **Can I run out of Legend Race tickets?**
 Not on the Archipelago save: its ladder races are free. (The ticket's in-game
 maximum is 3; more would show as 0, so no extra tickets are handed out.)
+
+**I turned the mod on and there's no Legend Race ladder.**
+The game was running: the server can't change its master.mdb while the game reads
+it. Close the game, save the mod switch again, start the game.
+
+**Do my custom banners or Legend races show up?**
+Not on the Archipelago save: the Custom page's banners stay closed with scouting,
+and custom Legend races never replace the ladder.
 
 **Team Trials says it's tallying.**
 On the Archipelago save Team Trials is always open. On a normal save the

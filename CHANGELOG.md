@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- `umamusume/tables.py` is now the source of truth for ids (the server mirrors it
+  and checks the two agree). `tools/sync_tables.py` is gone.
+- Docs: the Legend Race ladder starts when you save the mod switch, switch it with
+  the game closed, Linux setup from the panel, daily tickets refill once a day,
+  starting a seed over.
+
 ## 0.12.0
 Needs the matching UmamusumeX server.
 - Support cards arrive at limit break 0 instead of maxed. New item: Rainbow Uncap
