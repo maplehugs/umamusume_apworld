@@ -9,6 +9,8 @@
 
 ## 0.12.0
 Needs the matching UmamusumeX server.
+- The release now also has `umapd_archipelago.dll`, the optional Hachimi Edge
+  plugin (live sync), prebuilt from `source_code_dll/`.
 - Support cards arrive at limit break 0 instead of maxed. New item: Rainbow Uncap
   Crystal, one limit break for any SSR you pick (4 max a card). `uncap_crystals`
   (default 24, a deck of 6) are always in the pool; spare checks add up to half as

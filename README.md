@@ -55,7 +55,8 @@ python tools/build.py 0.5.0    # same, stamped with a release version
 [source_code_dll](source_code_dll/README.md) holds an optional Hachimi Edge plugin.
 With it the running game picks up what the server changes (the Legend Race ladder,
 items from the multiworld, a seed switch) without going back to the title screen:
-it reloads the game's data on the home screen. Build it yourself with
+it reloads the game's data on the home screen. Download `umapd_archipelago.dll`
+from the [latest release](../../releases/latest), or build it yourself with
 `python tools/build.py` (it writes `dist/umapd_archipelago.dll`).
 
 ## Versions

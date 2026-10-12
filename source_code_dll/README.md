@@ -53,7 +53,7 @@ uvx --from ziglang python -m ziglang cc -target x86_64-windows-gnu -shared -O2 \
    game folder (`.../steamapps/common/UmamusumePrettyDerby`), keeping a backup
    of the `cri_mana_vpx.dll` that was there. Start the game once so Hachimi
    creates `<game>/hachimi/`.
-2. Copy `umapd_archipelago.dll` into `<game>/hachimi/`.
+2. Copy `umapd_archipelago.dll` (from the latest release, or your own build) into `<game>/hachimi/`.
 3. In `<game>/hachimi/config.json`, list it (next to any other plugin):
    `"load_libraries": ["hachimi\\umapd_archipelago.dll"]`.
    For a log in `<game>/hachimi.log`, also set `"enable_file_logging": true`.
@@ -76,5 +76,6 @@ To remove: take the line out of `load_libraries` (or delete the DLL).
   ships none of their code.
 - Plugin: Maple.
 
-You build it yourself from this source (`python tools/build.py`); no prebuilt DLL
-is published here, so you always know what runs in your game.
+Each release has a prebuilt `umapd_archipelago.dll`, built from this source with
+`python tools/build.py`. Build it yourself if you'd rather know exactly what runs
+in your game.
