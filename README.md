@@ -50,6 +50,14 @@ python tools/build.py          # -> dist/umamusume.apworld
 python tools/build.py 0.5.0    # same, stamped with a release version
 ```
 
+## Optional: live sync plugin
+
+[source_code_dll](source_code_dll/README.md) holds an optional Hachimi Edge plugin.
+With it the running game picks up what the server changes (the Legend Race ladder,
+items from the multiworld, a seed switch) without going back to the title screen:
+it reloads the game's data on the home screen. Build it yourself with
+`python tools/build.py` (it writes `dist/umapd_archipelago.dll`).
+
 ## Versions
 
 `MAJOR.MINOR.PATCH`, as `world_version` in `umamusume/archipelago.json` and as git

@@ -1,9 +1,13 @@
 """Build dist/umamusume.apworld: python tools/build.py [version]
 
+Also builds the optional client plugin dist/umapd_archipelago.dll (zig through
+uvx; skipped with a warning when that fails).
+
 With a version (e.g. 0.5.0) the packed archipelago.json carries it as
 world_version; without one, the file's own world_version is kept."""
 
 import json
+import subprocess
 import re
 import sys
 import zipfile
@@ -27,3 +31,14 @@ with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         else:
             z.write(f, f"umamusume/{f.name}")
 print(out)
+
+dll = ROOT / "dist" / "umapd_archipelago.dll"
+src = ROOT / "source_code_dll" / "umapd_archipelago.c"
+try:
+    subprocess.run(["uvx", "--from", "ziglang", "python", "-m", "ziglang", "cc", "-target", "x86_64-windows-gnu",
+                    "-shared", "-O2", "-o", str(dll), str(src)], check=True)
+    for junk in (dll.with_suffix(".lib"), dll.with_suffix(".pdb")):
+        junk.unlink(missing_ok=True)
+    print(dll)
+except (OSError, subprocess.CalledProcessError) as e:
+    print(f"warning: {dll.name} not built ({e})")

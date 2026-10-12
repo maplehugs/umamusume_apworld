@@ -46,7 +46,8 @@ save.
 
 Why the game must be closed: the switch changes the game's `master.mdb` (the
 ladder's Legend races), and the server can't write it while the game reads it.
-The game shows the change after a restart.
+The game shows the change after a restart, or right away with the optional
+[live sync plugin](../source_code_dll/README.md).
 
 ## Playing
 
