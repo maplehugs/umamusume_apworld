@@ -1,6 +1,6 @@
 # Showcase
 
-A seed in progress (v0.6.0), played on a local room. Everything below is the
+A seed in progress (v0.9.0), played on a local room. Everything below is the
 UmamusumeX dashboard (Mods > Archipelago) and the game itself; nothing is
 installed in the client.
 
@@ -11,6 +11,8 @@ scenario) and Grand Live (received as an item); Unity Cup and Trackblazer stay
 hidden until they arrive.
 
 ![Scenario select showing only the unlocked scenarios](media/scenario-select.gif)
+
+![Grand Live, received as an item, next to URA Finale](media/game-scenario-grand-live.png)
 
 ([mp4](media/scenario-select.mp4))
 
@@ -29,9 +31,19 @@ marked with who sent them.
 |---|---|
 | ![Trainee collected](media/game-trainee-outfit.png) | ![SSR collected](media/game-ssr-collected.png) |
 
-**SSR support cards arrive maxed** (limit broken, level 50), ready for the next career.
+**Rainbow Uncap Crystals limit-break the SSR of your choice** (Enhance > Support
+Cards > Limit Break), one level each, up to four. Here Kitasan Black after two.
 
-![The received SSR at level 50](media/game-ssr-maxed.png)
+![Kitasan Black uncapped twice with crystals](media/game-uncap-crystal.png)
+
+**A Trainee Awakening takes a random trainee you own to 5 stars, potential 5
+and every hint at its top level.** Before and after, on the trainee select:
+
+| Before | After |
+|---|---|
+| ![Starters at 3 stars, potential 1](media/game-awaken-before.png) | ![Satono Diamond at 5 stars, potential 5](media/game-awaken-after.png) |
+
+![Satono Diamond's details: potential 5, every hint at level 3](media/game-awaken-details.png)
 
 ## In the dashboard
 
