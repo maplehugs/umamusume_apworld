@@ -25,6 +25,8 @@ the game (or go back to the title screen) after such a change.
   drop their cached rows, the database connection is closed, and the next
   lookup reads the new rows. See [RE_NOTES.md](RE_NOTES.md).
 - A screen that is already open keeps what it showed: leave it and come back.
+- If something in the game looks out of date (a hint level, the trainee list,
+  ticket counts), restart the game.
 - The server also rewrites `<game>/hachimi/umapd_account.version` when the
   account changes on its own (seed switch, items received, save restored). Three
   seconds after the last such change, as soon as you are on the home screen with

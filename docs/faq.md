@@ -28,6 +28,10 @@ maximum is 3; more would show as 0, so no extra tickets are handed out.)
 The game was running: the server can't change its master.mdb while the game reads
 it. Close the game, save the mod switch again, start the game.
 
+**Something in the game looks out of date after a seed switch or new items.**
+If something in the game looks out of date (a hint level, the trainee list, ticket
+counts), restart the game.
+
 **Do my custom banners or Legend races show up?**
 Not on the Archipelago save: the Custom page's banners stay closed with scouting,
 and custom Legend races never replace the ladder.
