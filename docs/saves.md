@@ -25,12 +25,18 @@ when it reconnects.
 ## Switching seeds
 
 Point the mod at another room: that seed gets **its own new save**. The previous
-seed's save is kept; reconnecting to that room later resumes it. Switch with the
-game closed: the game keeps the old save in memory until it logs in again.
+seed's save is kept; reconnecting to that room later resumes it. 
+
+> [!IMPORTANT]
+> Switch with the game closed: the game keeps the old save in memory until it
+> logs in again.
 
 ## Starting a seed over
 
-With the server stopped (and a backup made), delete that seed's save: the rows of
+> [!CAUTION]
+> This can't be undone: stop the server and make a backup first.
+
+With the server stopped, delete that seed's save: the rows of
 viewer id `<viewer id>:ap:<seed>` in the server's state database. The next
 connection to its room makes a new save and the room sends every item again.
 

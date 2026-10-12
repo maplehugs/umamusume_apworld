@@ -29,6 +29,8 @@ Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
 4. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago, with the
    game closed: turn on `mod_archipelago`, fill in the room address, your slot name,
    the password and your viewer id. Start the game.
+5. *(Optional)* **Live sync plugin**: `umapd_archipelago.dll` from the release, for
+   Hachimi Edge. Without it, restart the game after a seed switch.
 
 Full walkthrough: [docs/setup.md](docs/setup.md).
 
@@ -52,6 +54,9 @@ python tools/build.py 0.5.0    # same, stamped with a release version
 
 ## Optional: live sync plugin
 
+> [!TIP]
+> Optional: everything works without it.
+
 [source_code_dll](source_code_dll/README.md) holds an optional Hachimi Edge plugin.
 With it the running game picks up what the server changes (the Legend Race ladder,
 items from the multiworld, a seed switch) without going back to the title screen:
@@ -62,9 +67,12 @@ from the [latest release](../../releases/latest), or build it yourself with
 ## Versions
 
 `MAJOR.MINOR.PATCH`, as `world_version` in `umamusume/archipelago.json` and as git
-tags `vX.Y.Z` with a release each. A seed must be played with a server whose
-tables match the apworld that generated it; ids are never renumbered, so a newer
-server keeps working with older seeds. See [CHANGELOG.md](CHANGELOG.md).
+tags `vX.Y.Z` with a release each. 
+> [!IMPORTANT]
+> A seed must be played with a server whose tables match the apworld that
+> generated it; ids are never renumbered, so a newer server keeps working with
+> older seeds.
+ See [CHANGELOG.md](CHANGELOG.md).
 
 `umamusume/tables.py` is the source of truth for every item and check id. The
 server mirrors it: edit `tables.py` here, make the same change on the server, and

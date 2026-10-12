@@ -10,6 +10,7 @@ from the launcher), the game logs in again by itself once you are on the home
 screen, the way it does at the daily 5:00 reset. Optional: without it, restart
 the game (or go back to the title screen) after such a change.
 
+> [!WARNING]
 > Modding the game client is against the game's Terms of Service. Use it with
 > the private server only; it does nothing on its own, but remove it before
 > playing on the official servers if that matters to you.
@@ -50,10 +51,18 @@ uvx --from ziglang python -m ziglang cc -target x86_64-windows-gnu -shared -O2 \
 
 1. Hachimi Edge: download `hachimi.dll` from its releases (check it against the
    release's `blake3.json`), rename it to `cri_mana_vpx.dll` and put it in the
-   game folder (`.../steamapps/common/UmamusumePrettyDerby`), keeping a backup
-   of the `cri_mana_vpx.dll` that was there. Start the game once so Hachimi
-   creates `<game>/hachimi/`.
+   game folder (`.../steamapps/common/UmamusumePrettyDerby`). Start the game once
+   so Hachimi creates `<game>/hachimi/`.
+
+   > [!CAUTION]
+   > Keep a backup of the `cri_mana_vpx.dll` that was there: it's how you undo it.
+
 2. Copy `umapd_archipelago.dll` (from the latest release, or your own build) into `<game>/hachimi/`.
+
+   > [!TIP]
+   > Check a downloaded DLL against the release's `SHA256SUMS`:
+   > `sha256sum -c --ignore-missing SHA256SUMS` (Windows: `Get-FileHash umapd_archipelago.dll`).
+
 3. In `<game>/hachimi/config.json`, list it (next to any other plugin):
    `"load_libraries": ["hachimi\\umapd_archipelago.dll"]`.
    For a log in `<game>/hachimi.log`, also set `"enable_file_logging": true`.

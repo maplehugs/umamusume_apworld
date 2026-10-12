@@ -24,8 +24,11 @@ Archipelago's `Players/` folder together with everyone else's yaml.
 
 - Launcher > *Generate*. The seed is written to `output/AP_<number>.zip`.
 - Host it: Launcher > *Host* (your PC, port 38281), or archipelago.gg >
-  *Host Game* > upload the zip. archipelago.gg can host a custom world's seed but
-  can't generate one, so generate locally.
+  *Host Game* > upload the zip.
+
+> [!NOTE]
+> archipelago.gg can host a custom world's seed but can't generate one, so
+> generate locally.
 
 ## 4. Connect UmamusumeX
 
@@ -44,10 +47,35 @@ Save. Within a few seconds the page's **Connection** section (and the server log
 starts the Legend Race ladder events. Start the game: you are on your Archipelago
 save.
 
-Why the game must be closed: the switch changes the game's `master.mdb` (the
-ladder's Legend races), and the server can't write it while the game reads it.
-The game shows the change after a restart, or right away with the optional
-[live sync plugin](../source_code_dll/README.md).
+> [!IMPORTANT]
+> **Close the game before saving the switch.** It changes the game's `master.mdb`
+> (the ladder's Legend races), and the server can't write it while the game reads
+> it. The game shows the change after a restart, or right away with the optional
+> live sync plugin (step 5).
+
+> [!TIP]
+> If the Connection section says **"missing settings"**, one of the fields above
+> is empty. If the dashboard shows a yellow banner about an **unknown account**,
+> the game signed in with an account this server doesn't know (often an official
+> one): press **Allow**, or create a new account in the game.
+
+## 5. Optional: live sync plugin
+
+> [!TIP]
+> **Optional. Everything works without it**: you just restart the game after a
+> seed switch or a Legend ladder change. With it, the running game picks those up
+> on the home screen by itself.
+
+1. Install [Hachimi Edge](https://github.com/kairusds/Hachimi-Edge) (it replaces
+   the game's `cri_mana_vpx.dll`; keep a backup of the original).
+2. Download `umapd_archipelago.dll` and `SHA256SUMS` from the
+   [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest) and check them:
+   `sha256sum -c --ignore-missing SHA256SUMS` (Windows: `Get-FileHash umapd_archipelago.dll`
+   and compare with the file).
+3. Copy the DLL into `<game>/hachimi/` and add it to `<game>/hachimi/config.json`:
+   `"load_libraries": ["hachimi\\umapd_archipelago.dll"]`.
+
+Full steps, log lines and the source: [source_code_dll](../source_code_dll/README.md).
 
 ## Playing
 
@@ -64,6 +92,10 @@ continue the seed. Custom banners and Legend races (dashboard **Custom**) are fo
 your normal save; they never apply on the Archipelago ladder.
 
 ## Troubleshooting
+
+> [!TIP]
+> If something in the game looks out of date (a hint level, the trainee list,
+> ticket counts), restart the game.
 
 - **Logs say "refused: InvalidSlot"**: `archipelago_slot` doesn't match the yaml `name`.
 - **"cannot reach"**: check the address and port; archipelago.gg rooms change
