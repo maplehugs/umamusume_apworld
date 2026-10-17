@@ -21,9 +21,9 @@ Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
 
 ## Quick start
 
-1. **Install UmamusumeX**: grab it from its
-   [releases](https://github.com/Remezzo/UmamusumeX/releases/latest), run it and let
-   its panel do the one-time setup. Start the game once to check it connects.
+1. **Install UmamusumeX**: download it from its
+   [releases](https://github.com/Remezzo/UmamusumeX/releases/latest), double-click it,
+   press **Fix** on anything red, then **Play** and create an account in the game.
 2. **Install the world** (whoever generates the seed): download
    `umamusume.apworld` from the [releases](../../releases/latest) (or build it, below) and double-click it,
    or Archipelago Launcher > *Install APWorld*.

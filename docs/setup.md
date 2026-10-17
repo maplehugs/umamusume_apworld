@@ -9,13 +9,14 @@
 
 ## 1. Install UmamusumeX
 
-Download `windows.zip` or `linux.tar.gz` from the
-[UmamusumeX releases](https://github.com/Remezzo/UmamusumeX/releases/latest),
-extract it and run UmamusumeX. Its panel does the one-time setup (certificate,
-port 443, the redirect): Windows asks once through UAC; on Linux one desktop
-password prompt (pkexec) covers the certificate in the Proton prefix, port 443
-and the hosts redirect. Start the game once and check it reaches the home
-screen on the private server.
+1. Download it from the [UmamusumeX releases](https://github.com/Remezzo/UmamusumeX/releases/latest)
+   (`windows.zip` or `linux.tar.gz`) and extract it to a folder of its own.
+2. Double-click **UmamusumeX**. The control panel opens in your browser; keep
+   its console window open while you play.
+3. Press **Fix** on anything red in the checklist (the certificate and the
+   redirect; it asks for admin once).
+4. Press **Play**. Steam launches the game; create an account when it asks
+   (it lives on your own server).
 
 ## 2. Install the world
 
