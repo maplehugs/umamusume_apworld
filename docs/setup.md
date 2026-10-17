@@ -4,23 +4,31 @@
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.7 or
   newer, only on the PC that **generates** the seed.
-- The [UmamusumeX](https://github.com/Remezzo/UmamusumeX/releases/latest) server running, with the game connected to it. Its panel does
-  the one-time setup (certificate, port 443, the redirect): Windows asks once
-  through UAC; on Linux one desktop password prompt (pkexec) covers the
-  certificate in the Proton prefix, port 443 and the hosts redirect.
+- Umamusume: Pretty Derby (Global, Steam) and [UmamusumeX](https://github.com/Remezzo/UmamusumeX/releases/latest)
+  on the PC that **plays**.
 
-## 1. Install the world
+## 1. Install UmamusumeX
+
+Download `windows.zip` or `linux.tar.gz` from the
+[UmamusumeX releases](https://github.com/Remezzo/UmamusumeX/releases/latest),
+extract it and run UmamusumeX. Its panel does the one-time setup (certificate,
+port 443, the redirect): Windows asks once through UAC; on Linux one desktop
+password prompt (pkexec) covers the certificate in the Proton prefix, port 443
+and the hosts redirect. Start the game once and check it reaches the home
+screen on the private server.
+
+## 2. Install the world
 
 Double-click `umamusume.apworld`, or Archipelago Launcher > *Install APWorld*.
 On Linux, copy it into Archipelago's `custom_worlds/` folder.
 
-## 2. Player file
+## 3. Player file
 
 Copy `examples/Umamusume.yaml`, set `name:` (your slot name, unique in the
 multiworld) and adjust options ([options.md](options.md)). Put it in
 Archipelago's `Players/` folder together with everyone else's yaml.
 
-## 3. Generate and host
+## 4. Generate and host
 
 - Launcher > *Generate*. The seed is written to `output/AP_<number>.zip`.
 - Host it: Launcher > *Host* (your PC, port 38281), or archipelago.gg >
@@ -30,7 +38,7 @@ Archipelago's `Players/` folder together with everyone else's yaml.
 > archipelago.gg can host a custom world's seed but can't generate one, so
 > generate locally.
 
-## 4. Connect UmamusumeX
+## 5. Connect UmamusumeX
 
 Dashboard > **Game > Mods > Archipelago**, with the game closed:
 
@@ -51,7 +59,7 @@ save.
 > **Close the game before saving the switch.** It changes the game's `master.mdb`
 > (the ladder's Legend races), and the server can't write it while the game reads
 > it. The game shows the change after a restart, or right away with the optional
-> live sync plugin (step 5).
+> live sync plugin (step 6).
 
 > [!TIP]
 > If the Connection section says **"missing settings"**, one of the fields above
@@ -59,7 +67,7 @@ save.
 > the game signed in with an account this server doesn't know (often an official
 > one): press **Allow**, or create a new account in the game.
 
-## 5. Optional: live sync plugin
+## 6. Optional: live sync plugin
 
 > [!TIP]
 > **Optional. Everything works without it**: you just restart the game after a

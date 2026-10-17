@@ -21,18 +21,21 @@ Screenshots and a clip of it running: [docs/showcase.md](docs/showcase.md).
 
 ## Quick start
 
-1. **Install the world** (whoever generates the seed): download
+1. **Install UmamusumeX**: grab it from its
+   [releases](https://github.com/Remezzo/UmamusumeX/releases/latest), run it and let
+   its panel do the one-time setup. Start the game once to check it connects.
+2. **Install the world** (whoever generates the seed): download
    `umamusume.apworld` from the [releases](../../releases/latest) (or build it, below) and double-click it,
    or Archipelago Launcher > *Install APWorld*.
-2. **Make your player file**: copy [`examples/Umamusume.yaml`](examples/Umamusume.yaml),
+3. **Make your player file**: copy [`examples/Umamusume.yaml`](examples/Umamusume.yaml),
    set `name`, change options if you like (see [docs/options.md](docs/options.md)),
    and put it in Archipelago's `Players/` folder with the other players' files.
-3. **Generate and host**: Launcher > *Generate*, then host the zip from
+4. **Generate and host**: Launcher > *Generate*, then host the zip from
    `output/` (Launcher > *Host*, or upload it to archipelago.gg > Host Game).
-4. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago, with the
+5. **Connect the server**: UmamusumeX dashboard > Game > Mods > Archipelago, with the
    game closed: turn on `mod_archipelago`, fill in the room address, your slot name,
    the password and your viewer id. Start the game.
-5. *(Optional)* **Live sync plugin**: `umapd_archipelago.dll` from the release, for
+6. *(Optional)* **Live sync plugin**: `umapd_archipelago.dll` from the release, for
    Hachimi Edge. Without it, restart the game after a seed switch.
 
 Full walkthrough: [docs/setup.md](docs/setup.md).
