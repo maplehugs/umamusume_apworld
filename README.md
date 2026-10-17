@@ -4,7 +4,7 @@ An [Archipelago](https://archipelago.gg) world for **Umamusume: Pretty Derby**,
 played on the [**UmamusumeX**](https://github.com/Remezzo/UmamusumeX) private server (its Archipelago mod does the game side).
 
 Get the server from its [releases](https://github.com/Remezzo/UmamusumeX/releases/latest).
-Questions, bugs, testers: [Discord](https://discord.gg/tAqwpQCgaE).
+Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE).
 
 Every career is a run. Winning G1s and finishing careers sends items to the
 other players in your multiworld; what comes back are scenarios, trainees,
