@@ -4,7 +4,7 @@
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.7 or
   newer, only on the PC that **generates** the seed.
-- The UmamusumeX server running, with the game connected to it. Its panel does
+- The [UmamusumeX](https://github.com/Remezzo/UmamusumeX/releases/latest) server running, with the game connected to it. Its panel does
   the one-time setup (certificate, port 443, the redirect): Windows asks once
   through UAC; on Linux one desktop password prompt (pkexec) covers the
   certificate in the Proton prefix, port 443 and the hosts redirect.
