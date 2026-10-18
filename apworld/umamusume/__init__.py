@@ -260,12 +260,13 @@ class UmamusumeWorld(World):
         o = self.options
         # The most wanted first: whatever doesn't fit in the checks is start
         # inventory instead (any set of checks generates; fewer = a shorter game).
+        # Score buffs are cut last: precollected, they put the goal in logic at once.
         names = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
+        names += TRAINING * 3  # stat by stat, so a cut hits them evenly
+        names += ["Progressive Starting Stats"] * 5 + ["Progressive Stat Cap"] * self.caps
         names += [f"Trainee: {tables.TRAINEES[c]}" for c in self.trainees]
         names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in self.supports]
         names += [CRYSTAL] * self.crystals()
-        names += TRAINING * 3  # stat by stat, so a cut hits them evenly
-        names += ["Progressive Starting Stats"] * 5 + ["Progressive Stat Cap"] * self.caps
         names += ["Trainee Awakening"] * min(o.trainee_awakenings.value, len(self.starters) + len(self.trainees))
         names += ["Progressive RP Recovery"] * min(3, o.team_trials_checks.value)
         names += ["Progressive Starting Skill Points"] * 3 + ["Progressive Training Guard"] * 2

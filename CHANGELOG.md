@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.1
+- Fix: when a seed has fewer checks than items, training and starting stats are
+  now the last items moved to start inventory, so the goal is no longer in
+  logic before any check (crystals, supports and trainees go first).
+
 ## 0.13.0
 - The server is in this repo now: `server/` is UmamusumePS (AGPL-3.0, by
   systemless10) with Archipelago support. The world moved to `apworld/`.
