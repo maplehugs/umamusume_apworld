@@ -1,11 +1,15 @@
 # Changelog
 
-## Unreleased
-- `umamusume/tables.py` is now the source of truth for ids (the server mirrors it
-  and checks the two agree). `tools/sync_tables.py` is gone.
-- Docs: the Legend Race ladder starts when you save the mod switch, switch it with
-  the game closed, Linux setup from the panel, daily tickets refill once a day,
-  starting a seed over.
+## 0.13.0
+- The server is in this repo now: `server/` is UmamusumePS (AGPL-3.0, by
+  systemless10) with Archipelago support. The world moved to `apworld/`.
+- Every account on the server plays Archipelago; a new seed starts the save over.
+- Legend Race ladder works on the new server (C..SS+, `legend_race` goal too).
+- Web panel is Archipelago only, with a Download logs button for bug reports.
+- Linux server package with the race engines prebuilt (no Rust needed, Python
+  3.11+). Windows: run `server/start-global.ps1` from the repo for now.
+- `apworld/umamusume/tables.py` is the source of truth for ids; the server
+  mirrors it.
 
 ## 0.12.0
 Needs the matching server.
