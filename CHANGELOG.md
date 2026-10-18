@@ -8,7 +8,7 @@
   starting a seed over.
 
 ## 0.12.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - The release now also has `umapd_archipelago.dll`, the optional Hachimi Edge
   plugin (live sync), prebuilt from `source_code_dll/`.
 - Support cards arrive at limit break 0 instead of maxed. New item: Rainbow Uncap
@@ -23,7 +23,7 @@ Needs the matching UmamusumeX server.
 - Default seed: 51 cards, ~31 crystals, ~25 filler.
 
 ## 0.11.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - Any set of checks generates: items that don't fit are start inventory (most
   wanted stay in the pool: scenarios, trainees, cards, Progressive Training...).
   Everything off is a 24-check game that starts with the rest.
@@ -39,7 +39,7 @@ Needs the matching UmamusumeX server.
   Team Trials checks but only filler and traps land there).
 
 ## 0.10.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - Team Trials checks hold multiworld items like any other check (50 more checks
   in the pool by default). `team_trials_roulette: true` brings back the old
   roulette of your own filler and traps (`team_trials_trap_percentage`).
@@ -51,11 +51,11 @@ Needs the matching UmamusumeX server.
 - Minor Starting Skill Points is rarer in the filler (weight 10, was 25).
 - items-and-checks.md opens with the loot table: what a default seed holds, how
   many of each and what they do.
-- The seed records its apworld version; the server's dashboard warns when it
+- The seed records its apworld version; the server warns when it
   doesn't match.
 
 ## 0.9.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - Team Trials checks are per race won (each of a match's 5, lost match or not),
   not per match: "Team Trials: win N races". Default 50 (was 10), up to 100.
 - They hold your own filler now, `team_trials_trap_percentage` of it traps
@@ -75,12 +75,12 @@ Needs the matching UmamusumeX server.
   10 h), halved per Progressive RP Recovery (15, 7.5, ~4 min).
 - Tunnel Vision Trap's text: it turns off one stat's Progressive Training bonus;
   the training still gives its normal points.
-- Dashboard tracker: each G1 shows its course, which of your trainees has it as a
+- Tracker: each G1 shows its course, which of your trainees has it as a
   goal race (and which shuffled ones don't belong to you yet), and who has A
   aptitude for it; hinted checks show it too.
 
 ## 0.8.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - "Finish a <scenario> career" now needs the scenario's final won (1st in the
   turn-78 race). The trainee checks still only need the last turn.
 - `g1_place` (1-3, default 1): a G1 check counts at that place or better.
@@ -91,7 +91,7 @@ Needs the matching UmamusumeX server.
   to how fast a real player gets there.
 
 ## 0.7.0
-Needs the matching UmamusumeX server.
+Needs the matching server.
 - `starting_scenario: shuffled`: start with a random scenario; the others (URA
   included, now an item) are found in the multiworld.
 - `starting_trainee_count` (1-10, default 5) random starting trainees.

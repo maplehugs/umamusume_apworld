@@ -18,35 +18,32 @@ one zip file. The apworld isn't used again after that.
 ## During the game
 
 ```
-  Umamusume client  <->  UmamusumeX server  <->  Archipelago room  <->  other players
-       (unchanged)        (the "client")         (MultiServer)
+  Umamusume client  <->  private server  <->  Archipelago room  <->  other players
+  (redirect plugin)       (the "client")       (MultiServer)
 ```
 
 - The **room** (archipelago.gg or your own Launcher > Host) holds the seed. It
   knows which item sits behind every check.
-- The **UmamusumeX server** connects to the room as your slot. When you win a G1
+- The **private server** (`server/`) connects to the room as your slot. When you win a G1
   or finish a career, it tells the room "check X done"; the room sends the item
   behind it to whoever owns it. When an item for you arrives, the server applies
   it to your Archipelago save.
-- The **game** needs nothing. It just sees mail in the present box, a new
+- The **game** only needs the redirect plugin that points it at the server. It sees mail in the present box, a new
   scenario on the career screen, or bigger numbers in training.
 
-Both sides share one id table: `umamusume/tables.py` here is the source of truth,
-and the server mirrors it.
+Both sides share one id table: `apworld/umamusume/tables.py` is the source of truth,
+and the server's copy mirrors it.
 
 ## Your saves
 
-While `mod_archipelago` is on, your account plays a **separate save**:
+Every account on the server plays Archipelago:
 
-- made the first time you connect, with your name and profile but a new
-  player's collection (URA only, 5 trainees, R/SR cards), with Support Pt and
-  Monies at the cap;
-- scouting is closed there (cards come from the multiworld);
-- turning the mod off brings your normal save back (switch with the game closed);
-- **each seed has its own save**: closing the server and coming back to the same
-  room resumes it; joining another seed starts a new save and keeps the old one,
-  so going back to the old room resumes it too. Deleting a seed's save starts that
-  seed over. Your normal save is never touched.
+- the first connection to a seed starts the account over, with your name and
+  profile but a new player's collection (URA only, 5 trainees, R/SR cards), with
+  Support Pt and Monies at the cap;
+- scouting is closed (cards come from the multiworld);
+- closing the server and coming back to the same room resumes the save; joining
+  another seed starts the account over again. See [saves.md](saves.md).
 
 ## Logic
 

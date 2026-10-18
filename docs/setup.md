@@ -4,85 +4,86 @@
 
 - [Archipelago](https://github.com/ArchipelagoMW/Archipelago/releases) 0.6.7 or
   newer, only on the PC that **generates** the seed.
-- Umamusume: Pretty Derby (Global, Steam) and [UmamusumeX](https://github.com/Remezzo/UmamusumeX/releases/latest)
-  on the PC that **plays**.
+- On the PC that **plays**: Umamusume: Pretty Derby (Global, Steam), started
+  once so its `master.mdb` exists, [Hachimi Edge](https://github.com/kairusds/Hachimi-Edge),
+  Python 3.11 or newer, and this repo's `server/` folder (a release package, or a
+  clone).
 
-## 1. Install UmamusumeX
+## 1. Start the server
 
-1. Download it from the [UmamusumeX releases](https://github.com/Remezzo/UmamusumeX/releases/latest)
-   (`windows.zip` or `linux.tar.gz`) and extract it to a folder of its own.
-2. Double-click **UmamusumeX**. The control panel opens in your browser; keep
-   its console window open while you play.
-3. Press **Fix** on anything red in the checklist (the certificate and the
-   redirect; it asks for admin once).
-4. Press **Play**. Steam launches the game; create an account when it asks
-   (it lives on your own server).
+In `server/`:
 
-## 2. Install the world
+- Linux/macOS: `./start-global.sh`
+- Windows: right-click `start-global.ps1` > *Run with PowerShell*
+
+The first run takes a while: it makes the Python environment, a certificate,
+builds the race engines (a release package has them already built) and reads
+the race courses from your game install. Keep the window open while you play.
+When it's up, the web panel opens at <http://localhost:8189>.
+
+## 2. Point the game at the server
+
+1. Install Hachimi Edge and start the game once, so `<game>/hachimi/` exists.
+2. Download `hachimi_redirect.dll` from [UmamusumePS's plugin release](https://github.com/systemless10/UmamusumePS/releases/tag/plugin)
+   (or build it from `server/plugin/hachimi_redirect`) and copy it into `<game>/hachimi/`.
+3. Add it to `<game>/hachimi/config.json`:
+   `"load_libraries": ["hachimi\\hachimi_redirect.dll"]`.
+4. Start the game, open the Hachimi menu (right arrow key) and set the redirect
+   server to `https://127.0.0.1:8443`.
+5. Create an account in the game. Any new account gets in.
+
+To play on the official servers again, turn the redirect off in the Hachimi menu.
+
+## 3. Install the world
 
 Double-click `umamusume.apworld`, or Archipelago Launcher > *Install APWorld*.
 On Linux, copy it into Archipelago's `custom_worlds/` folder.
 
-## 3. Player file
+## 4. Player file
 
-Copy `examples/Umamusume.yaml`, set `name:` (your slot name, unique in the
+Copy `apworld/examples/Umamusume.yaml`, set `name:` (your slot name, unique in the
 multiworld) and adjust options ([options.md](options.md)). Put it in
 Archipelago's `Players/` folder together with everyone else's yaml.
 
-## 4. Generate and host
+## 5. Generate and host
 
 - Launcher > *Generate*. The seed is written to `output/AP_<number>.zip`.
 - Host it: Launcher > *Host* (your PC, port 38281), or archipelago.gg >
   *Host Game* > upload the zip.
 
-> [!NOTE]
-> archipelago.gg can host a custom world's seed but can't generate one, so
-> generate locally.
+archipelago.gg can host a custom world's seed but can't generate one, so
+generate locally.
 
-## 5. Connect UmamusumeX
+## 6. Connect the server
 
-Dashboard > **Game > Mods > Archipelago**, with the game closed:
+In the web panel's **Archipelago** window, fill in:
 
-| Setting | Value |
-|---|---|
-| `mod_archipelago` | On |
-| `archipelago_server` | `archipelago.gg:12345`, or `localhost:38281` for your own room |
-| `archipelago_slot` | your `name:` from the yaml |
-| `archipelago_password` | the room's password, if any |
-| `archipelago_viewer_id` | your account's viewer id (dashboard > Accounts) |
+- **Room**: `archipelago.gg:12345`, or `localhost:38281` for your own room
+- **Slot name**: your `name:` from the yaml
+- **Room password**: the room's password, if any
 
-Save. Within a few seconds the page's **Connection** section (and the server log,
-**System > Backups & logs**) shows `connected as <slot>`. Saving the switch also
-starts the Legend Race ladder events. Start the game: you are on your Archipelago
-save.
+They're saved in `server/server/client_config.json` (`archipelago_server`,
+`archipelago_slot`, `archipelago_password`) if you'd rather edit the file.
+Within a few seconds the window shows `connected as <slot>`. The connection plays
+for the account that logged in last, so log in once before connecting.
 
-> [!IMPORTANT]
-> **Close the game before saving the switch.** It changes the game's `master.mdb`
-> (the ladder's Legend races), and the server can't write it while the game reads
-> it. The game shows the change after a restart, or right away with the optional
-> live sync plugin (step 6).
+The first connection to a seed starts that account over for it (see
+[saves.md](saves.md)). Go back to the title screen and log in again to see the
+new save.
 
-> [!TIP]
-> If the Connection section says **"missing settings"**, one of the fields above
-> is empty. If the dashboard shows a yellow banner about an **unknown account**,
-> the game signed in with an account this server doesn't know (often an official
-> one): press **Allow**, or create a new account in the game.
+## 7. Optional: live sync plugin
 
-## 6. Optional: live sync plugin
+Optional, everything works without it: you just log in again after a seed
+switch or new items. With it, the running game picks those up on the home
+screen by itself, and the Legend Race ladder shows without restarting the game.
 
-> [!TIP]
-> **Optional. Everything works without it**: you just restart the game after a
-> seed switch or a Legend ladder change. With it, the running game picks those up
-> on the home screen by itself.
-
-1. Install [Hachimi Edge](https://github.com/kairusds/Hachimi-Edge) (it replaces
-   the game's `cri_mana_vpx.dll`; keep a backup of the original).
-2. Download `umapd_archipelago.dll` and `SHA256SUMS` from the
+1. Download `umapd_archipelago.dll` and `SHA256SUMS` from the
    [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest) and check them:
    `sha256sum -c --ignore-missing SHA256SUMS` (Windows: `Get-FileHash umapd_archipelago.dll`
    and compare with the file).
-3. Copy the DLL into `<game>/hachimi/` and add it to `<game>/hachimi/config.json`:
-   `"load_libraries": ["hachimi\\umapd_archipelago.dll"]`.
+2. Copy the DLL into `<game>/hachimi/` and add it next to the redirect plugin in
+   `<game>/hachimi/config.json`:
+   `"load_libraries": ["hachimi\\hachimi_redirect.dll", "hachimi\\umapd_archipelago.dll"]`.
 
 Full steps, log lines and the source: [source_code_dll](../source_code_dll/README.md).
 
@@ -93,23 +94,29 @@ Full steps, log lines and the source: [source_code_dll](../source_code_dll/READM
 - Traps and boons (Pep Talk, Lucky Charm) hit your **next** career.
 - Checks are sent the moment they happen: a G1 win at the race result screen,
   career checks when the career ends.
+- Team Trials and Legend Races need trained umas: finish a career first, then
+  register a team in Team Trials > Edit Team.
 
-## Back to your normal save
+## The Legend Race ladder
 
-Close the game, turn `mod_archipelago` off, start the game. Turn it on again to
-continue the seed. Custom banners and Legend races (dashboard **Custom**) are for
-your normal save; they never apply on the Archipelago ladder.
+The game's own Legend Races have all ended, so when the server starts it opens
+the ladder's ten Legend Races in your game's `master.mdb` (backed up once to
+`server/server/data/master_before_archipelago.sqlite3.bak`). The game shows them
+after its next login, or right away with the live sync plugin. To put the
+original dates back, see the [server README](../server/README.md#archipelago).
 
 ## Troubleshooting
 
-> [!TIP]
-> If something in the game looks out of date (a hint level, the trainee list,
-> ticket counts), restart the game.
+If something in the game looks out of date (a hint level, the trainee list,
+ticket counts), go back to the title screen, or restart the game.
 
-- **Logs say "refused: InvalidSlot"**: `archipelago_slot` doesn't match the yaml `name`.
+- **"refused: InvalidSlot"** in the server window: the slot doesn't match the yaml `name`.
 - **"cannot reach"**: check the address and port; archipelago.gg rooms change
   port when they restart after inactivity.
-- **A trainee from mail doesn't appear**: restart the game once.
-- **No Legend Race ladder in the game**: the game was open when you saved the
-  switch. Close it, save the switch again, start it.
-- **"The game is reading its data (master.mdb)"**: close the game and try again.
+- **"no account yet: log in to the game once"**: start the game and log in; the
+  server connects to the room right after.
+- **A trainee from mail doesn't appear**: log in again.
+- **No Legend Race in the game**: log in again (or restart the game) so it reads
+  the ladder.
+- **Team Trials error 2801**: you have no team yet; register one in Team Trials > Edit Team.
+- The server's full log is `server/server/logs/server.log`.

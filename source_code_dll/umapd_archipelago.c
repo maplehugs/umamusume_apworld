@@ -1,5 +1,5 @@
 // umapd_archipelago: a Hachimi Edge plugin that keeps the running game in sync
-// with the UmamusumeX server, without a restart or a trip to the title screen.
+// with the private server, without a restart or a trip to the title screen.
 //
 // The server touches two files in the game's hachimi folder:
 // - umapd_master.version after every change it commits to master.mdb (custom

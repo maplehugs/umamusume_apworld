@@ -1,7 +1,7 @@
-"""Archipelago tables shared by the apworld and the UmamusumeX server.
+"""Archipelago tables shared by the apworld and the server.
 
-The source of truth for every id: the server mirrors it, and its tests check that
-the two agree.
+The source of truth for every id: the server keeps a copy
+(server/server/app/archipelago/tables.py) with the same ids.
 Pure data, no imports. Generated from master.mdb (global); ids must never be
 renumbered once a seed exists.
 """

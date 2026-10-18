@@ -1,8 +1,6 @@
 # Showcase
 
-A seed in progress (v0.9.0), played on a local room. Everything below is the
-UmamusumeX dashboard (Mods > Archipelago) and the game itself; nothing is
-installed in the client.
+A seed in progress (v0.9.0), played on a local room.
 
 ## In the game
 
@@ -36,37 +34,9 @@ Cards > Limit Break), one level each, up to four. Here Kitasan Black after two.
 
 ![Kitasan Black uncapped twice with crystals](media/game-uncap-crystal.png)
 
-**A Trainee Awakening takes a random trainee you own to 5 stars, potential 5
-and every hint at its top level.** Before and after, on the trainee select:
+**A Trainee Awakening takes a random trainee you own to 5 stars and potential 5.** Before and after, on the trainee select:
 
 | Before | After |
 |---|---|
 | ![Starters at 3 stars, potential 1](media/game-awaken-before.png) | ![Satono Diamond at 5 stars, potential 5](media/game-awaken-after.png) |
 
-![Satono Diamond's details: potential 5, every hint at level 3](media/game-awaken-details.png)
-
-## In the dashboard
-
-The Mods page. Turning Archipelago on sets the other mods aside and brings them
-back when it's off.
-
-![Mods page](media/dashboard-mods.png)
-
-Room settings and the live connection: seed, items received, checks done, the
-goal, what's queued for the next career and the latest checks.
-
-![Settings and connection](media/dashboard-connection.png)
-
-Permanent buffs (stacking, with their total effect), traps and boons for the
-current and next career, and hints asked straight from the page.
-
-![Buffs, traps and boons, hints](media/dashboard-buffs-hints.png)
-
-Items sent from your checks and items received, with their class and where they came from.
-
-![Sent and received items](media/dashboard-items.png)
-
-The tracker: every check by group, green when it's in logic now, red when it
-still needs items, struck out when done.
-
-![Tracker](media/dashboard-tracker.png)
