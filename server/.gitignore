@@ -32,6 +32,8 @@ debug_responses/
 *.sqlite3-shm
 # Archipelago runtime files (connection status, the ladder rows' own master dates)
 server/data/archipelago_*.json
+# The master.mdb the launcher was pointed at (per machine)
+server/data/master_mdb_*.txt
 
 # tools/career_capture_diff.py's isolated per-run harness DBs
 # (region.use_region("harness*_...")) -- throwaway, never real account data.

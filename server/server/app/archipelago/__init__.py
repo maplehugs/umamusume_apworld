@@ -28,11 +28,13 @@ from __future__ import annotations
 import logging
 import math
 import json
+import os
 import queue
 import random
 import shutil
 import sqlite3
 import time
+from pathlib import Path
 
 from .. import accounts, master_data, region
 from .. import state as state_store
@@ -90,7 +92,9 @@ def start_seed(viewer_id, seed: str) -> bool:
 def _touch_plugin(name: str) -> None:
     """Nudge the optional umapd_archipelago Hachimi plugin (it watches these
     files' write time). No hachimi folder: no-op."""
-    hachimi = master_data.MASTER_MDB_PATH.parents[3] / "hachimi"  # <game>/<x>_Data/Persistent/master/master.mdb
+    # The launcher's, else <game>/<x>_Data/Persistent/master/master.mdb
+    mdb = master_data.MASTER_MDB_PATH
+    hachimi = Path(os.environ.get("UMA_HACHIMI_DIR") or (mdb.parents[3] if len(mdb.parents) > 3 else Path(".")) / "hachimi")
     if hachimi.is_dir():
         try:
             (hachimi / name).write_text(f"{time.time()}\n")

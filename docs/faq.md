@@ -43,3 +43,9 @@ You have no team yet. Finish a career, then register a team in Team Trials > Edi
 **Do other players need anything?**
 Only whoever generates needs the apworld. Players of other games need nothing
 from this repo.
+
+**"master.mdb is missing" / my game data is somewhere else?**
+The launcher looks in the game folder; if it isn't there, it asks you to pick
+your `master.mdb` (a file dialog) and remembers it. With more than one copy it
+uses the newest, and it warns when the one it uses is old (a stale copy serves
+old data). To pick another one later: run the launcher with `--mdb <path>`.

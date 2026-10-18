@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.1
+- Launcher: when the game folder has no `master.mdb`, it asks you to pick it (a
+  file dialog) and remembers it. With more than one copy it uses the newest, and
+  it warns when the one it uses is over 14 days old. `--mdb <path>` picks another.
+- With `master.mdb` outside the game folder, the server still finds `hachimi/`,
+  so the plugin rereads the Legend Race dates.
+
 ## 0.14.0
 Logic changes for new seeds: regenerate to get them.
 - Logic expects much weaker careers without supports (a base-deck career is

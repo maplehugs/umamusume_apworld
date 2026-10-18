@@ -32,6 +32,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.request
 from pathlib import Path
 
@@ -303,23 +304,65 @@ def ensure_race_assets(region: str, persistent: Path | None) -> None:
          "--persistent", persistent, "--output", out])
 
 
+def ask_mdb() -> Path:
+    """A file dialog (the console if there's no Tk) for the user's master.mdb."""
+    if ASSUME_YES:
+        die("master.mdb not found: pass it with --mdb.")
+    say("  Pick your master.mdb: it's in the game's data folder, ...\\Persistent\\master\\master.mdb")
+    say("  (start the game once first if it never downloaded its data).")
+    path = ""
+    try:
+        import tkinter
+        from tkinter import filedialog
+        tk = tkinter.Tk()
+        tk.withdraw()
+        tk.attributes("-topmost", True)
+        path = filedialog.askopenfilename(title="Pick your master.mdb",
+                                          filetypes=[("master.mdb", "master.mdb"), ("All files", "*")])
+        tk.destroy()
+    except Exception:  # no Tk (some Linux Pythons) or no display
+        try:
+            path = input("  Path to master.mdb: ").strip().strip('"')
+        except EOFError:
+            pass
+    if not path or not Path(path).expanduser().is_file():
+        die("master.mdb is required -- the server reads all game data from it. Re-run and pick it, or use --mdb.")
+    return Path(path).expanduser().resolve()
+
+
+def choose_mdb(region: str, default: Path | None) -> Path:
+    """--mdb, else the newest of the one picked before and the game install's
+    (an old copy left behind serves stale data), else ask. Remembered per region."""
+    saved = SERVER / "data" / f"master_mdb_{region}.txt"
+    if os.environ.get("MASTER_MDB_PATH"):  # --mdb
+        mdb = Path(os.environ["MASTER_MDB_PATH"])
+    else:
+        found = {Path(p) for p in (saved.exists() and saved.read_text().strip(), default) if p and Path(p).is_file()}
+        if default and not default.is_file():
+            say(f"  {default} is missing.")
+        mdb = max(found, key=lambda p: p.stat().st_mtime) if found else ask_mdb()
+        for other in found - {mdb}:
+            say(f"  note: also found an older {other}, not used.")
+    say(f"  master.mdb: {mdb}")
+    days = int((time.time() - mdb.stat().st_mtime) // 86400)
+    if days > 14:
+        say(f"  WARNING: this master.mdb was last updated {days} days ago. If the game updated since,")
+        say("  it's the wrong file (or start the game once): run again with --mdb to pick another.")
+    saved.parent.mkdir(parents=True, exist_ok=True)
+    saved.write_text(str(mdb))
+    return mdb
+
+
 def setup_game(region: str, info: dict) -> None:
     step("Game install")
     game = find_game(info)
-    if not game:
-        say(f"  {info['install']} not found in any Steam library.")
-        say("  Set UMA_GAME_DIR to the game folder (the one with the .exe) and re-run,")
-        say("  or point at a master.mdb directly with --mdb.")
-        if not os.environ.get("MASTER_MDB_PATH"):
-            die("master.mdb is required -- the server reads all game data from it.")
-        ensure_race_assets(region, None)
-        return
-    say(f"  found {game}")
-    mdb = game / info["data"] / "Persistent" / "master" / "master.mdb"
-    if not os.environ.get("MASTER_MDB_PATH"):
-        if not mdb.exists():
-            die(f"{mdb} is missing. Start the game once so it downloads its data, then re-run.")
-        os.environ["MASTER_MDB_PATH"] = str(mdb)
+    if game:
+        say(f"  found {game}")
+        os.environ["UMA_HACHIMI_DIR"] = str(game / "hachimi")  # for the server, wherever master.mdb is
+    else:
+        say(f"  {info['install']} not found in any Steam library (--game-dir sets the folder with the .exe).")
+    mdb = choose_mdb(region, game and game / info["data"] / "Persistent" / "master" / "master.mdb")
+    os.environ["MASTER_MDB_PATH"] = str(mdb)
     if region == "jp" and not os.environ.get("UMA_EN_TEXT_MDB"):
         gl = find_game(REGIONS["global"]) if not os.environ.get("UMA_GAME_DIR") else None
         gl_mdb = gl and gl / REGIONS["global"]["data"] / "Persistent" / "master" / "master.mdb"
@@ -327,7 +370,9 @@ def setup_game(region: str, info: dict) -> None:
             os.environ["UMA_EN_TEXT_MDB"] = str(gl_mdb)
         else:
             say("  note: Global isn't installed, so JP career events match on Japanese text only.")
-    ensure_race_assets(region, game / info["data"] / "Persistent")
+    # The assets sit next to the master folder, wherever the game keeps its data.
+    persistent = mdb.parent.parent if (mdb.parent.parent / "meta").exists() else game and game / info["data"] / "Persistent"
+    ensure_race_assets(region, persistent)
 
 
 # --- 5. start --------------------------------------------------------------------
@@ -355,7 +400,6 @@ def warn_knobs() -> None:
 def open_panel_when_ready(port: int, server: subprocess.Popen) -> None:
     """The server hosts the admin panel itself (app/admin_lifecycle.py); open
     it in the browser once it answers."""
-    import time
     import webbrowser
     url = f"http://localhost:{port}"
     for _ in range(240):
@@ -414,7 +458,7 @@ def main() -> None:
     if args.mdb:
         mdb = Path(args.mdb).expanduser().resolve()
         if not mdb.is_file():
-            die(f"--mdb: {mdb} not found")
+            die(f"--mdb: {mdb} not found")  # remembered: later runs use it without --mdb
         os.environ["MASTER_MDB_PATH"] = str(mdb)
     if args.game_dir:
         os.environ["UMA_GAME_DIR"] = str(Path(args.game_dir).expanduser().resolve())
