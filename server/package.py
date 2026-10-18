@@ -49,6 +49,11 @@ for crate in ENGINES:
 files = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "server"],
                        capture_output=True, text=True, check=True).stdout.split("\0")
 files = [f for f in files if f and f != "server/package.py"]
+# The plugin too, so the panel's Game setup can install it and check it's this release's.
+dll = ROOT / "dist" / "umapd_archipelago.dll"
+if not dll.is_file():
+    sys.exit("dist/umapd_archipelago.dll is missing: run python apworld/build.py first")
+engines["server/plugin/umapd_archipelago.dll"] = dll
 
 top = f"umaps-archipelago-server-{os_name}-x86_64"
 out = ROOT / "dist" / (top + (".zip" if os_name == "windows" else ".tar.gz"))

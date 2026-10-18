@@ -94,6 +94,7 @@ server/certs/
 *.sqlite3
 *.sqlite3-*
 plugin/hachimi_redirect.dll
+plugin/umapd_archipelago.dll
 plugin/hachimi_redirect/target/
 server/data/custom_support/packs/
 server/data/jp/custom_support/packs/

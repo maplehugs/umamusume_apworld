@@ -4,9 +4,13 @@ tracker, goal, buffs, traps and boons, sent and received items, hints."""
 
 from __future__ import annotations
 
+import hashlib
 import json
+import shutil
+import time
+from pathlib import Path
 
-from app import archipelago
+from app import archipelago, master_data
 from app import state as state_store
 from app.archipelago import client, tables
 from app.handlers import single_mode_team
@@ -16,6 +20,9 @@ from .career_tuning import _read, _write
 from .common import OpError
 
 KEYS = ("archipelago_server", "archipelago_slot", "archipelago_password")
+# The release's own plugin, shipped in the server package (server/package.py).
+BUNDLED_DLL = Path(__file__).resolve().parents[2] / "plugin" / "umapd_archipelago.dll"
+DLLS = ("hachimi_redirect.dll", "umapd_archipelago.dll")
 
 
 def _status() -> dict:
@@ -92,3 +99,90 @@ def say(viewer, args):
     with client.say_path().open("a") as f:
         f.write(text.replace("\n", " ") + "\n")
     return {"ok": True}
+
+
+# ---- game setup: the Hachimi plugins and the master.mdb the server reads
+
+def _sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def _libraries(cfg: Path) -> list:
+    return json.loads(cfg.read_text(encoding="utf-8-sig")).get("load_libraries") or []
+
+
+@op("archipelago.setup")
+def setup(viewer, args):
+    """Each thing the game needs, ok or not, and whether Fix can sort it out."""
+    hachimi = archipelago.hachimi_dir()
+    rows, fixable = [], False
+
+    def row(ok, name, detail):
+        rows.append({"ok": bool(ok), "name": name, "detail": detail})
+
+    row(hachimi.is_dir(), "Hachimi folder", str(hachimi) if hachimi.is_dir()
+        else f"{hachimi} not found: install Hachimi Edge and start the game once")
+    redirect = hachimi / DLLS[0]
+    row(redirect.is_file(), DLLS[0], "installed" if redirect.is_file()
+        else "missing: download it from UmamusumePS's plugin release (docs/setup.md, step 2)")
+    plugin = hachimi / DLLS[1]
+    if not plugin.is_file():
+        row(False, DLLS[1], "missing" + (": Fix installs it" if BUNDLED_DLL.is_file() else ""))
+        fixable |= BUNDLED_DLL.is_file()
+    elif not BUNDLED_DLL.is_file():
+        row(True, DLLS[1], f"installed (sha256 {_sha(plugin)[:12]}...)")
+    elif _sha(plugin) == _sha(BUNDLED_DLL):
+        row(True, DLLS[1], "installed, the same file as this release")
+    else:
+        row(False, DLLS[1], "a different version from this release's: Fix replaces it")
+        fixable = True
+    cfg = hachimi / "config.json"
+    try:
+        libs = {Path(x.replace("\\", "/")).name.lower() for x in _libraries(cfg)}
+        missing = [d for d in DLLS if d not in libs]
+        row(not missing, "config.json load_libraries",
+            "lists both plugins" if not missing else f"doesn't list {', '.join(missing)}: Fix adds it")
+        fixable |= bool(missing)
+    except OSError:
+        row(False, "config.json", "not found: start the game once with Hachimi so it creates it")
+    except ValueError:
+        row(False, "config.json", "not valid JSON: fix it by hand or delete it so Hachimi makes a new one")
+    mdb = master_data.MASTER_MDB_PATH
+    try:
+        days = int((time.time() - mdb.stat().st_mtime) // 86400)
+        row(days <= 14, "master.mdb", f"{mdb}, updated {days} days ago" + (
+            "" if days <= 14 else ": if the game updated since, it's the wrong file (start the launcher with --mdb)"))
+    except OSError:
+        row(False, "master.mdb", f"{mdb} not found")
+    return {"rows": rows, "fixable": fixable}
+
+
+@op("archipelago.setup_fix")
+def setup_fix(viewer, args):
+    """Install this release's umapd_archipelago.dll and list the plugins in
+    config.json (backed up once to config.json.bak)."""
+    hachimi = archipelago.hachimi_dir()
+    if not hachimi.is_dir():
+        raise OpError(f"{hachimi} not found: install Hachimi Edge and start the game once.")
+    plugin = hachimi / DLLS[1]
+    if BUNDLED_DLL.is_file() and not (plugin.is_file() and _sha(plugin) == _sha(BUNDLED_DLL)):
+        try:
+            shutil.copyfile(BUNDLED_DLL, plugin)
+        except OSError as e:
+            raise OpError(f"Could not copy {DLLS[1]} (close the game first): {e}") from e
+    cfg = hachimi / "config.json"
+    if cfg.is_file():
+        try:
+            data = json.loads(cfg.read_text(encoding="utf-8-sig"))
+        except ValueError as e:
+            raise OpError("hachimi/config.json isn't valid JSON: fix it by hand.") from e
+        libs = data.setdefault("load_libraries", [])
+        have = {Path(x.replace("\\", "/")).name.lower() for x in libs}
+        add = [f"hachimi\\{d}" for d in DLLS if d not in have and (hachimi / d).is_file()]
+        if add:
+            bak = cfg.with_name("config.json.bak")
+            if not bak.exists():
+                shutil.copyfile(cfg, bak)
+            libs += add
+            cfg.write_text(json.dumps(data, indent=4, ensure_ascii=False), encoding="utf-8")
+    return setup(viewer, args)

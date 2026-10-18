@@ -36,8 +36,8 @@ print(out)
 dll = ROOT / "dist" / "umapd_archipelago.dll"
 src = ROOT / "source_code_dll" / "umapd_archipelago.c"
 try:
-    subprocess.run(["uvx", "--from", "ziglang", "python", "-m", "ziglang", "cc", "-target", "x86_64-windows-gnu",
-                    "-shared", "-O2", "-o", str(dll), str(src)], check=True)
+    subprocess.run(["uvx", "--from", "ziglang==0.17.0", "python", "-m", "ziglang", "cc", "-target", "x86_64-windows-gnu",
+                    "-shared", "-O2", "-s", "-o", str(dll), str(src)], check=True)
     for junk in (dll.with_suffix(".lib"), dll.with_suffix(".pdb")):
         junk.unlink(missing_ok=True)
     print(dll)

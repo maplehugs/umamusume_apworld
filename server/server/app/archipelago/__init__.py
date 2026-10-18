@@ -89,12 +89,17 @@ def start_seed(viewer_id, seed: str) -> bool:
     return True
 
 
-def _touch_plugin(name: str) -> None:
-    """Nudge the optional umapd_archipelago Hachimi plugin (it watches these
-    files' write time). No hachimi folder: no-op."""
-    # The launcher's, else <game>/<x>_Data/Persistent/master/master.mdb
+def hachimi_dir() -> Path:
+    """The game's hachimi/ folder: the launcher's, else from
+    <game>/<x>_Data/Persistent/master/master.mdb."""
     mdb = master_data.MASTER_MDB_PATH
-    hachimi = Path(os.environ.get("UMA_HACHIMI_DIR") or (mdb.parents[3] if len(mdb.parents) > 3 else Path(".")) / "hachimi")
+    return Path(os.environ.get("UMA_HACHIMI_DIR") or (mdb.parents[3] if len(mdb.parents) > 3 else Path(".")) / "hachimi")
+
+
+def _touch_plugin(name: str) -> None:
+    """Nudge the umapd_archipelago Hachimi plugin (it watches these files'
+    write time). No hachimi folder: no-op."""
+    hachimi = hachimi_dir()
     if hachimi.is_dir():
         try:
             (hachimi / name).write_text(f"{time.time()}\n")

@@ -38,6 +38,8 @@ function apPage(settings) {
       `<span class="grow"></span><a class="btn sm" href="/logs.zip" download="umaps-archipelago-logs.zip"
         title="server.log and the connection status, for a bug report">Download logs</a>
       <button class="btn sm" type="button" data-a="check">Check connection</button>`)}
+    ${apSec("Game setup", `<div class="ap-panel ap-col" id="ap-setup"><span class="faint">Checking...</span></div>`,
+      `<span class="grow"></span><button class="btn sm" type="button" data-a="setup">Check files</button>`)}
     ${apSec("Room", `<div class="ap-panel">
       ${FIELDS.map(([k, label, help]) => `<div class="ed-row"><label style="flex:1">${esc(label)}<span class="faint" style="font-size:11px">${esc(help)}</span></label>
         <input class="wide" data-k="${k}" type="${k.endsWith("password") ? "password" : "text"}" value="${esc(settings[k] ?? "")}"></div>`).join("")}
@@ -273,6 +275,19 @@ export const archipelagoWin = {
       }).join("");
     }
 
+    // Game setup: the Hachimi plugins, config.json and master.mdb, with a Fix
+    // that installs this release's plugin and lists both in config.json.
+    async function checkSetup(btn, fix) {
+      const r = await act(btn, fix ? "Fixing the game setup" : "Checking the game setup",
+        () => call(fix ? "archipelago.setup_fix" : "archipelago.setup", {}, GL), fix ? "Game setup fixed: restart the game" : null);
+      const box = $("#ap-setup");
+      if (!r || !box) return;
+      box.innerHTML = `<ul class="ap-list">${r.rows.map((x) => `<li><span class="ap-dot ${x.ok ? "ap-logic" : "ap-locked"}"></span>
+          <b>${esc(x.name)}</b> <span class="faint">${esc(x.detail)}</span></li>`).join("")}</ul>
+        ${r.fixable ? `<div class="row"><span class="faint">Close the game first.</span><span class="grow"></span>
+          <button class="btn primary sm" type="button" data-a="setup-fix">Fix</button></div>` : ""}`;
+    }
+
     async function askHint(btn) {
       const item = $("#ap-hint-item").value.trim();
       if (!item) return;
@@ -287,6 +302,8 @@ export const archipelagoWin = {
       const b = e.target.closest("[data-a]");
       if (!b) return;
       if (b.dataset.a === "check") return checkArchipelago();
+      if (b.dataset.a === "setup") return checkSetup(b);
+      if (b.dataset.a === "setup-fix") return checkSetup(b, true);
       if (b.dataset.a === "hint") return askHint(b);
       if (b.dataset.a === "save") {
         const r = await act(b, "Saving Archipelago settings", () => call("archipelago.set", { values: values() }, GL), "Archipelago settings saved");
@@ -305,7 +322,7 @@ export const archipelagoWin = {
 
     win.refresh = load;
     body.innerHTML = empty("Loading…");
-    load();
+    load().then(() => checkSetup());
     const timer = setInterval(() => checkArchipelago(true), 4000);
     return () => clearInterval(timer);
   },

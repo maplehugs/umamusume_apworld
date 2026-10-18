@@ -56,6 +56,9 @@ uvx --from ziglang python -m ziglang cc -target x86_64-windows-gnu -shared -O2 \
 
    Check a downloaded DLL against the release's `SHA256SUMS`:
    `sha256sum -c --ignore-missing SHA256SUMS` (Windows: `Get-FileHash umapd_archipelago.dll`).
+   The build is reproducible: `python apworld/build.py` (Zig 0.17.0, no debug info,
+   no timestamp) gives a byte-identical DLL from the same source, so the hash
+   proves the release DLL is this code.
 
 3. In `<game>/hachimi/config.json`, list it (next to any other plugin):
    `"load_libraries": ["hachimi\\umapd_archipelago.dll"]`.

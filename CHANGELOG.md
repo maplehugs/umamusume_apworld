@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.14.2
+- Web panel, Archipelago page: new **Game setup** section. It checks `hachimi/`,
+  both plugins, `config.json` and `master.mdb`. **Fix** installs this release's
+  `umapd_archipelago.dll` and lists both plugins in `config.json` (backed up to
+  `config.json.bak`). The server packages now include the DLL.
+- `umapd_archipelago.dll` builds reproducibly (Zig 0.17.0, no debug info): the
+  same source gives the same SHA256.
+
 ## 0.14.1
 - Launcher: when the game folder has no `master.mdb`, it asks you to pick it (a
   file dialog) and remembers it. With more than one copy it uses the newest, and

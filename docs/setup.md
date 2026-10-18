@@ -27,9 +27,11 @@ When it's up, the web panel opens at <http://localhost:8189>.
 1. Install Hachimi Edge and start the game once, so `<game>/hachimi/` exists.
 2. Download `hachimi_redirect.dll` from [UmamusumePS's plugin release](https://github.com/systemless10/UmamusumePS/releases/tag/plugin)
    (or build it from `server/plugin/hachimi_redirect`) and copy it into `<game>/hachimi/`.
-3. **Required:** download `umapd_archipelago.dll` from the
-   [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest) and copy it
-   into `<game>/hachimi/`. It makes the game pick up seed switches, items and the Legend Race
+3. **Required:** `umapd_archipelago.dll` in `<game>/hachimi/`. Easiest: once the server
+   is running, the panel's Archipelago page > **Game setup** checks your files and its
+   **Fix** button installs it and lists both plugins in `config.json` (step 4). Or download it
+   from the [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest)
+   and copy it there. It makes the game pick up seed switches, items and the Legend Race
    ladder ([details](../source_code_dll/README.md)).
    Optional: the release's `SHA256SUMS` checks the download is the exact file published
    (`sha256sum -c --ignore-missing SHA256SUMS`; Windows: `Get-FileHash umapd_archipelago.dll`
