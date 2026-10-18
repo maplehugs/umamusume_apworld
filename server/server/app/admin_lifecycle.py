@@ -7,9 +7,20 @@ from pathlib import Path
 import sys
 import threading
 
+from fastapi import Request
+from fastapi.responses import PlainTextResponse, RedirectResponse
+
 from . import region, state
 
 log = logging.getLogger("uma-server")
+
+
+async def panel_redirect(request: Request):
+    """GET / is a browser on the game's address: send it to the admin panel."""
+    panel = getattr(request.app.state, "admin_panel", None)
+    if panel is None:
+        return PlainTextResponse("This is the game server (for the Hachimi redirect). The admin panel is off.")
+    return RedirectResponse(f"http://localhost:{panel.port}")
 
 
 @asynccontextmanager

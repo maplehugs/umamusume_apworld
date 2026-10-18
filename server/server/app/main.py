@@ -18,7 +18,7 @@ from fastapi import FastAPI, Request, Response
 from . import crypto
 from . import dispatch as pipeline
 from . import region
-from .admin_lifecycle import lifespan
+from .admin_lifecycle import lifespan, panel_redirect
 
 # This is the GLOBAL server. JP runs as its own process with its own data
 # (app/jp/server.py, `./start-server.sh --region jp`); see app/region.py.
@@ -45,6 +45,7 @@ log = logging.getLogger("uma-server")
 app = FastAPI(title="Umamusume private server (dev)", lifespan=lifespan)
 from . import custom_support, custom_support_http
 app.include_router(custom_support_http.router)
+app.get("/", include_in_schema=False)(panel_redirect)
 
 
 @app.post("/{endpoint_path:path}")

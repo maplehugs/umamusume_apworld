@@ -363,8 +363,9 @@ def open_panel_when_ready(port: int, server: subprocess.Popen) -> None:
             return
         with socket.socket() as s:
             if s.connect_ex(("127.0.0.1", port)) == 0:
-                say(f"  admin panel: {url} (opening in your browser)")
-                webbrowser.open(url)
+                step(f"Admin panel: {url}  <- open this in your browser")
+                if not webbrowser.open(url):
+                    say("  (couldn't open a browser: open the link above yourself)")
                 return
         time.sleep(0.5)
 
@@ -386,6 +387,7 @@ def start(region: str, info: dict, key: Path, cert: Path, reload: bool, admin: b
         args += ["--reload", "--reload-dir", "app"]
     step(f"Starting the {region} server on https://{HOST}:{info['port']}  (Ctrl-C to stop)")
     say(f"  In the game's Hachimi menu, set the redirect server to https://{HOST}:{info['port']}")
+    say("  (that address is for the game; the admin panel opens in your browser)")
     server = subprocess.Popen(args, cwd=SERVER)
     if admin:
         panel_port = int(os.environ.get("UMA_ADMIN_PORT", info["admin_port"]))

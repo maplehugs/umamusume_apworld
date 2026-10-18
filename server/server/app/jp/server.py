@@ -22,7 +22,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request, Response
 
 from .. import region
-from ..admin_lifecycle import lifespan
+from ..admin_lifecycle import lifespan, panel_redirect
 
 if region.PROCESS_REGION != "jp":
     raise RuntimeError("app.jp.server needs UMA_REGION=jp (use ./start-server.sh --region jp)")
@@ -82,6 +82,7 @@ def flatten_request_common(payload: dict) -> dict:
 
 
 app = FastAPI(title="Umamusume private server (JP)", lifespan=lifespan)
+app.get("/", include_in_schema=False)(panel_redirect)
 from .. import custom_support, custom_support_http
 app.include_router(custom_support_http.router)
 arming.start()
