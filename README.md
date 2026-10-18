@@ -18,6 +18,7 @@ is one great career (default: rank score 20000, UG1).
 The server applies the items and reports the checks. Every account on it plays
 Archipelago; a new seed starts that account over.
 
+Screenshots of it running: [docs/showcase.md](docs/showcase.md).
 Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE) (attach the zip from the
 panel's **Download logs** button).
 
@@ -48,6 +49,7 @@ Full walkthrough: [docs/setup.md](docs/setup.md).
 
 ## Docs
 
+- [Showcase](docs/showcase.md): screenshots of the game and the web panel.
 - [How it works](docs/how-it-works.md): what an apworld is and how the pieces talk.
 - [Setup](docs/setup.md): from nothing to playing.
 - [Options](docs/options.md): every yaml option, and how to exclude checks.
