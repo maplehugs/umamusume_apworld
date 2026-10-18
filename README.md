@@ -14,7 +14,7 @@ this repo:
 > **Early and rough.** The Archipelago basics work (checks, items, generating
 > and playing a seed), but it needs a lot more testing and balancing, and parts
 > of it are still broken. If something fails, please report it on
-> [Discord](https://discord.gg/tAqwpQCgaE) with the zip from the panel's
+> [Discord](https://discord.gg/vb67v9BH5X) with the zip from the panel's
 > **Download logs** button.
 
 Every career is a run. Winning G1s and finishing careers sends items to the
@@ -26,7 +26,7 @@ The server applies the items and reports the checks. Every account on it plays
 Archipelago; a new seed starts that account over.
 
 Screenshots of it running: [docs/showcase.md](docs/showcase.md).
-Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE) (attach the zip from the
+Questions and bugs: [Discord](https://discord.gg/vb67v9BH5X) (attach the zip from the
 panel's **Download logs** button).
 
 ## Quick start
