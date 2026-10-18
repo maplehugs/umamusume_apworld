@@ -51,12 +51,13 @@ A career's rank score mostly depends on your buffs and your deck, so logic doesn
 count items: it estimates the best rank score you can reach with what you have:
 
 ```
-estimate = base + 450 per training item + 400 per starting-stats item
-         + 300 per stat-cap item + 300 per SSR support card (up to 6)
+estimate = base + 300 per training item + 400 per starting-stats item
+         + 300 per stat-cap item + 1200 per maxed SSR support card (up to 6)
          + 1500 with a non-URA scenario
 ```
 
-`base` is 10500 / 11500 / 12500 for relaxed / normal / expert
+An SSR not yet maxed counts half; the other half once 4 crystals can max it.
+`base` is 7500 / 8500 / 9500 for relaxed / normal / expert
 (`logic_difficulty`). A rank check (or the goal) is "in logic" once the estimate
 reaches it. A goal above what every buff could reach only asks for every buff.
 

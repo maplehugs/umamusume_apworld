@@ -25,9 +25,12 @@ LOCATION_GROUPS = {
     "Team Trials": {T.team_trials_location(n) for n in range(1, T.TEAM_TRIALS_CHECKS + 1)},
     "Trainees": {T.trainee_location(c) for c in T.TRAINEES},
 }
-BASE_SCORE = {0: 10500, 1: 11500, 2: 12500}  # logic_difficulty -> unbuffed career
+# A base-deck career with 3* umas is ~8.5k: supports carry the rest, so the
+# goal needs a few maxed SSRs (none: ~16.5k at most on normal).
+BASE_SCORE = {0: 7500, 1: 8500, 2: 9500}  # logic_difficulty -> unbuffed career
+TRAINING_BONUS = 300  # each training item
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
-SUPPORT_BONUS, SUPPORT_MAX = 300, 6  # each maxed SSR (a deck holds 6)
+SUPPORT_BONUS, SUPPORT_MAX = 1200, 6  # each maxed SSR (a deck holds 6)
 CRYSTAL = "Rainbow Uncap Crystal"  # one SSR limit break: 4 max a card
 # Filler is small permanent buffs and next-career boons: support cards already
 # arrive maxed, and mail items (Monies, clocks...) did nothing for a run.
@@ -97,7 +100,7 @@ class UmamusumeWorld(World):
     def estimate(self, state, scenario: int | None = None) -> int:
         p = self.player
         est = BASE_SCORE[self.options.logic_difficulty.value]
-        est += 450 * sum(state.count(n, p) for n in TRAINING)
+        est += TRAINING_BONUS * sum(state.count(n, p) for n in TRAINING)
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
         cards = min(SUPPORT_MAX, len(self.start_supports) + state.count_group("Supports", p))
@@ -112,10 +115,14 @@ class UmamusumeWorld(World):
             owned = scenario != 1
         return est + (SCENARIO_BONUS if owned else 0)
 
+    def reaches(self, state, score: int) -> bool:
+        """estimate >= score; a score past every buff only asks for every buff."""
+        return self.estimate(state) >= min(score, self.best)
+
     def max_estimate(self, scenario: int | None = None) -> int:
         return (
             BASE_SCORE[self.options.logic_difficulty.value]
-            + 450 * 3 * len(TRAINING)
+            + TRAINING_BONUS * 3 * len(TRAINING)
             + 400 * 5
             + 300 * self.caps
             + self.max_support_bonus()
@@ -132,6 +139,7 @@ class UmamusumeWorld(World):
         return 0 if self.options.maxed_supports else self.options.uncap_crystals.value
 
     def create_regions(self) -> None:
+        self.best = self.max_estimate()  # for reaches
         menu = Region("Menu", self.player, self.multiworld)
         p, o = self.player, self.options
 
@@ -142,9 +150,9 @@ class UmamusumeWorld(World):
             menu.locations.append(loc)
             return loc
 
-        # A rank_score goal ends the game at that score: a rank check above it
-        # would hold its item past the goal.
-        cap = o.goal_rank_score.value if o.goal == o.goal.option_rank_score else 10**9
+        # A rank_score goal ends the game at that score: a rank check at or just
+        # under it (UG 19600 for a 20000 goal) comes with the win, its item too late.
+        cap = o.goal_rank_score.value - 500 if o.goal == o.goal.option_rank_score else 10**9
         if o.g1_checks:
             for g1 in tables.G1_RACES:
                 add(tables.g1_location(g1))
@@ -168,19 +176,21 @@ class UmamusumeWorld(World):
             for tier, score in tables.GLOBAL_RANKS:
                 if score > cap:
                     continue
-                add(tables.global_rank_location(tier), lambda s, score=score: self.estimate(s) >= score)
+                add(tables.global_rank_location(tier), lambda s, score=score: self.reaches(s, score))
         if o.unique_race_checks:
             for n in tables.UNIQUE_RACE_MILESTONES:  # ~8 wins per career
-                add(tables.unique_races_location(n), lambda s, n=n: self.estimate(s) >= 9000 + 100 * n)
+                add(tables.unique_races_location(n), lambda s, n=n: self.reaches(s, 9000 + 100 * n))
         if o.legend_ladder:
             # The rival is raced with one of your trained umas: in logic once your
             # careers are expected to reach that rival's rank.
             for tier, rank_id, _row, _stats in tables.LEGEND_LADDER:
+                if o.goal == o.goal.option_legend_race and rank_id == tables.LEGEND_LADDER[-1][1]:
+                    continue  # beating SS+ is the goal itself
                 need = tables.LEGEND_RANK_SCORE[rank_id]
-                add(tables.legend_location(tier), lambda s, need=need: self.estimate(s) >= need)
+                add(tables.legend_location(tier), lambda s, need=need: self.reaches(s, need))
         if o.fan_checks:  # ~250k fans per career
             for n in tables.FAN_MILESTONES:
-                add(tables.fans_location(n), lambda s, n=n: self.estimate(s) >= tables.fans_logic(n))
+                add(tables.fans_location(n), lambda s, n=n: self.reaches(s, tables.fans_logic(n)))
         # One race won per check, in the multiworld like any other; with
         # team_trials_roulette, our own filler instead (team_trials_trap_percentage
         # of it traps, shuffled, never progression).
@@ -192,7 +202,7 @@ class UmamusumeWorld(World):
             self.random.shuffle(roulette)
         for n in range(1, tt + 1):  # ~3 races won per match
             loc = add(tables.team_trials_location(n),
-                      lambda s, n=n: self.estimate(s) >= 11000 + 300 * min(n // 3, 10))
+                      lambda s, n=n: self.reaches(s, 11000 + 300 * min(n // 3, 10)))
             if roulette:
                 loc.place_locked_item(self.create_item(roulette[n - 1]))
         for card in self.starters:
@@ -205,17 +215,14 @@ class UmamusumeWorld(World):
             scenarios = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
             goal = add("Goal", lambda s: s.has_all(scenarios, p))
         elif o.goal == o.goal.option_legend_race:
-            goal = add("Goal", lambda s: self.estimate(s) >= 19200)  # the SS+ rival's rank
+            goal = add("Goal", lambda s: self.reaches(s, 19200))  # the SS+ rival's rank
         elif o.goal == o.goal.option_g1_collector:
             if not o.g1_checks:
                 raise Exception(f"{self.player_name}: g1_collector needs g1_checks on")
             need = o.goal_g1_count.value
-            goal = add("Goal", lambda s: self.estimate(s) >= 11000 + 150 * need)
+            goal = add("Goal", lambda s: self.reaches(s, 11000 + 150 * need))
         else:
-            # A goal past what every buff can be expected to reach is still the goal,
-            # but logic only asks for every buff.
-            score = min(o.goal_rank_score.value, self.max_estimate())
-            goal = add("Goal", lambda s: self.estimate(s) >= score)
+            goal = add("Goal", lambda s: self.reaches(s, o.goal_rank_score.value))
         goal.place_locked_item(UmaItem("Victory", IC.progression, None, p))
         self.multiworld.completion_condition[p] = lambda s: s.has("Victory", p)
         self.multiworld.regions.append(menu)
@@ -297,6 +304,8 @@ class UmamusumeWorld(World):
             "maxed_supports": bool(o.maxed_supports),
             "g1_per_scenario": bool(o.g1_checks and o.g1_per_scenario),
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
+            "logic_training": TRAINING_BONUS,
+            "logic_support": SUPPORT_BONUS,
             "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,
             "starting_trainees": self.starters,

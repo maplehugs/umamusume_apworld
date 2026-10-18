@@ -579,19 +579,21 @@ def on_career_finished(full_state: dict, chara_info: dict | None, record: dict |
 
 _LOGIC_BASE_DEFAULT = 11500
 _SCENARIO_BONUS = 1500
-_SUPPORT_BONUS, _SUPPORT_MAX = 300, 6  # each maxed SSR, up to a deck
+_SUPPORT_BONUS, _SUPPORT_MAX = 300, 6  # each maxed SSR, up to a deck (seeds before 0.14.0)
 
 
 def logic_estimate(st: dict, scenario: int | None = None) -> int:
     have = lambda name: _count(st, tables.PROGRESSIVE[name])  # noqa: E731
-    est = int(st.get("slot_data", {}).get("logic_base") or _LOGIC_BASE_DEFAULT)
-    est += 450 * sum(have(f"Progressive {s} Training") for s in tables.STATS)
+    sd = st.get("slot_data", {})
+    est = int(sd.get("logic_base") or _LOGIC_BASE_DEFAULT)
+    support = int(sd.get("logic_support") or _SUPPORT_BONUS)
+    est += int(sd.get("logic_training") or 450) * sum(have(f"Progressive {s} Training") for s in tables.STATS)
     est += 400 * have("Progressive Starting Stats") + 300 * have("Progressive Stat Cap")
     supports = st.get("supports_received", 0) + len(st.get("slot_data", {}).get("starting_supports") or [])
     if _maxed_supports(st):
-        est += _SUPPORT_BONUS * min(_SUPPORT_MAX, supports)
+        est += support * min(_SUPPORT_MAX, supports)
     else:  # half for the card, half once 4 crystals can max it
-        est += _SUPPORT_BONUS // 2 * (min(_SUPPORT_MAX, supports) + min(_SUPPORT_MAX, _count(st, _CRYSTAL_ID) // 4))
+        est += support // 2 * (min(_SUPPORT_MAX, supports) + min(_SUPPORT_MAX, _count(st, _CRYSTAL_ID) // 4))
     owned = starting_scenario(st) != 1 or any(_count(st, sid) for sid in tables.SCENARIO_ITEM if sid != 1)
     if (owned if scenario is None else scenario != 1):
         est += _SCENARIO_BONUS
@@ -635,7 +637,7 @@ def tracker(full_state: dict) -> list:
     group("Different races",
           [(tables.unique_races_location(n), est >= 9000 + 100 * n) for n in tables.UNIQUE_RACE_MILESTONES])
     group("Fans", [(tables.fans_location(n), est >= tables.fans_logic(n)) for n in tables.FAN_MILESTONES])
-    group("Team Trials", [(tables.team_trials_location(n), True) for n in range(1, tables.TEAM_TRIALS_CHECKS + 1)])
+    group("Team Trials", [(tables.team_trials_location(n), est >= 11000 + 300 * min(n // 3, 10)) for n in range(1, tables.TEAM_TRIALS_CHECKS + 1)])
     group("Legend Race", [(tables.legend_location(t), est >= tables.LEGEND_RANK_SCORE[rank])
                           for t, rank, _row, _stats in tables.LEGEND_LADDER])
     have = set(starters(st)) | set(st["trainees"])

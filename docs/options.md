@@ -7,7 +7,7 @@ brackets.
 
 | Option | Values | What it does |
 |---|---|---|
-| `goal` | **rank_score**, g1_collector, all_scenarios, legend_race | Finish one career at `goal_rank_score` (rank checks above that score aren't generated, so nothing sits past the goal); win `goal_g1_count` different G1s across careers; finish a career in each of the 4 scenarios; or beat the SS+ Legend Race rival (needs `legend_ladder`). |
+| `goal` | **rank_score**, g1_collector, all_scenarios, legend_race | Finish one career at `goal_rank_score` (rank checks within 500 of that score or above aren't generated: they would come with the win); win `goal_g1_count` different G1s across careers; finish a career in each of the 4 scenarios; or beat the SS+ Legend Race rival (needs `legend_ladder`; that rung is the goal, not a check). |
 | `goal_rank_score` | 14500-23900 [**20000**] | S is 14500, SS 17500, UG 19600, UG1 20000. 21000+ adds 2 Progressive Stat Cap items. |
 | `goal_g1_count` | 5-34 [**24**] | For g1_collector (needs `g1_checks` on). |
 | `logic_difficulty` | relaxed, **normal**, expert | How strong logic expects an unbuffed career to be. relaxed puts more buffs before each rank. |

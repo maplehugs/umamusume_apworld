@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.14.0
+Logic changes for new seeds: regenerate to get them.
+- Logic expects much weaker careers without supports (a base-deck career is
+  ~8.5k): base 7500 / 8500 / 9500 (relaxed / normal / expert), 300 per training
+  item, 1200 per maxed SSR (half until 4 crystals can max it). A 20000 goal
+  needs about 3 maxed SSRs on normal, so cards can no longer sit behind ranks
+  you can't reach without them.
+- Rank checks within 500 of a `rank_score` goal aren't generated (UG 19600 for
+  a 20000 goal came with the win). With `legend_race`, the SS+ rival is the goal,
+  not a check.
+- Checks and goals past what every buff could reach (weak settings: few SSRs,
+  no crystals) only ask for every buff instead of failing generation.
+- Web panel tracker: Team Trials checks show whether they are in logic.
+
 ## 0.13.1
 - Fix: when a seed has fewer checks than items, training and starting stats are
   now the last items moved to start inventory, so the goal is no longer in
