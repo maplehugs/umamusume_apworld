@@ -1,0 +1,745 @@
+{
+ "_generated_by": "tools/gen_concert_unlocks.py -- edit RULES there, not this file",
+ "songs": [
+  {
+   "music_id": 1001,
+   "title": "Umapyoi Legend",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     910201,
+     910202,
+     910203,
+     910204,
+     910205,
+     910206,
+     910207,
+     910208,
+     910209,
+     910210,
+     910211,
+     910212,
+     910213,
+     910214,
+     910215,
+     910216,
+     910217,
+     910218,
+     910219,
+     910220,
+     910221,
+     910222,
+     910223,
+     910224,
+     910225,
+     910226,
+     910227,
+     910228,
+     910229,
+     910230,
+     910231,
+     910232,
+     910233,
+     910234,
+     910235,
+     910236,
+     910237,
+     910238,
+     910239,
+     910240,
+     910241
+    ]
+   },
+   "evidence": "CAPTURE JP 09-01 #0839: add_music 1001 on the turn-78 URA finals race_end (program 2207, instance 910207).",
+   "wiki": "Get first place in the URA Finale Finals."
+  },
+  {
+   "music_id": 1004,
+   "title": "Never Looking Back",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1001,
+    "episode": 6,
+    "episode_ids": {
+     "global": 6,
+     "jp": 6
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 6 of the Half Anniversary Story ."
+  },
+  {
+   "music_id": 1005,
+   "title": "Brilliant Phantasia",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100401,
+     100901,
+     101401
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Oka Sho Japanese Oaks Shuka Sho"
+  },
+  {
+   "music_id": 1006,
+   "title": "Make Debut!",
+   "kind": "win_grade_at_most",
+   "params": {
+    "grade": 200
+   },
+   "evidence": "CAPTURE JP 09-01 #0268: add_music 1006 on the Junior Make Debut race_end (grade 900). race.grade 200=G2 .. 900=debut.",
+   "wiki": "Get first place in a race ranked G2 or lower while training."
+  },
+  {
+   "music_id": 1007,
+   "title": "Endless Dream!!",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     102101,
+     102201,
+     102401,
+     110801
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Hanshin Juvenile Fillies Asahi Hai Futurity Stakes Hopeful Stakes Zen-Nippon Nisai Yushun"
+  },
+  {
+   "music_id": 1008,
+   "title": "NEXT FRONTIER",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100601,
+     101601,
+     102301,
+     102701
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Tenno Sho (Spring) Tenno Sho (Autumn) Arima Kinen"
+  },
+  {
+   "music_id": 1009,
+   "title": "UNLIMITED IMPACT",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100101,
+     102001,
+     110101,
+     110201,
+     110301,
+     110401,
+     110501,
+     110601,
+     110701,
+     110901,
+     111001,
+     111101,
+     111201,
+     111301,
+     111401,
+     111501,
+     111601,
+     111701,
+     111801,
+     111901
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: February Stakes Champions Cup Teio Sho Japan Dirt Derby JBC Ladies' Classic JBC Sprint JBC Classic Tokyo Daishoten Kawasaki Kinen Kashiwa Kinen Mile Championship Nambu Hai"
+  },
+  {
+   "music_id": 1010,
+   "title": "Special Record!",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100301,
+     101201,
+     101701,
+     101901,
+     102501
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Osaka Hai Takarazuka Kinen Queen Elizabeth II Cup Japan Cup"
+  },
+  {
+   "music_id": 1012,
+   "title": "Grow Up and Shine!",
+   "kind": "default",
+   "params": {},
+   "evidence": "CAPTURE Global 07-23 present/receive_all: 1012, 1034, 1054 arrive in a fresh account's present box.",
+   "wiki": "Unlocked by default."
+  },
+  {
+   "music_id": 1025,
+   "title": "Signal of Something New",
+   "kind": "main_story",
+   "params": {
+    "part": 1,
+    "number": 14,
+    "episode_ids": {
+     "global": 118,
+     "jp": 118
+    }
+   },
+   "evidence": "MASTER 252 (JP): 第1部 第1章 第14話.",
+   "wiki": "Watch Episode 14 of Chapter 1 of Main Story - Act 1 ."
+  },
+  {
+   "music_id": 1026,
+   "title": "A Little Prayer",
+   "kind": "main_story",
+   "params": {
+    "part": 2,
+    "number": 13,
+    "episode_ids": {
+     "global": 217,
+     "jp": 217
+    }
+   },
+   "evidence": "MASTER 252 (JP): 第1部 第2章 第13話.",
+   "wiki": "Watch Episode 13 of Chapter 2 of Main Story - Act 1 ."
+  },
+  {
+   "music_id": 1027,
+   "title": "Instinctive Speed",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100201,
+     100701,
+     100801,
+     101101,
+     101301,
+     101801
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Takamatsunomiya Kinen Sprinters Stakes Mile Championship NHK Mile Cup Yasuda Kinen Victoria Mile"
+  },
+  {
+   "music_id": 1028,
+   "title": "Winning the Soul",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     100501,
+     101001,
+     101501,
+     102801
+    ]
+   },
+   "evidence": "wiki race list",
+   "wiki": "Win one of the following races: Satsuki Sho Tokyo Yushun (Japanese Derby) Kikuka Sho"
+  },
+  {
+   "music_id": 1029,
+   "title": "Girls' Legend U (Special)",
+   "kind": "special_grand_concert",
+   "params": {},
+   "evidence": "MASTER 252: 'Career: Put on a special Grand Concert'.",
+   "wiki": "Hold a Special Grand Concert in Grand Concert scenario. (Practice at least 18 songs)"
+  },
+  {
+   "music_id": 1030,
+   "title": "Those Tears Are for Tomorrow's Sake!",
+   "kind": "main_story",
+   "params": {
+    "part": 3,
+    "number": 13,
+    "episode_ids": {
+     "global": 234,
+     "jp": 234
+    }
+   },
+   "evidence": "MASTER 252 (JP): 第1部 第3章 第13話.",
+   "wiki": "Watch Episode 13 of Chapter 3 of Main Story - Act 1 ."
+  },
+  {
+   "music_id": 1031,
+   "title": "BLAZE",
+   "kind": "main_story",
+   "params": {
+    "part": 4,
+    "number": 13,
+    "episode_ids": {
+     "global": 417,
+     "jp": 417
+    }
+   },
+   "evidence": "MASTER 252 (JP): 第1部 第4章 第13話.",
+   "wiki": "Watch Episode 13 of Chapter 4 of Main Story - Act 1 ."
+  },
+  {
+   "music_id": 1032,
+   "title": "Run for Our Dream!",
+   "kind": "story_event",
+   "params": {
+    "event": 1002,
+    "episode": 1,
+    "episode_ids": {
+     "global": 9,
+     "jp": 9
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the Story Event Brand New Friends ."
+  },
+  {
+   "music_id": 1033,
+   "title": "Sparkly Magic Show",
+   "kind": "default",
+   "params": {},
+   "evidence": "wiki",
+   "wiki": "Distributed during KIRARI MAGIC SHOW event. Unlocked by default."
+  },
+  {
+   "music_id": 1034,
+   "title": "Hoppity Sunny Days ♪",
+   "kind": "default",
+   "params": {},
+   "evidence": "see 1012",
+   "wiki": "Unlocked by default."
+  },
+  {
+   "music_id": 1035,
+   "title": "WINnin' 5",
+   "kind": "uc_finals",
+   "params": {},
+   "evidence": "CAPTURE JP 09-01: add_music null on the team_race_end of rounds 1-4 (turns 24/36/48/60), 1035 on the turn-72 finals' team_race_end.",
+   "wiki": "Beat Team Zenith in the Unity Cup finals."
+  },
+  {
+   "music_id": 1036,
+   "title": "Girls' Legend U",
+   "kind": "grand_concert",
+   "params": {},
+   "evidence": "MASTER 252: 'Career: Put on a Grand Concert'.",
+   "wiki": "Hold a regular Grand Concert in Grand Concert scenario."
+  },
+  {
+   "music_id": 1037,
+   "title": "Transforming",
+   "kind": "main_story",
+   "params": {
+    "part": 5,
+    "number": 13,
+    "episode_ids": {
+     "global": 517,
+     "jp": 517
+    }
+   },
+   "evidence": "MASTER 252 (JP): 第1部 第5章 第13話.",
+   "wiki": "Watch Episode 13 of Chapter 5 of Main Story - Act 1 ."
+  },
+  {
+   "music_id": 1048,
+   "title": "Blow My Gale",
+   "kind": "ts_climax",
+   "params": {},
+   "evidence": "MASTER 252: '(Career) Win the TS Climax series' -- first in the cumulative standings after the third Climax leg.",
+   "wiki": "Win first place in the Twinkle Star Climax in Trackblazer ."
+  },
+  {
+   "music_id": 1050,
+   "title": "We are DREAMERS!!",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1002,
+    "episode": 1,
+    "episode_ids": {
+     "global": 11,
+     "jp": 11
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the 1st Anniversary Story ."
+  },
+  {
+   "music_id": 1051,
+   "title": "Precious Smiles (Beyond the Future!)",
+   "kind": "main_story",
+   "params": {
+    "part": 7,
+    "number": 21,
+    "episode_ids": {
+     "global": 710,
+     "jp": 710
+    }
+   },
+   "evidence": "MASTER 252: 最終章後編 第21話 -- story_number 21, episode_index 10 (the part has only 15 episodes).",
+   "wiki": "Watch Episode 21 of the Main Story - Act 1 finale."
+  },
+  {
+   "music_id": 1053,
+   "title": "Gaze on Me!",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1003,
+    "episode": 1,
+    "episode_ids": {
+     "global": 14,
+     "jp": 14
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the 1.5th Anniversary Story ."
+  },
+  {
+   "music_id": 1054,
+   "title": "Ms. Victoria",
+   "kind": "default",
+   "params": {},
+   "evidence": "see 1012",
+   "wiki": "Distributed alongside it's introduction on Champion's Meeting. Unlocked by default."
+  },
+  {
+   "music_id": 1058,
+   "title": "Everlasting Beats",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     930124,
+     930125,
+     930126,
+     930127,
+     930128,
+     930129,
+     930130,
+     930131,
+     930132,
+     930133,
+     930134,
+     930135,
+     930136,
+     930137,
+     930138,
+     930139,
+     930140,
+     930141,
+     930142,
+     930143,
+     930144,
+     930145,
+     930146,
+     930147,
+     930148,
+     930149,
+     930150,
+     930151,
+     930152,
+     930153,
+     930154,
+     930155,
+     930156,
+     930157,
+     930158,
+     930159,
+     930160,
+     930161,
+     930162,
+     930163,
+     930164
+    ]
+   },
+   "evidence": "CAPTURE JP 09-30 umacap: add_music 1058 on single_mode_venus/race_end, program 2850 (instance 930132).",
+   "wiki": "Get first place in the Grand Masters race."
+  },
+  {
+   "music_id": 1059,
+   "title": "Overrunner!",
+   "kind": "default",
+   "params": {},
+   "evidence": "wiki",
+   "wiki": "Distributed during Sprinters' Story 's runtime. Unlocked by default."
+  },
+  {
+   "music_id": 1060,
+   "title": "Dramatic Journey",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1004,
+    "episode": 1,
+    "episode_ids": {
+     "jp": 17
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the 2nd Anniversary Story ."
+  },
+  {
+   "music_id": 1081,
+   "title": "Glorious Moment!",
+   "kind": "default",
+   "params": {},
+   "evidence": "wiki",
+   "wiki": "Distributed alongside ROAD TO THE TOP 's runtime. Unlocked by default."
+  },
+  {
+   "music_id": 1082,
+   "title": "L'Arc de gloire",
+   "kind": "win_race",
+   "params": {
+    "scenario_id": 6,
+    "race_instance_ids": [
+     931203,
+     931204,
+     931205
+    ]
+   },
+   "evidence": "wiki: Prix de l'Arc de Triomphe in Project L'Arc (scenario 6, not implemented on this server).",
+   "wiki": "Get first place in the Prix de l'Arc de Triomphe in Project L'Arc ."
+  },
+  {
+   "music_id": 1083,
+   "title": "Tracen Ondo",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1005,
+    "episode": 1,
+    "episode_ids": {
+     "jp": 20
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the 2.5th Anniversary Story ."
+  },
+  {
+   "music_id": 1084,
+   "title": "Be Their Beloved",
+   "kind": "story_event",
+   "params": {
+    "event": 1032,
+    "episode": 1,
+    "episode_ids": {
+     "jp": 253
+    }
+   },
+   "evidence": "wiki: 'Watashi mo Minna no' = JP story event 1032 ワタシモミンナノ.",
+   "wiki": "Watch Episode 1 of the Story Event Watashi mo Minna no ."
+  },
+  {
+   "music_id": 1088,
+   "title": "Big Bang! My Soul",
+   "kind": "sport_live",
+   "params": {},
+   "evidence": "MASTER 252: U.A.F. SHOW DOWN overall win; CAPTURE JP 10-11 (headless alt): add_music 1088 on single_mode_sport/competition_live (T72), the account's first time only.",
+   "wiki": "Achieve an overall victory in the U.A.F SHOW DOWN in U.A.F. Ready Go!"
+  },
+  {
+   "music_id": 1089,
+   "title": "U. M. A. New World!",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1006,
+    "episode": 1,
+    "episode_ids": {
+     "jp": 23
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 1 of the 3rd Anniversary Story ."
+  },
+  {
+   "music_id": 1092,
+   "title": "Umalicious! Gourmet Parade",
+   "kind": "cook_live",
+   "params": {},
+   "evidence": "MASTER 252: open the 大豊食祭; CAPTURE JP 10-10 (umacap + headless): add_music 1092 on single_mode_cook/tasting_live, the account's first time only (main + alt first careers; 4 later careers None).",
+   "wiki": "Open the Great Gourmet Festival in Gourmet Festival scenario."
+  },
+  {
+   "music_id": 1093,
+   "title": "UMA Summer",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1007,
+    "episode": 3,
+    "episode_ids": {
+     "jp": 28
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 3 of the 3.5th Anniversary Story ."
+  },
+  {
+   "music_id": 1094,
+   "title": "Aurorize",
+   "kind": "mecha_live",
+   "params": {},
+   "evidence": "MASTER 252: view either '発表会：途中経過として' or '発表会：最良の友たちと'; CAPTURE JP 10-02/10-03 (umacap + headless): add_music 1094 on single_mode_mecha/mecha_live, the account's first time only.",
+   "wiki": "Pass the final inspection in Hashire! Meka Umamusume ."
+  },
+  {
+   "music_id": 1126,
+   "title": "Ready!! Steady!! Derby!!",
+   "kind": "default",
+   "params": {},
+   "evidence": "wiki",
+   "wiki": "Distributed alongside Beginning of a New Era 's runtime. Unlocked by default."
+  },
+  {
+   "music_id": 1150,
+   "title": "Starting Force",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1008,
+    "episode": 3,
+    "episode_ids": {
+     "jp": 31
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 3 of the 4th Anniversary Story ."
+  },
+  {
+   "music_id": 1151,
+   "title": "Legend Changer",
+   "kind": "unavailable",
+   "params": {
+    "scenario_id": 10
+   },
+   "evidence": "wiki: win the Dream Fest Legend race (scenario 10, not implemented).",
+   "wiki": "Win the Dream Fest Legend race in The Twinkle Legends ."
+  },
+  {
+   "music_id": 1154,
+   "title": "Tucker's Grindin' Island",
+   "kind": "pioneer_live",
+   "params": {},
+   "evidence": "MASTER 252: complete Tracen Island; CAPTURE JP 09-01 #3126 and 09-30 umacap: add_music 1154 on single_mode_pioneer/pioneer_live.",
+   "wiki": "Complete Tracen Island in the Design Your Island scenario."
+  },
+  {
+   "music_id": 1155,
+   "title": "Gift",
+   "kind": "main_story",
+   "params": {
+    "part": 23,
+    "number": 12,
+    "episode_ids": {
+     "jp": 2315
+    }
+   },
+   "evidence": "MASTER 252: 第2部 後編 第12話.",
+   "wiki": "Watch Episode 12 of Chapter 2 of Main Story - Act 2 ."
+  },
+  {
+   "music_id": 1156,
+   "title": "Super Suki♡Shuki Rush!",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1009,
+    "episode": 4,
+    "episode_ids": {
+     "jp": 35
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 4 of the 4.5th Anniversary Story ."
+  },
+  {
+   "music_id": 1157,
+   "title": "Yukoma Thermae",
+   "kind": "story_seen",
+   "params": {
+    "story_ids": [
+     400012021,
+     400012022
+    ]
+   },
+   "evidence": "MASTER 252: view either ending 'ぴょいや！大宴会！' or 'ゆこま温泉、いつまでも'. Every Onsen career sees one of the two, so the wiki's 'Legendary Hot Springs rank' is not the gate.",
+   "wiki": "Earn a Legendary Hot Springs rank in the Yukoma Hot Springs scenario."
+  },
+  {
+   "music_id": 1175,
+   "title": "Hello Polaris",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1012,
+    "episode": 3,
+    "episode_ids": {
+     "jp": 42
+    }
+   },
+   "evidence": "wiki calls 'The White Era' a story event; in master it is extra story 1012 (白の時代, story_extra_type 2).",
+   "wiki": "Watch Episode 3 of the Story Event The White Era ."
+  },
+  {
+   "music_id": 1176,
+   "title": "VOLTAGE",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1013,
+    "episode": 3,
+    "episode_ids": {
+     "jp": 45
+    }
+   },
+   "evidence": "wiki",
+   "wiki": "Watch Episode 3 of the 5th Anniversary Story ."
+  },
+  {
+   "music_id": 1177,
+   "title": "UMA IN AMERICA",
+   "kind": "win_race",
+   "params": {
+    "race_instance_ids": [
+     931417,
+     931418,
+     931419,
+     931420,
+     931421,
+     931422,
+     931423,
+     931424,
+     931425,
+     931426,
+     931427,
+     931428,
+     931429,
+     931430,
+     931431,
+     931432,
+     931433,
+     931434
+    ]
+   },
+   "evidence": "MASTER 252 lists all nine BC races as alternatives; CAPTURE JP 09-28 umacap: add_music 1177 on the first BC race won (BCターフ, program 3104). The wiki's 'win all legs' is wrong.",
+   "wiki": "Complete and win all legs of the Breeder's Cup in Beyond Dreams Scenario."
+  },
+  {
+   "music_id": 1181,
+   "title": "Tracen Ramen Chronicles",
+   "kind": "story_seen",
+   "params": {
+    "story_ids": [
+     400014018
+    ]
+   },
+   "evidence": "MASTER 252: hold the 超ラーメン・ジャンボリー極 (its opening story).",
+   "wiki": "Open a Super Ramen Jamboree EX in the Tracen Ramen scenario."
+  },
+  {
+   "music_id": 1193,
+   "title": "Beyond",
+   "kind": "extra_story",
+   "params": {
+    "extra": 1014,
+    "episode": 3,
+    "episode_ids": {
+     "jp": 48
+    }
+   },
+   "evidence": "MASTER 252: 「5.5th Anniversary」第3話.",
+   "wiki": "Watch Episode 3 of the 5.5th Anniversary Story ."
+  }
+ ]
+}

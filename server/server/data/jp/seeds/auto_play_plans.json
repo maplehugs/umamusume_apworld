@@ -1,0 +1,766 @@
+{
+ "_source": "WIRE 2.31.0 single_mode_ramen/start reply (jp_captures/CarrotJuicer 1790040234393R): the account's own two Ramen custom plans; default plans unmodified, so none are listed. Scenario 13: WIRE 2.31.0 single_mode_breeders/start reply (umacap api-20260929-033538, career 7): the account's two Beyond Dreams custom plans. Scenario 11: WIRE 2.31.0 single_mode_pioneer/start reply (umacap api-20260930-033146, career 1): the account's two Design Your Island custom plans, none selected. Scenario 5: WIRE 2.31.0 single_mode_venus/start reply (umacap api-20260930-033146-344): the account's Grand Masters plans. Scenario 9: WIRE 2.31.0 single_mode_mecha/start reply (umacap api-20261003-002801-344 and the 7 headless careers, identical): the two unedited Mecha custom plans, none selected. Scenarios 1/6/7/8/10: WIRE 2.31.0 single_mode_{ura,arc,sport,cook,legend}/start replies (headless 1: api-20261011-120413-real.jsonl, 6: api-20261003-184022-real.jsonl, 7: api-20261010-221847-real.jsonl, 8: api-20261010-161132-real.jsonl, 10: api-20260930-224457-real.jsonl): two unedited custom plans each, none selected.",
+ "14": {
+  "selected": 140101,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 140101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": [
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1401,
+      "plan_setting_value": 3
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1402,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1403,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14004,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 3,
+      "plan_setting_id": 14101,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 3,
+      "plan_setting_id": 14102,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140004,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140005,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140006,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140007,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 0,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 1,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 2,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 3,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 4,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 5,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 200331,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 200352,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 201032,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 201312,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 201612,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 203352,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 203501,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 204052,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10003,
+      "plan_setting_id": 1,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10012,
+      "plan_setting_id": 1,
+      "plan_setting_value": 3
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 1,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 3,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 5,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 6,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 9,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 10,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 16,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 19,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 20,
+      "plan_setting_value": 1
+     }
+    ]
+   },
+   {
+    "plan_id": 140102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": [
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1401,
+      "plan_setting_value": 3
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1402,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1403,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 14004,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 3,
+      "plan_setting_id": 14101,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 3,
+      "plan_setting_id": 14102,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140004,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140005,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140006,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 140007,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 140003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 0,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 1,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 2,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 3,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 4,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 5,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 200331,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 200352,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 201612,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 203501,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 203661,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10002,
+      "plan_setting_id": 204041,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10003,
+      "plan_setting_id": 1,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 140001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 140002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10012,
+      "plan_setting_id": 1,
+      "plan_setting_value": 2
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 1,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 2,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10013,
+      "plan_setting_id": 5,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 6,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 9,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10014,
+      "plan_setting_id": 10,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 16,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 18,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 10015,
+      "plan_setting_id": 19,
+      "plan_setting_value": 1
+     }
+    ]
+   }
+  ]
+ },
+ "13": {
+  "selected": 130102,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 130101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 130102,
+    "plan_name": "beh",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": [
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1301,
+      "plan_setting_value": 3
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1302,
+      "plan_setting_value": 2
+     },
+     {
+      "plan_setting_type": 1,
+      "plan_setting_id": 1303,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 13001,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 13002,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 13003,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 2,
+      "plan_setting_id": 13004,
+      "plan_setting_value": 1
+     },
+     {
+      "plan_setting_type": 3,
+      "plan_setting_id": 13101,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130004,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130005,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 4,
+      "plan_setting_id": 130006,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 130001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 130002,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 5,
+      "plan_setting_id": 130003,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 0,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 1,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 2,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 3,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 4,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10001,
+      "plan_setting_id": 5,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10003,
+      "plan_setting_id": 1,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 130001,
+      "plan_setting_value": 0
+     },
+     {
+      "plan_setting_type": 10004,
+      "plan_setting_id": 130002,
+      "plan_setting_value": 0
+     }
+    ]
+   }
+  ]
+ },
+ "11": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 110101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_setting_array": []
+   },
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 110102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "5": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 50101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_setting_array": []
+   },
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 50102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "9": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 90101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_setting_array": []
+   },
+   {
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_id": 90102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "1": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 10101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 10102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "6": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 60101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 60102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "7": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 70101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 70102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "8": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 80101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 80102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   }
+  ]
+ },
+ "10": {
+  "selected": 0,
+  "default": [],
+  "custom": [
+   {
+    "plan_id": 100101,
+    "plan_name": "新おまかせ育成プラン1",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   },
+   {
+    "plan_id": 100102,
+    "plan_name": "新おまかせ育成プラン2",
+    "plan_description": "自由にカスタマイズできるプランです",
+    "plan_setting_array": []
+   }
+  ]
+ }
+}

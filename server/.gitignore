@@ -1,0 +1,101 @@
+# Python virtualenv / bytecode
+/.race_remaining/
+server/.venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Raw capture corpora -- multi-GB working data, never committed.
+# Anything the SERVER needs at runtime lives in server/fixtures/ instead
+# (see server/app/fixtures.py CAPTURE_DIR); tools/ scan these in place.
+# Both patterns are ROOT-ANCHORED on purpose: a bare `captures/` also matches
+# server/fixtures/captures/ at any depth and would silently ignore the
+# tracked fixture copies kept there.
+/captures/
+/20260717_124934_06d26c/
+
+# Logs
+*.log
+server/server.err.log
+server/server.out.log
+server/server_stderr.log
+server/server_stdout.log
+
+# Debug files
+debug_responses/
+
+# Database backup snapshots (live state.sqlite3 is tracked)
+*.sqlite3.bak*
+*.sqlite3.bak_*
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+# Archipelago runtime files (connection status, the ladder rows' own master dates)
+server/data/archipelago_*.json
+
+# tools/career_capture_diff.py's isolated per-run harness DBs
+# (region.use_region("harness*_...")) -- throwaway, never real account data.
+server/data/*harness*.sqlite3*
+server/data/*digregion*.sqlite3*
+
+# TLS private key material
+server/certs/*.key*.pem
+server/certs/server.cert.combined.pem
+# The iOS CA+leaf pair from tools/gen-ios-certs.ps1. The CA key in particular
+# signs certs an iPhone is configured to trust implicitly -- it must never be
+# committed. The whole directory is regenerable, so ignore all of it.
+server/certs/ios/
+
+# Rust build artifacts
+target/
+
+# The race engine's skill table, regenerated from the local master.mdb
+# (app/simulation/race_engine/skill_table.py).
+server/data/race_skill_table.json
+server/data/race_skill_table_*.json
+
+# OS cruft
+Thumbs.db
+.DS_Store
+server/logs/
+
+# JP region (server/data/jp is JP's own data root -- see server/app/region.py).
+# The server's X25519 private key reads every request sealed to it.
+server/data/jp/server_key.json
+# Built by tools/build_jp_reference.py from the capturing account's REAL replies
+# (trainer name, friends, inventory) -- rebuild, never commit.
+jp_captures/reference/
+
+# SaveData.db copies hold a real account's credentials.
+server/data/jp/save_backups/
+
+# JP working data -- multi-GB, and personal (real account captures, scraped profiles).
+/jp_captures/
+/jp_docs/
+server/data/jp/*.sqlite3
+
+# Admin panel runtime: icon cache, worker logs, undo history
+admin_panel/cache/
+admin_panel/logs/
+server/data/admin_history.sqlite3
+server/data/jp/admin_history.sqlite3
+
+.race_jp_captures/
+
+.race_jp_work/
+
+# Per-machine TLS material minted by server/launcher.py
+server/certs/
+
+# Local-only: Claude settings, per-machine databases, plugin builds (shipped as a release asset)
+.claude/
+*.sqlite3
+*.sqlite3-*
+plugin/hachimi_redirect.dll
+plugin/hachimi_redirect/target/
+server/data/custom_support/packs/
+server/data/jp/custom_support/packs/
+
+# Extracted from the user's own install by tools/extract_race_assets.py
+server/data/race_param_define.json
+server/data/race_param_define_global.json

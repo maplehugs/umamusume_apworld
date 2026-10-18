@@ -1,0 +1,3721 @@
+{
+  "tables": {
+    "training_challenge_master": [
+      {
+        "id": 2001,
+        "target_main_scenario": 2,
+        "exam_id_1": 1,
+        "exam_id_2": 2,
+        "exam_id_3": 3,
+        "exam_id_4": 4,
+        "exam_id_5": 5,
+        "ex_exam_id": 6,
+        "free_exam_id": 7,
+        "shop_id": 11000,
+        "rental_value": 3000,
+        "consume_tp_ratio": 20000,
+        "bonus_reward_ratio": 20000,
+        "notice_date": 1768428000,
+        "start_date": 1768514400,
+        "end_date": 1769205599,
+        "start_result_date": 1769205600,
+        "end_result_date": 1769464799
+      },
+      {
+        "id": 3001,
+        "target_main_scenario": 3,
+        "exam_id_1": 9,
+        "exam_id_2": 10,
+        "exam_id_3": 11,
+        "exam_id_4": 12,
+        "exam_id_5": 13,
+        "ex_exam_id": 14,
+        "free_exam_id": 15,
+        "shop_id": 11002,
+        "rental_value": 3000,
+        "consume_tp_ratio": 20000,
+        "bonus_reward_ratio": 20000,
+        "notice_date": 1786485600,
+        "start_date": 1786572000,
+        "end_date": 1787349599,
+        "start_result_date": 1787349600,
+        "end_result_date": 1787608799
+      },
+      {
+        "id": 4001,
+        "target_main_scenario": 4,
+        "exam_id_1": 0,
+        "exam_id_2": 0,
+        "exam_id_3": 0,
+        "exam_id_4": 0,
+        "exam_id_5": 0,
+        "ex_exam_id": 0,
+        "free_exam_id": 8,
+        "shop_id": 11001,
+        "rental_value": 3000,
+        "consume_tp_ratio": 0,
+        "bonus_reward_ratio": 0,
+        "notice_date": 1774735200,
+        "start_date": 1774821600,
+        "end_date": 1775253599,
+        "start_result_date": 1775253600,
+        "end_result_date": 1775512799
+      }
+    ],
+    "training_challenge_exam": [
+      {
+        "id": 1,
+        "feature_type": 1,
+        "good_score": 7000,
+        "good_score_reward_coin": 100,
+        "great_score": 10000,
+        "great_score_reward_coin": 150,
+        "exellent_score": 15000,
+        "exellent_score_reward_coin": 200,
+        "score_group_id": 1,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 2,
+        "feature_type": 2,
+        "good_score": 7000,
+        "good_score_reward_coin": 100,
+        "great_score": 10000,
+        "great_score_reward_coin": 150,
+        "exellent_score": 15000,
+        "exellent_score_reward_coin": 200,
+        "score_group_id": 2,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 3,
+        "feature_type": 3,
+        "good_score": 7000,
+        "good_score_reward_coin": 100,
+        "great_score": 10000,
+        "great_score_reward_coin": 150,
+        "exellent_score": 15000,
+        "exellent_score_reward_coin": 200,
+        "score_group_id": 3,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 4,
+        "feature_type": 4,
+        "good_score": 7000,
+        "good_score_reward_coin": 100,
+        "great_score": 10000,
+        "great_score_reward_coin": 150,
+        "exellent_score": 15000,
+        "exellent_score_reward_coin": 200,
+        "score_group_id": 4,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 5,
+        "feature_type": 5,
+        "good_score": 7000,
+        "good_score_reward_coin": 100,
+        "great_score": 10000,
+        "great_score_reward_coin": 150,
+        "exellent_score": 15000,
+        "exellent_score_reward_coin": 200,
+        "score_group_id": 5,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 6,
+        "feature_type": 6,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 6,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 1000,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 150,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 10000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 5000,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 1000
+      },
+      {
+        "id": 7,
+        "feature_type": 7,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 7,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 1000,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 150,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 10000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 5000,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 1000
+      },
+      {
+        "id": 8,
+        "feature_type": 7,
+        "good_score": 15000,
+        "good_score_reward_coin": 200,
+        "great_score": 20000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 28000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 8,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 1000,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 150,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 10000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 5000,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 1000
+      },
+      {
+        "id": 9,
+        "feature_type": 1,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 9,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 10,
+        "feature_type": 2,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 10,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 11,
+        "feature_type": 3,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 11,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 12,
+        "feature_type": 4,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 12,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 13,
+        "feature_type": 5,
+        "good_score": 10000,
+        "good_score_reward_coin": 200,
+        "great_score": 15000,
+        "great_score_reward_coin": 300,
+        "exellent_score": 20000,
+        "exellent_score_reward_coin": 400,
+        "score_group_id": 13,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 500,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 100,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 5000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 2500,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 500
+      },
+      {
+        "id": 14,
+        "feature_type": 6,
+        "good_score": 15000,
+        "good_score_reward_coin": 400,
+        "great_score": 20000,
+        "great_score_reward_coin": 600,
+        "exellent_score": 25000,
+        "exellent_score_reward_coin": 800,
+        "score_group_id": 14,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 1000,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 150,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 10000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 5000,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 1000
+      },
+      {
+        "id": 15,
+        "feature_type": 7,
+        "good_score": 15000,
+        "good_score_reward_coin": 400,
+        "great_score": 20000,
+        "great_score_reward_coin": 600,
+        "exellent_score": 25000,
+        "exellent_score_reward_coin": 800,
+        "score_group_id": 15,
+        "item_category_1": 165,
+        "item_id_1": 156,
+        "item_num_1": 1000,
+        "item_category_2": 90,
+        "item_id_2": 43,
+        "item_num_2": 150,
+        "item_category_3": 91,
+        "item_id_3": 59,
+        "item_num_3": 10000,
+        "item_category_4": 30,
+        "item_id_4": 110,
+        "item_num_4": 5000,
+        "item_category_5": 103,
+        "item_id_5": 98,
+        "item_num_5": 1000
+      }
+    ],
+    "training_challenge_score": [
+      {
+        "id": 1,
+        "score_group_id": 1,
+        "score_type": 1,
+        "data": 800,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 2,
+        "score_group_id": 1,
+        "score_type": 3,
+        "data": 800,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 3,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200492,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 4,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200652,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 5,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200992,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 6,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 7,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200491,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 8,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200651,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 9,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200991,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 10,
+        "score_group_id": 1,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 11,
+        "score_group_id": 1,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 11,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 12,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 13,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 14,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 3,
+        "disp_order": 14,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 15,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 4,
+        "disp_order": 15,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 16,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 5,
+        "disp_order": 16,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 17,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 6,
+        "disp_order": 17,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 18,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 7,
+        "disp_order": 18,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 19,
+        "score_group_id": 1,
+        "score_type": 101,
+        "data": 8,
+        "disp_order": 19,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 20,
+        "score_group_id": 2,
+        "score_type": 1,
+        "data": 800,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 21,
+        "score_group_id": 2,
+        "score_type": 4,
+        "data": 800,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 22,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200682,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 23,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200702,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 24,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 201072,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 25,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 26,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200681,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 27,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200701,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 28,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 201071,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 29,
+        "score_group_id": 2,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 30,
+        "score_group_id": 2,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 11,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 31,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 32,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 33,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 3,
+        "disp_order": 14,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 34,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 4,
+        "disp_order": 15,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 35,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 5,
+        "disp_order": 16,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 36,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 6,
+        "disp_order": 17,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 37,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 7,
+        "disp_order": 18,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 38,
+        "score_group_id": 2,
+        "score_type": 102,
+        "data": 8,
+        "disp_order": 19,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 39,
+        "score_group_id": 3,
+        "score_type": 1,
+        "data": 800,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 40,
+        "score_group_id": 3,
+        "score_type": 2,
+        "data": 800,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 41,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 201122,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 42,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 200732,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 43,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 201152,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 44,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 45,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 201121,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 46,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 200731,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 47,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 201151,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 48,
+        "score_group_id": 3,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 49,
+        "score_group_id": 3,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 11,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 50,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 51,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 52,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 3,
+        "disp_order": 14,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 53,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 4,
+        "disp_order": 15,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 54,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 5,
+        "disp_order": 16,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 55,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 6,
+        "disp_order": 17,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 56,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 7,
+        "disp_order": 18,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 57,
+        "score_group_id": 3,
+        "score_type": 103,
+        "data": 8,
+        "disp_order": 19,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 58,
+        "score_group_id": 4,
+        "score_type": 2,
+        "data": 800,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 59,
+        "score_group_id": 4,
+        "score_type": 5,
+        "data": 800,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 60,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200742,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 61,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 201192,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 62,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200762,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 63,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 64,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200741,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 65,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 201191,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 66,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200761,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 67,
+        "score_group_id": 4,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 68,
+        "score_group_id": 4,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 11,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 69,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 70,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 71,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 3,
+        "disp_order": 14,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 72,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 4,
+        "disp_order": 15,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 73,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 5,
+        "disp_order": 16,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 74,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 6,
+        "disp_order": 17,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 75,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 7,
+        "disp_order": 18,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 76,
+        "score_group_id": 4,
+        "score_type": 104,
+        "data": 8,
+        "disp_order": 19,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 77,
+        "score_group_id": 5,
+        "score_type": 3,
+        "data": 800,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 78,
+        "score_group_id": 5,
+        "score_type": 4,
+        "data": 800,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 20
+      },
+      {
+        "id": 79,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200472,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 80,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200452,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 81,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 201682,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 82,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 83,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200471,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 84,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200451,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 85,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 201681,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 86,
+        "score_group_id": 5,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 87,
+        "score_group_id": 5,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 11,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 88,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 89,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 90,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 3,
+        "disp_order": 14,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 91,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 4,
+        "disp_order": 15,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 92,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 5,
+        "disp_order": 16,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 93,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 6,
+        "disp_order": 17,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 94,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 7,
+        "disp_order": 18,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 95,
+        "score_group_id": 5,
+        "score_type": 106,
+        "data": 8,
+        "disp_order": 19,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 96,
+        "score_group_id": 6,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 97,
+        "score_group_id": 6,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 98,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 201122,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 99,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200732,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 100,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200372,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 101,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200352,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 102,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200382,
+        "disp_order": 7,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 103,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200462,
+        "disp_order": 8,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 104,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 201121,
+        "disp_order": 9,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 105,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200731,
+        "disp_order": 10,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 106,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200371,
+        "disp_order": 11,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 107,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200351,
+        "disp_order": 12,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 108,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200381,
+        "disp_order": 13,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 109,
+        "score_group_id": 6,
+        "score_type": 6,
+        "data": 200461,
+        "disp_order": 14,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 110,
+        "score_group_id": 6,
+        "score_type": 7,
+        "data": 100,
+        "disp_order": 15,
+        "bonus_score": 100,
+        "reward_coin": 10
+      },
+      {
+        "id": 111,
+        "score_group_id": 6,
+        "score_type": 7,
+        "data": 200,
+        "disp_order": 16,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 112,
+        "score_group_id": 6,
+        "score_type": 7,
+        "data": 300,
+        "disp_order": 17,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 113,
+        "score_group_id": 6,
+        "score_type": 7,
+        "data": 400,
+        "disp_order": 18,
+        "bonus_score": 20,
+        "reward_coin": 0
+      },
+      {
+        "id": 114,
+        "score_group_id": 6,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 19,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 115,
+        "score_group_id": 7,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 116,
+        "score_group_id": 7,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 117,
+        "score_group_id": 7,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 118,
+        "score_group_id": 7,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 119,
+        "score_group_id": 7,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 120,
+        "score_group_id": 7,
+        "score_type": 8,
+        "data": 1,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 121,
+        "score_group_id": 7,
+        "score_type": 8,
+        "data": 2,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 122,
+        "score_group_id": 7,
+        "score_type": 7,
+        "data": 100,
+        "disp_order": 8,
+        "bonus_score": 100,
+        "reward_coin": 10
+      },
+      {
+        "id": 123,
+        "score_group_id": 7,
+        "score_type": 7,
+        "data": 200,
+        "disp_order": 9,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 124,
+        "score_group_id": 7,
+        "score_type": 7,
+        "data": 300,
+        "disp_order": 10,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 125,
+        "score_group_id": 7,
+        "score_type": 7,
+        "data": 400,
+        "disp_order": 11,
+        "bonus_score": 20,
+        "reward_coin": 0
+      },
+      {
+        "id": 126,
+        "score_group_id": 7,
+        "score_type": 2000,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 127,
+        "score_group_id": 8,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 128,
+        "score_group_id": 8,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 129,
+        "score_group_id": 8,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 130,
+        "score_group_id": 8,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 131,
+        "score_group_id": 8,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 30
+      },
+      {
+        "id": 132,
+        "score_group_id": 8,
+        "score_type": 8,
+        "data": 1,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 20
+      },
+      {
+        "id": 133,
+        "score_group_id": 8,
+        "score_type": 8,
+        "data": 2,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 50
+      },
+      {
+        "id": 134,
+        "score_group_id": 8,
+        "score_type": 7,
+        "data": 100,
+        "disp_order": 8,
+        "bonus_score": 100,
+        "reward_coin": 10
+      },
+      {
+        "id": 135,
+        "score_group_id": 8,
+        "score_type": 7,
+        "data": 200,
+        "disp_order": 9,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 136,
+        "score_group_id": 8,
+        "score_type": 7,
+        "data": 300,
+        "disp_order": 10,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 137,
+        "score_group_id": 8,
+        "score_type": 7,
+        "data": 400,
+        "disp_order": 11,
+        "bonus_score": 20,
+        "reward_coin": 0
+      },
+      {
+        "id": 138,
+        "score_group_id": 8,
+        "score_type": 4000,
+        "data": 1,
+        "disp_order": 12,
+        "bonus_score": 500,
+        "reward_coin": 30
+      },
+      {
+        "id": 139,
+        "score_group_id": 8,
+        "score_type": 4000,
+        "data": 2,
+        "disp_order": 13,
+        "bonus_score": 1000,
+        "reward_coin": 50
+      },
+      {
+        "id": 140,
+        "score_group_id": 8,
+        "score_type": 4001,
+        "data": 1,
+        "disp_order": 15,
+        "bonus_score": 1500,
+        "reward_coin": 100
+      },
+      {
+        "id": 141,
+        "score_group_id": 9,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 142,
+        "score_group_id": 9,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 143,
+        "score_group_id": 9,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 144,
+        "score_group_id": 9,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 145,
+        "score_group_id": 9,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 146,
+        "score_group_id": 9,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 147,
+        "score_group_id": 9,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 148,
+        "score_group_id": 9,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 149,
+        "score_group_id": 9,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 150,
+        "score_group_id": 9,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 151,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200342,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 152,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200432,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 153,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200652,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 154,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 155,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200341,
+        "disp_order": 5,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 156,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200431,
+        "disp_order": 6,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 157,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 200651,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 158,
+        "score_group_id": 9,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 159,
+        "score_group_id": 9,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 160,
+        "score_group_id": 9,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 161,
+        "score_group_id": 9,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 162,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 1,
+        "disp_order": 14,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 163,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 2,
+        "disp_order": 15,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 164,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 3,
+        "disp_order": 16,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 165,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 4,
+        "disp_order": 17,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 166,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 5,
+        "disp_order": 18,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 167,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 6,
+        "disp_order": 19,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 168,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 7,
+        "disp_order": 20,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 169,
+        "score_group_id": 9,
+        "score_type": 101,
+        "data": 8,
+        "disp_order": 21,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 170,
+        "score_group_id": 10,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 171,
+        "score_group_id": 10,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 172,
+        "score_group_id": 10,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 173,
+        "score_group_id": 10,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 174,
+        "score_group_id": 10,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 175,
+        "score_group_id": 10,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 176,
+        "score_group_id": 10,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 177,
+        "score_group_id": 10,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 178,
+        "score_group_id": 10,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 179,
+        "score_group_id": 10,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 180,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 200492,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 181,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 200702,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 182,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 201062,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 183,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 184,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 200491,
+        "disp_order": 5,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 185,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 200701,
+        "disp_order": 6,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 186,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 201061,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 187,
+        "score_group_id": 10,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 188,
+        "score_group_id": 10,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 189,
+        "score_group_id": 10,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 190,
+        "score_group_id": 10,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 191,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 1,
+        "disp_order": 14,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 192,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 2,
+        "disp_order": 15,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 193,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 3,
+        "disp_order": 16,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 194,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 4,
+        "disp_order": 17,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 195,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 5,
+        "disp_order": 18,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 196,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 6,
+        "disp_order": 19,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 197,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 7,
+        "disp_order": 20,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 198,
+        "score_group_id": 10,
+        "score_type": 102,
+        "data": 8,
+        "disp_order": 21,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 199,
+        "score_group_id": 11,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 200,
+        "score_group_id": 11,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 201,
+        "score_group_id": 11,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 202,
+        "score_group_id": 11,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 203,
+        "score_group_id": 11,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 204,
+        "score_group_id": 11,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 205,
+        "score_group_id": 11,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 206,
+        "score_group_id": 11,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 207,
+        "score_group_id": 11,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 208,
+        "score_group_id": 11,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 209,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200332,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 210,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200712,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 211,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200722,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 212,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 213,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200331,
+        "disp_order": 5,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 214,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200711,
+        "disp_order": 6,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 215,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 200721,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 216,
+        "score_group_id": 11,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 217,
+        "score_group_id": 11,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 218,
+        "score_group_id": 11,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 219,
+        "score_group_id": 11,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 220,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 1,
+        "disp_order": 14,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 221,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 2,
+        "disp_order": 15,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 222,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 3,
+        "disp_order": 16,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 223,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 4,
+        "disp_order": 17,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 224,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 5,
+        "disp_order": 18,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 225,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 6,
+        "disp_order": 19,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 226,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 7,
+        "disp_order": 20,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 227,
+        "score_group_id": 11,
+        "score_type": 103,
+        "data": 8,
+        "disp_order": 21,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 228,
+        "score_group_id": 12,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 229,
+        "score_group_id": 12,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 230,
+        "score_group_id": 12,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 231,
+        "score_group_id": 12,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 232,
+        "score_group_id": 12,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 233,
+        "score_group_id": 12,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 234,
+        "score_group_id": 12,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 235,
+        "score_group_id": 12,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 236,
+        "score_group_id": 12,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 237,
+        "score_group_id": 12,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 238,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 200352,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 239,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 200742,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 240,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 201212,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 241,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 242,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 200351,
+        "disp_order": 5,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 243,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 200741,
+        "disp_order": 6,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 244,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 201211,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 245,
+        "score_group_id": 12,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 246,
+        "score_group_id": 12,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 247,
+        "score_group_id": 12,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 248,
+        "score_group_id": 12,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 249,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 1,
+        "disp_order": 14,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 250,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 2,
+        "disp_order": 15,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 251,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 3,
+        "disp_order": 16,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 252,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 4,
+        "disp_order": 17,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 253,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 5,
+        "disp_order": 18,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 254,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 6,
+        "disp_order": 19,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 255,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 7,
+        "disp_order": 20,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 256,
+        "score_group_id": 12,
+        "score_type": 104,
+        "data": 8,
+        "disp_order": 21,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 257,
+        "score_group_id": 13,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 258,
+        "score_group_id": 13,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 259,
+        "score_group_id": 13,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 260,
+        "score_group_id": 13,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 261,
+        "score_group_id": 13,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 262,
+        "score_group_id": 13,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 263,
+        "score_group_id": 13,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 264,
+        "score_group_id": 13,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 265,
+        "score_group_id": 13,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 266,
+        "score_group_id": 13,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 267,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 200452,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 268,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 201672,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 269,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 202282,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 270,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 271,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 200451,
+        "disp_order": 5,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 272,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 201671,
+        "disp_order": 6,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 273,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 202281,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 274,
+        "score_group_id": 13,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 275,
+        "score_group_id": 13,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 276,
+        "score_group_id": 13,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 277,
+        "score_group_id": 13,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 278,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 1,
+        "disp_order": 14,
+        "bonus_score": 40,
+        "reward_coin": 0
+      },
+      {
+        "id": 279,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 2,
+        "disp_order": 15,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 280,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 3,
+        "disp_order": 16,
+        "bonus_score": 60,
+        "reward_coin": 0
+      },
+      {
+        "id": 281,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 4,
+        "disp_order": 17,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 282,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 5,
+        "disp_order": 18,
+        "bonus_score": 80,
+        "reward_coin": 0
+      },
+      {
+        "id": 283,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 6,
+        "disp_order": 19,
+        "bonus_score": 90,
+        "reward_coin": 0
+      },
+      {
+        "id": 284,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 7,
+        "disp_order": 20,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 285,
+        "score_group_id": 13,
+        "score_type": 106,
+        "data": 8,
+        "disp_order": 21,
+        "bonus_score": 100,
+        "reward_coin": 0
+      },
+      {
+        "id": 286,
+        "score_group_id": 14,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 287,
+        "score_group_id": 14,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 288,
+        "score_group_id": 14,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 289,
+        "score_group_id": 14,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 290,
+        "score_group_id": 14,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 291,
+        "score_group_id": 14,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 292,
+        "score_group_id": 14,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 293,
+        "score_group_id": 14,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 294,
+        "score_group_id": 14,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 295,
+        "score_group_id": 14,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 296,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200332,
+        "disp_order": 1,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 297,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200502,
+        "disp_order": 2,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 298,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200712,
+        "disp_order": 3,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 299,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200722,
+        "disp_order": 4,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 300,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 201702,
+        "disp_order": 5,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 301,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 210072,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 302,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200331,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 303,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200501,
+        "disp_order": 8,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 304,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200711,
+        "disp_order": 11,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 305,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 200721,
+        "disp_order": 12,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 306,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 201701,
+        "disp_order": 13,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 307,
+        "score_group_id": 14,
+        "score_type": 6,
+        "data": 210071,
+        "disp_order": 14,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 308,
+        "score_group_id": 14,
+        "score_type": 7,
+        "data": 100,
+        "disp_order": 15,
+        "bonus_score": 100,
+        "reward_coin": 20
+      },
+      {
+        "id": 309,
+        "score_group_id": 14,
+        "score_type": 7,
+        "data": 200,
+        "disp_order": 16,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 310,
+        "score_group_id": 14,
+        "score_type": 7,
+        "data": 300,
+        "disp_order": 17,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 311,
+        "score_group_id": 14,
+        "score_type": 7,
+        "data": 400,
+        "disp_order": 18,
+        "bonus_score": 20,
+        "reward_coin": 0
+      },
+      {
+        "id": 312,
+        "score_group_id": 14,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 11,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 313,
+        "score_group_id": 14,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 314,
+        "score_group_id": 14,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 315,
+        "score_group_id": 15,
+        "score_type": 1,
+        "data": 1000,
+        "disp_order": 1,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 316,
+        "score_group_id": 15,
+        "score_type": 2,
+        "data": 1000,
+        "disp_order": 2,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 317,
+        "score_group_id": 15,
+        "score_type": 3,
+        "data": 1000,
+        "disp_order": 3,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 318,
+        "score_group_id": 15,
+        "score_type": 4,
+        "data": 1000,
+        "disp_order": 4,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 319,
+        "score_group_id": 15,
+        "score_type": 5,
+        "data": 1000,
+        "disp_order": 5,
+        "bonus_score": 1500,
+        "reward_coin": 60
+      },
+      {
+        "id": 320,
+        "score_group_id": 15,
+        "score_type": 1,
+        "data": 1201,
+        "disp_order": 1,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 321,
+        "score_group_id": 15,
+        "score_type": 2,
+        "data": 1201,
+        "disp_order": 2,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 322,
+        "score_group_id": 15,
+        "score_type": 3,
+        "data": 1201,
+        "disp_order": 3,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 323,
+        "score_group_id": 15,
+        "score_type": 4,
+        "data": 1201,
+        "disp_order": 4,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 324,
+        "score_group_id": 15,
+        "score_type": 5,
+        "data": 1201,
+        "disp_order": 5,
+        "bonus_score": 1000,
+        "reward_coin": 40
+      },
+      {
+        "id": 325,
+        "score_group_id": 15,
+        "score_type": 8,
+        "data": 1,
+        "disp_order": 6,
+        "bonus_score": 400,
+        "reward_coin": 40
+      },
+      {
+        "id": 326,
+        "score_group_id": 15,
+        "score_type": 8,
+        "data": 2,
+        "disp_order": 7,
+        "bonus_score": 1200,
+        "reward_coin": 100
+      },
+      {
+        "id": 327,
+        "score_group_id": 15,
+        "score_type": 7,
+        "data": 100,
+        "disp_order": 8,
+        "bonus_score": 100,
+        "reward_coin": 20
+      },
+      {
+        "id": 328,
+        "score_group_id": 15,
+        "score_type": 7,
+        "data": 200,
+        "disp_order": 9,
+        "bonus_score": 70,
+        "reward_coin": 0
+      },
+      {
+        "id": 329,
+        "score_group_id": 15,
+        "score_type": 7,
+        "data": 300,
+        "disp_order": 10,
+        "bonus_score": 50,
+        "reward_coin": 0
+      },
+      {
+        "id": 330,
+        "score_group_id": 15,
+        "score_type": 7,
+        "data": 400,
+        "disp_order": 11,
+        "bonus_score": 20,
+        "reward_coin": 0
+      },
+      {
+        "id": 331,
+        "score_group_id": 15,
+        "score_type": 3000,
+        "data": 4,
+        "disp_order": 12,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 332,
+        "score_group_id": 15,
+        "score_type": 3001,
+        "data": 10,
+        "disp_order": 13,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      },
+      {
+        "id": 333,
+        "score_group_id": 15,
+        "score_type": 3001,
+        "data": 15,
+        "disp_order": 14,
+        "bonus_score": 2000,
+        "reward_coin": 200
+      }
+    ],
+    "skill_data": [
+      {
+        "id": 100681,
+        "rarity": 5
+      },
+      {
+        "id": 200192,
+        "rarity": 1
+      },
+      {
+        "id": 200372,
+        "rarity": 1
+      },
+      {
+        "id": 200432,
+        "rarity": 1
+      },
+      {
+        "id": 200452,
+        "rarity": 1
+      },
+      {
+        "id": 200492,
+        "rarity": 1
+      },
+      {
+        "id": 200501,
+        "rarity": 2
+      },
+      {
+        "id": 200531,
+        "rarity": 2
+      },
+      {
+        "id": 201102,
+        "rarity": 1
+      },
+      {
+        "id": 201112,
+        "rarity": 1
+      },
+      {
+        "id": 201122,
+        "rarity": 1
+      },
+      {
+        "id": 201142,
+        "rarity": 1
+      },
+      {
+        "id": 201162,
+        "rarity": 1
+      },
+      {
+        "id": 201173,
+        "rarity": 2
+      },
+      {
+        "id": 201192,
+        "rarity": 1
+      },
+      {
+        "id": 201272,
+        "rarity": 1
+      },
+      {
+        "id": 201282,
+        "rarity": 1
+      },
+      {
+        "id": 201641,
+        "rarity": 1
+      },
+      {
+        "id": 201662,
+        "rarity": 2
+      },
+      {
+        "id": 201702,
+        "rarity": 1
+      },
+      {
+        "id": 201902,
+        "rarity": 1
+      },
+      {
+        "id": 202462,
+        "rarity": 1
+      },
+      {
+        "id": 210071,
+        "rarity": 2
+      }
+    ]
+  },
+  "samples": [
+    {
+      "source": "captures/20260821_165708/0009_single_mode_live_finish.json",
+      "record": {
+        "speed": 1242,
+        "stamina": 504,
+        "power": 846,
+        "wiz": 1027,
+        "guts": 653,
+        "rank_score": 17802,
+        "scenario_id": 3,
+        "proper_ground_turf": 7,
+        "proper_ground_dirt": 3,
+        "proper_running_style_nige": 7,
+        "proper_running_style_senko": 8,
+        "proper_running_style_sashi": 5,
+        "proper_running_style_oikomi": 1,
+        "proper_distance_short": 3,
+        "proper_distance_mile": 6,
+        "proper_distance_middle": 7,
+        "proper_distance_long": 7,
+        "skill_array": [
+          {
+            "skill_id": 100681,
+            "level": 5
+          },
+          {
+            "skill_id": 200192,
+            "level": 1
+          },
+          {
+            "skill_id": 200372,
+            "level": 1
+          },
+          {
+            "skill_id": 200432,
+            "level": 1
+          },
+          {
+            "skill_id": 200452,
+            "level": 1
+          },
+          {
+            "skill_id": 200492,
+            "level": 1
+          },
+          {
+            "skill_id": 200501,
+            "level": 1
+          },
+          {
+            "skill_id": 200531,
+            "level": 1
+          },
+          {
+            "skill_id": 201102,
+            "level": 1
+          },
+          {
+            "skill_id": 201112,
+            "level": 1
+          },
+          {
+            "skill_id": 201122,
+            "level": 1
+          },
+          {
+            "skill_id": 201142,
+            "level": 1
+          },
+          {
+            "skill_id": 201162,
+            "level": 1
+          },
+          {
+            "skill_id": 201173,
+            "level": 1
+          },
+          {
+            "skill_id": 201192,
+            "level": 1
+          },
+          {
+            "skill_id": 201272,
+            "level": 1
+          },
+          {
+            "skill_id": 201282,
+            "level": 1
+          },
+          {
+            "skill_id": 201641,
+            "level": 1
+          },
+          {
+            "skill_id": 201662,
+            "level": 1
+          },
+          {
+            "skill_id": 201702,
+            "level": 1
+          },
+          {
+            "skill_id": 201902,
+            "level": 1
+          },
+          {
+            "skill_id": 202462,
+            "level": 1
+          },
+          {
+            "skill_id": 210071,
+            "level": 1
+          }
+        ]
+      },
+      "exam_id": 11,
+      "expected": {
+        "total": 23002,
+        "rank_score": 17802,
+        "base_rank_score": 17802,
+        "score_ids": [
+          199,
+          204,
+          203,
+          216,
+          226
+        ],
+        "add_event_coin": 1120
+      }
+    },
+    {
+      "source": "captures/20260818_122351/0013_single_mode_live_finish.json",
+      "record": {
+        "speed": 847,
+        "stamina": 490,
+        "power": 730,
+        "wiz": 631,
+        "guts": 522,
+        "rank_score": 7376,
+        "scenario_id": 3,
+        "proper_ground_turf": 7,
+        "proper_ground_dirt": 2,
+        "proper_running_style_nige": 7,
+        "proper_running_style_senko": 6,
+        "proper_running_style_sashi": 6,
+        "proper_running_style_oikomi": 1,
+        "proper_distance_short": 3,
+        "proper_distance_mile": 5,
+        "proper_distance_middle": 7,
+        "proper_distance_long": 7,
+        "skill_array": [
+          {
+            "skill_id": 100681,
+            "level": 5
+          }
+        ]
+      },
+      "exam_id": 12,
+      "expected": {
+        "total": 7376,
+        "rank_score": 7376,
+        "base_rank_score": 7376,
+        "score_ids": [
+          255
+        ],
+        "add_event_coin": 140
+      }
+    }
+  ]
+}

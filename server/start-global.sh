@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Set up (first run) and start the UmaPS Global server + admin panel. macOS / Linux.
+#   ./start-global.sh              normal run
+#   ./start-global.sh --no-admin   don't open the admin panel
+#   ./start-global.sh --help       all options
+set -euo pipefail
+cd "$(dirname "$0")"
+for py in python3.14 python3.13 python3.12 python3.11 python3; do
+    if command -v "$py" >/dev/null 2>&1 && "$py" -c 'import sys; sys.exit(sys.version_info < (3, 11))'; then
+        exec "$py" server/launcher.py --region global "$@"
+    fi
+done
+echo "Python 3.11 or newer is required: https://www.python.org/downloads/" >&2
+echo "  (Linux: install python3 and python3-venv from your package manager)" >&2
+exit 1

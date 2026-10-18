@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+msgpack
+pycryptodome
+cryptography
+lz4
+Pillow
+UnityPy==1.25.4
+apsw-sqlite3mc==3.53.4.0

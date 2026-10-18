@@ -1,0 +1,1862 @@
+Reference for admin.py send-mail <category> <item_id> <num>
+(JP: python admin.py --region jp send-mail ...)
+Names: English where Global has the same id, otherwise the JP
+master's Japanese name (JP-only content).
+======================================================================
+
+ITEMS  (category is per-item -- see 3rd column)
+item_id	name	item_category
+1	Sprint Racing Shoes	11
+4	Mile Racing Shoes	11
+7	Medium Racing Shoes	11
+10	Long Racing Shoes	11
+13	Dirt Racing Shoes	11
+25	Unused	11
+26	Unused	11
+27	Unused	11
+28	Unused	11
+32	Toughness 30	20
+34	Carrot Jelly Mini	21
+35	Carrot Jelly	21
+41	Trainee Scout Ticket	40
+43	Carats	90
+44	Dream Glimmer	93
+45	Prize Coin	94
+48	Silver Cleat	160
+49	Gold Cleat	160
+50	Rainbow Cleat	160
+57	Clover	99
+58	Event Points	100
+59	Monies	91
+60	Tazuna's Red Pen	110
+69	February S. Winner's Sash	11
+70	Takamatsunomiya Kinen Winner's Sash	11
+71	Osaka Hai Winner's Sash	11
+72	Oka Sho Winner's Sash	11
+73	Satsuki Sho Winner's Sash	11
+74	Tenno Sho (Spring) Winner's Sash	11
+75	NHK Mile C. Winner's Sash	11
+76	Victoria Mile Winner's Sash	11
+77	Japanese Oaks Winner's Sash	11
+78	Japanese Derby Winner's Sash	11
+79	Yasuda Kinen Winner's Sash	11
+80	Takarazuka Kinen Winner's Sash	11
+81	Sprinters S. Winner's Sash	11
+82	Shuka Sho Winner's Sash	11
+83	Kikuka Sho Winner's Sash	11
+84	Tenno Sho (Autumn) Winner's Sash	11
+85	Mile Ch. Winner's Sash	11
+86	Queen Elizabeth II Cup Winner's Sash	11
+87	Japan Cup Winner's Sash	11
+88	Champions Cup Winner's Sash	11
+89	Hanshin J.F. Winner's Sash	11
+90	Asahi Hai F.S. Winner's Sash	11
+91	Arima Kinen Winner's Sash	11
+92	Hopeful S. Winner's Sash	11
+95	Alarm Clock	34
+96	Daily Race Ticket	140
+97	Legend Race Ticket	140
+98	Friend Points	103
+101	Japan Dirt Derby Winner's Sash	11
+102	JBC Sprint Winner's Sash	11
+103	JBC Classic Winner's Sash	11
+104	JBC Ladies’ Classic Winner's Sash	11
+105	Teio Sho Winner's Sash	11
+106	Tokyo Daishoten Winner's Sash	11
+107	Unused	11
+108	Unused	11
+109	Unused	11
+110	Support Points	30
+111	Support Card Scout Ticket	40
+113	3★ Make Debut Scout Race 1	40
+114	SSR Make Debut Scout Race 1	40
+115	Goddess Statue	97
+116	Pleasing Parfait	150
+117	Sunshine Doll	150
+118	Rainfall Doll	150
+119	Inner Post Raffle Ball	150
+120	Outer Post Raffle Ball	150
+130	Head Start 3★ Voucher	41
+131	Head Start SSR Voucher	42
+132	Follow Slot Boost	98
+133	回想のしおり	162
+134	Club Points	161
+135	2★+ Make Debut Scout Race 1	40
+136	SR+ Make Debut Scout Race 1	40
+137	Taurus Cup Entry Ticket	163
+138	Gemini Cup Entry Ticket	163
+139	Cancer Cup Entry Ticket	163
+140	Umabako 2 3★ Voucher	41
+141	Half Anniversary SSR Voucher	42
+142	Leo Cup Entry Ticket	163
+143	Virgo Cup Entry Ticket	163
+144	Rainbow Uncap Crystal	164
+145	Gold Uncap Crystal	164
+147	Libra Cup Entry Ticket	163
+148	Scorpio Cup Entry Ticket	163
+149	Rainbow Crystal Shard	164
+150	Gold Crystal Shard	164
+151	Sagittarius Cup Entry Ticket	163
+152	3★ Make Debut Scout Race 2	40
+153	SSR Make Debut Scout Race 2	40
+154	2★+ Make Debut Scout Race 2	40
+155	SR+ Make Debut Scout Race 2	40
+156	Test Coins	165
+157	Capricorn Cup Entry Ticket	163
+159	Carnival Pts	166
+160	Book of Hints	11
+161	Textbook of Hints	11
+162	Rare Book of Hints	11
+163	Rare Textbook of Hints	11
+164	1st Anniversary 3★ Voucher	41
+165	1st Anniversary SSR Voucher	42
+166	Aquarius Cup Entry Ticket	163
+167	Pisces Cup Entry Ticket	163
+168	Daily Legend Race Ticket	140
+169	Aries Cup Entry Ticket	163
+170	Adds music to the Jukebox.	168
+171	Taurus Cup Entry Ticket	163
+172	Gemini Cup Entry Ticket	163
+173	Cancer Cup Entry Ticket	163
+174	Star Fruit	20
+175	Kawasaki Kinen Winner's Sash	11
+176	Zen-Nippon Junior Yushun Winner's Sash	11
+177	Kashiwa Kinen Winner's Sash	11
+178	1.5-Year Anniversary SSR Voucher	42
+179	M.C. Nambu Hai Winner's Sash	11
+180	Leo Cup Entry Ticket	163
+181	Virgo Cup Entry Ticket	163
+182	Libra Cup Entry Ticket	163
+183	Scorpio Cup Entry Ticket	163
+184	Sagittarius Cup Entry Ticket	163
+185	Capricorn Cup Entry Ticket	163
+186	Aquarius Cup Entry Ticket	163
+187	Pisces Cup Entry Ticket	163
+188	Aries Cup Entry Ticket	163
+189	Ornament	171
+190	Gallery Key	172
+191	3★ Make Debut Scout Race 3	40
+192	SSR Make Debut Scout Race 3	40
+193	2★+ Make Debut Scout Race 3	40
+194	SR+ Make Debut Scout Race 3	40
+195	Spark Research Report	174
+196	2nd Anniversary 3★ Voucher	41
+197	2nd Anniversary SSR Voucher	42
+198	Entry Ticket	163
+199	Entry Ticket	163
+200	エントリーチケット	163
+201	エントリーチケット	163
+202	エントリーチケット	163
+203	Spark Research Report	174
+204	2.5th Anniversary ★3引換券	41
+205	2.5th Anniversary SSR引換券	42
+206	新人トレーナー応援 ★3引換券	176
+207	新人トレーナー応援 SSR引換券	177
+208	因子研究レポート	174
+209	★3 5th WISH&GAZEガチャ	40
+210	TVアニメ第3期放送記念 ★3引換券	41
+211	サポートカード交換チケット	179
+212	因子研究レポート	174
+213	3rd Anniversary ★3引換券	41
+214	3rd Anniversary SSR引換券	42
+215	★3 5th YELL&NEW GATEガチャ	40
+216	ウマ箱３ ★3引換券	41
+217	エントリーチケット	163
+218	★3メイクデビューガチャ第４R	40
+219	SSRメイクデビューガチャ第４R	40
+220	★2以上メイクデビューガチャ第４R	40
+221	SR以上メイクデビューガチャ第４R	40
+222	スペースジャーニージュース	20
+223	KFCオリジナルチキンバーレル	20
+224	因子研究レポート	174
+225	因子研究レポート	174
+226	エントリーチケット	163
+227	エントリーチケット	163
+228	エントリーチケット	163
+229	エントリーチケット	163
+230	夏バテ撃退ドリンク	171
+231	サークルPt	181
+232	因子研究レポート	174
+233	KFCビスケット	21
+234	★3メイクデビューガチャ第５R	40
+235	SSRメイクデビューガチャ第５R	40
+236	★2以上メイクデビューガチャ第５R	40
+237	SR以上メイクデビューガチャ第５R	40
+238	★3メイクデビューガチャ第６R	40
+239	SSRメイクデビューガチャ第６R	40
+240	★2以上メイクデビューガチャ第６R	40
+241	SR以上メイクデビューガチャ第６R	40
+254	3.5th Anniversary ★3引換券	41
+255	3.5th Anniversary SSR引換券	42
+256	殿堂入りウマ娘登録数アップ	98
+257	因子研究レポート	174
+258	★3 5th -WISH- ガチャ	40
+259	★3 5th -GAZE- ガチャ	40
+260	因子再獲得チケット	183
+261	因子研究レポート	174
+262	因子指定チケット	184
+263	因子研究レポート	174
+264	ハットサブレ	20
+265	★3確定 劇場版『新時代の扉』ガチャ	40
+266	エントリーチケット	163
+268	栄誉のメダリオン	188
+270	4th Anniversary ★3引換券	41
+271	4th Anniversary SSR引換券	42
+272	特別SSR引換券 第1R	42
+273	★3 5th -YELL- ガチャ	40
+274	★3 5th -NEW GATE- ガチャ	40
+275	エントリーチケット	163
+276	因子研究レポート	174
+277	エントリーチケット	163
+278	アニメ『シングレ』★3引換券 第1R	41
+279	因子研究レポート	174
+280	エントリーチケット	163
+281	缶コーヒー BOSS	20
+282	おさんぽ気分	189
+283	特別SSR引換券 第2R	42
+284	チャンネル登録者数	171
+285	因子研究レポート	174
+286	エントリーチケット	163
+287	金の延べ棒	190
+288	特別SSR引換券 第3R	42
+289	4.5th Anniversary ★3引換券	41
+290	4.5th Anniversary SSR引換券	42
+291	因子研究レポート	174
+292	エントリーチケット	163
+293	シングレBlu-ray特典 ★3引換券	41
+294	シングレBlu-ray特典 SSR引換券	42
+295	エントリーチケット	163
+296	限定セールオープン上限アップ	98
+297	因子研究レポート	174
+298	アニメ『シングレ』★3引換券 第2R	41
+299	因子研究レポート	174
+300	特別SSR引換券 第4R	42
+301	想いのランタン	171
+302	因子研究レポート	174
+303	エントリーチケット	163
+304	継承専用ウマ娘獲得チケット	192
+305	エントリーチケット	163
+306	因子研究レポート	174
+307	ココスの包み焼きハンバーグ	20
+308	GOLDコイン/ステイゴールド	190
+309	GOLDコイン/ドリームジャーニー	190
+310	GOLDコイン/ナカヤマフェスタ	190
+311	GOLDコイン/オルフェーヴル	190
+312	GOLDコイン/ゴールドシップ	190
+313	GOLDコイン/フェノーメノ	190
+314	継承専用ウマ娘登録数アップ	98
+315	特別賞品（ミニチュア優勝レイ）	193
+316	特別賞品（トロフィー）	193
+317	特別賞品（クリスタルオブジェ）	193
+319	絆のロゼットリボン	11
+321	ファミチキ 	20
+322	カムバック★3引換券 第1R	41
+323	SSR確定カムバックガチャ 第1R	40
+324	特別SSR引換券 第5R	42
+325	エントリーチケット	163
+326	5th Anniversary ★3引換券	41
+327	5th Anniversary SSR引換券	42
+328	オールドファッションドーナツ	20
+329	因子研究レポート	174
+330	シングレ第2クールSSR引換券	42
+331	因子研究レポート	174
+332	エントリーチケット	163
+333	アビリティPt	191
+334	因子研究レポート	174
+335	因子研究レポート	174
+336	覚醒Lv6/7追加ウマ娘引換券 第1R	41
+337	エントリーチケット	163
+338	特別SSR引換券 第6R	42
+341	覚醒Lv6/7追加ウマ娘引換券 第2R	41
+342	因子研究レポート	174
+343	エントリーチケット	163
+344	5.5th Anniversary ★3引換券	41
+345	5.5th Anniversary SSR引換券	42
+346	KFCクリスピー＆ディップソース	20
+347	KFCポテト＆フリフリスパイス	20
+348	特別SSR引換券 第7R	42
+349	思い出写真	171
+350	エントリーチケット	163
+351	サントリー炭酸ドリンクセット	20
+353	エントリーチケット	163
+354	覚醒Lv6/7追加ウマ娘引換券 第3R	41
+1001	Scout Points	169
+1002	Scout Points	169
+1003	Scout Points	169
+1004	スカウトPt	169
+1005	スカウトPt	169
+1006	スカウトPt	169
+1007	スカウトPt	169
+1008	スカウトPt	169
+2001	Scout Race Ticket	170
+2002	Scout Race Ticket	170
+2003	Scout Race Ticket	170
+2004	スカウトレースチケット	170
+2005	スカウトレースチケット	170
+2006	スカウトレースチケット	170
+2007	スカウトレースチケット	170
+2008	スカウトレースチケット	170
+3001	League Ticket	173
+3002	League Ticket	173
+3003	リーグチケット	173
+3004	リーグチケット	173
+3005	リーグチケット	173
+3006	リーグチケット	173
+3007	リーグチケット	173
+3008	リーグチケット	173
+3009	リーグチケット	173
+3010	リーグチケット	173
+3011	リーグチケット	173
+3012	リーグチケット	173
+3013	リーグチケット	173
+3014	リーグチケット	173
+3015	リーグチケット	173
+3016	リーグチケット	173
+5001	因子強化レポート	185
+5002	因子強化レポート	185
+5003	因子強化レポート	185
+5004	因子強化レポート	185
+5005	因子強化レポート	185
+5006	因子強化レポート	185
+5007	因子強化レポート	185
+5008	因子強化レポート	185
+5009	因子強化レポート	185
+5501	究極因子研究レポート	194
+5601	因子強化レポート(無期限)	196
+5701	因子研究レポート	174
+6001	因子レポートメモリ	195
+10001	Special Week's Handmade Chocolate	20
+10002	Special Week's Handmade Chocolate	20
+10003	Silence Suzuka's Handmade Chocolate	20
+10004	Tokai Teio's Handmade Chocolate	20
+10005	Tokai Teio's Handmade Chocolate	20
+10006	Maruzensky's Handmade Chocolate	20
+10007	Maruzensky's Handmade Chocolate	20
+10008	Fuji Kiseki's Handmade Chocolate	20
+10009	Oguri Cap's Handmade Chocolate	20
+10010	Oguri Cap's Handmade Chocolate	20
+10011	Gold Ship's Handmade Chocolate	20
+10012	Vodka's Handmade Chocolate	20
+10013	Daiwa Scarlet's Handmade Chocolate	20
+10014	Taiki Shuttle's Handmade Chocolate	20
+10015	Grass Wonder's Handmade Chocolate	20
+10016	Grass Wonder's Handmade Chocolate	20
+10017	Hishi Amazon's Handmade Chocolate	20
+10018	Mejiro McQueen's Handmade Chocolate	20
+10019	Mejiro McQueen's Handmade Chocolate	20
+10020	El Condor Pasa's Handmade Chocolate	20
+10021	El Condor Pasa's Handmade Chocolate	20
+10022	T.M. Opera O's Handmade Chocolate	20
+10023	T.M. Opera O's Handmade Chocolate	20
+10024	Narita Brian's Handmade Chocolate	20
+10025	Symboli Rudolf's Handmade Chocolate	20
+10026	Symboli Rudolf's Handmade Chocolate	20
+10027	Air Groove's Handmade Chocolate	20
+10028	Air Groove's Handmade Chocolate	20
+10029	Agnes Digital's Handmade Chocolate	20
+10030	Seiun Sky's Handmade Chocolate	20
+10031	Tamamo Cross's Handmade Chocolate	20
+10032	Fine Motion's Handmade Chocolate	20
+10033	Biwa Hayahide's Handmade Chocolate	20
+10034	Biwa Hayahide's Handmade Chocolate	20
+10035	Mayano Top Gun's Handmade Chocolate	20
+10036	Mayano Top Gun's Handmade Chocolate	20
+10037	Manhattan Cafe's Handmade Chocolate	20
+10038	Mihono Bourbon's Handmade Chocolate	20
+10039	Mihono Bourbon's Handmade Chocolate	20
+10040	Mejiro Ryan's Handmade Chocolate	20
+10041	Hishi Akebono's Handmade Chocolate	20
+10042	Rice Shower's Handmade Chocolate	20
+10043	Rice Shower's Handmade Chocolate	20
+10044	Agnes Tachyon's Handmade Chocolate	20
+10045	Admire Vega's Handmade Chocolate	20
+10046	Winning Ticket's Handmade Chocolate	20
+10047	Eishin Flash's Handmade Chocolate	20
+10048	Eishin Flash's Handmade Chocolate	20
+10049	Curren Chan's Handmade Chocolate	20
+10050	Kawakami Princess's Handmade Chocolate	20
+10051	Gold City's Handmade Chocolate	20
+10052	Gold City's Handmade Chocolate	20
+10053	Sakura Bakushin O's Handmade Chocolate	20
+10054	Super Creek's Handmade Chocolate	20
+10055	Super Creek's Handmade Chocolate	20
+10056	Smart Falcon's Handmade Chocolate	20
+10057	Tosen Jordan's Handmade Chocolate	20
+10058	Narita Taishin's Handmade Chocolate	20
+10059	Haru Urara's Handmade Chocolate	20
+10060	Haru Urara's Handmade Chocolate	20
+10061	Matikanefukukitaru's Handmade Chocolate	20
+10062	Matikanefukukitaru's Handmade Chocolate	20
+10063	Meisho Doto's Handmade Chocolate	20
+10064	Mejiro Dober's Handmade Chocolate	20
+10065	Nice Nature's Handmade Chocolate	20
+10066	King Halo's Handmade Chocolate	20
+10067	Sakura Chiyono O's Handmade Chocolate	20
+10068	Mejiro Ardan's Handmade Chocolate	20
+10069	Special Week's Handmade Chocolate	20
+10070	Fuji Kiseki's Handmade Chocolate	20
+10071	Gold Ship's Handmade Chocolate	20
+10072	Vodka's Handmade Chocolate	20
+10073	Daiwa Scarlet's Handmade Chocolate	20
+10074	Taiki Shuttle's Handmade Chocolate	20
+10075	Mejiro McQueen's Handmade Chocolate	20
+10076	Narita Brian's Handmade Chocolate	20
+10077	Agnes Digital's Handmade Chocolate	20
+10078	Seiun Sky's Handmade Chocolate	20
+10079	Tamamo Cross's Handmade Chocolate	20
+10080	Fine Motion's Handmade Chocolate	20
+10081	Mejiro Ryan's Handmade Chocolate	20
+10082	Yukino Bijin's Handmade Chocolate	20
+10083	Ines Fujin's Handmade Chocolate	20
+10084	Ines Fujin's Handmade Chocolate	20
+10085	Inari One's Handmade Chocolate	20
+10086	Inari One's Handmade Chocolate	20
+10087	Winning Ticket's Handmade Chocolate	20
+10088	Air Shakur's Handmade Chocolate	20
+10089	Curren Chan's Handmade Chocolate	20
+10090	Seeking the Pearl's Handmade Chocolate	20
+10091	Shinko Windy's Handmade Chocolate	20
+10092	Sweep Tosho's Handmade Chocolate	20
+10093	Smart Falcon's Handmade Chocolate	20
+10094	Zenno Rob Roy's Handmade Chocolate	20
+10095	Nakayama Festa's Handmade Chocolate	20
+10096	Narita Taishin's Handmade Chocolate	20
+10097	Nishino Flower's Handmade Chocolate	20
+10098	Bamboo Memory's Handmade Chocolate	20
+10099	Meisho Doto's Handmade Chocolate	20
+10100	Mejiro Dober's Handmade Chocolate	20
+10101	Nice Nature's Handmade Chocolate	20
+10102	King Halo's Handmade Chocolate	20
+10103	Matikanetannhauser's Handmade Chocolate	20
+10104	Mejiro Palmer's Handmade Chocolate	20
+10105	Daitaku Helios's Handmade Chocolate	20
+10106	Satono Diamond's Handmade Chocolate	20
+10107	Satono Diamond's Handmade Chocolate	20
+10108	Kitasan Black's Handmade Chocolate	20
+10109	Kitasan Black's Handmade Chocolate	20
+10110	Yaeno Muteki's Handmade Chocolate	20
+10111	Mejiro Bright's Handmade Chocolate	20
+10112	Yamanin Zephyr's Handmade Chocolate	20
+10113	Aston Machan's Handmade Chocolate	20
+10114	Copano Rickey's Handmade Chocolate	20
+10115	Hokko Tarumae's Handmade Chocolate	20
+10116	Wonder Acute's Handmade Chocolate	20
+10117	サイレンススズカの手作りチョコ	20
+10118	トウカイテイオーの手作りチョコ	20
+10119	ゴールドシップの手作りチョコ	20
+10120	ヒシアマゾンの手作りチョコ	20
+10121	マンハッタンカフェの手作りチョコ	20
+10122	ユキノビジンの手作りチョコ	20
+10123	アグネスタキオンの手作りチョコ	20
+10124	エアシャカールの手作りチョコ	20
+10125	カワカミプリンセスの手作りチョコ	20
+10126	サクラバクシンオーの手作りチョコ	20
+10127	トーセンジョーダンの手作りチョコ	20
+10128	ニシノフラワーの手作りチョコ	20
+10129	バンブーメモリーの手作りチョコ	20
+10130	ビコーペガサスの手作りチョコ	20
+10131	マーベラスサンデーの手作りチョコ	20
+10132	ミスターシービーの手作りチョコ	20
+10133	ナイスネイチャの手作りチョコ	20
+10134	マチカネタンホイザの手作りチョコ	20
+10135	メジロパーマーの手作りチョコ	20
+10136	ツインターボの手作りチョコ	20
+10137	サトノダイヤモンドの手作りチョコ	20
+10138	キタサンブラックの手作りチョコ	20
+10139	サクラチヨノオーの手作りチョコ	20
+10140	シリウスシンボリの手作りチョコ	20
+10141	メジロアルダンの手作りチョコ	20
+10142	メジロブライトの手作りチョコ	20
+10143	サクラローレルの手作りチョコ	20
+10144	ナリタトップロードの手作りチョコ	20
+10145	シンボリクリスエスの手作りチョコ	20
+10146	シンボリクリスエスの手作りチョコ	20
+10147	タニノギムレットの手作りチョコ	20
+10148	ダイイチルビーの手作りチョコ	20
+10149	メジロラモーヌの手作りチョコ	20
+10150	サトノクラウンの手作りチョコ	20
+10151	シュヴァルグランの手作りチョコ	20
+10152	ヴィブロスの手作りチョコ	20
+10153	ケイエスミラクルの手作りチョコ	20
+10154	カツラギエースの手作りチョコ	20
+10155	ネオユニヴァースの手作りチョコ	20
+10156	ヒシミラクルの手作りチョコ	20
+10157	タップダンスシチーの手作りチョコ	20
+10158	ドゥラメンテの手作りチョコ	20
+10159	イクノディクタスの手作りチョコ	20
+10160	トランセンドの手作りチョコ	20
+10161	ラインクラフトの手作りチョコ	20
+10162	ダイイチルビーの手作りチョコ	20
+10163	ダイタクヘリオスの手作りチョコ	20
+10164	ウイニングチケットの手作りチョコ	20
+10165	スーパークリークの手作りチョコ	20
+10166	ヤエノムテキの手作りチョコ	20
+10167	サウンズオブアースの手作りチョコ	20
+10168	アグネスタキオンの手作りチョコ	20
+10169	ノースフライトの手作りチョコ	20
+10170	キングヘイローの手作りチョコ	20
+10171	スイープトウショウの手作りチョコ	20
+10172	ジャングルポケットの手作りチョコ	20
+10173	ドリームジャーニーの手作りチョコ	20
+10174	ライスシャワーの手作りチョコ	20
+10175	カルストンライトオの手作りチョコ	20
+10176	エイシンフラッシュの手作りチョコ	20
+10177	ホッコータルマエの手作りチョコ	20
+10178	ジェンティルドンナの手作りチョコ	20
+10179	ネオユニヴァースの手作りチョコ	20
+10180	ゼンノロブロイの手作りチョコ	20
+10181	シーザリオの手作りチョコ	20
+10182	デュランダルの手作りチョコ	20
+10183	シーキングザパールの手作りチョコ	20
+10184	マヤノトップガンの手作りチョコ	20
+10185	バブルガムフェローの手作りチョコ	20
+10186	ビワハヤヒデの手作りチョコ	20
+10187	ナリタタイシンの手作りチョコ	20
+10188	エアメサイアの手作りチョコ	20
+10189	ナリタトップロードの手作りチョコ	20
+10190	アドマイヤベガの手作りチョコ	20
+10191	ウインバリアシオンの手作りチョコ	20
+10192	フリオーソの手作りチョコ	20
+10193	ツルマルツヨシの手作りチョコ	20
+10194	グラスワンダーの手作りチョコ	20
+10195	カツラギエースの手作りチョコ	20
+10196	ミスターシービーの手作りチョコ	20
+10197	マルゼンスキーの手作りチョコ	20
+10198	アストンマーチャンの手作りチョコ	20
+10199	ヤマニンゼファーの手作りチョコ	20
+10200	オルフェーヴルの手作りチョコ	20
+10201	グランアレグリアの手作りチョコ	20
+10202	ノーリーズンの手作りチョコ	20
+10203	タップダンスシチーの手作りチョコ	20
+10204	タニノギムレットの手作りチョコ	20
+10205	シリウスシンボリの手作りチョコ	20
+10206	フェノーメノの手作りチョコ	20
+10207	コパノリッキーの手作りチョコ	20
+10208	スマートファルコンの手作りチョコ	20
+10209	ヴィルシーナの手作りチョコ	20
+10210	ラヴズオンリーユーの手作りチョコ	20
+10211	メジロラモーヌの手作りチョコ	20
+10212	シーザリオの手作りチョコ	20
+10213	クロノジェネシスの手作りチョコ	20
+10214	ゴールドシチーの手作りチョコ	20
+10215	アイネスフウジンの手作りチョコ	20
+10216	フサイチパンドラの手作りチョコ	20
+10217	ラインクラフトの手作りチョコ	20
+10218	サトノクラウンの手作りチョコ	20
+10219	シュヴァルグランの手作りチョコ	20
+10220	ヴィブロスの手作りチョコ	20
+10221	スティルインラブの手作りチョコ	20
+10222	ケイエスミラクルの手作りチョコ	20
+10223	ヒシミラクルの手作りチョコ	20
+10224	エスポワールシチーの手作りチョコ	20
+10225	ビリーヴの手作りチョコ	20
+10226	ヒシアケボノの手作りチョコ	20
+10227	マーベラスサンデーの手作りチョコ	20
+10228	トーセンジョーダンの手作りチョコ	20
+10229	ダンツフレームの手作りチョコ	20
+10230	トランセンドの手作りチョコ	20
+10231	ワンダーアキュートの手作りチョコ	20
+10232	ブエナビスタの手作りチョコ	20
+10233	ナカヤマフェスタの手作りチョコ	20
+10234	ドリームジャーニーの手作りチョコ	20
+10235	オグリキャップの手作りチョコ	20
+10236	ステイゴールドの手作りチョコ	20
+10237	イクノディクタスの手作りチョコ	20
+10238	サクラローレルの手作りチョコ	20
+10239	バブルガムフェローの手作りチョコ	20
+10240	キセキの手作りチョコ	20
+10241	タイキシャトルの手作りチョコ	20
+10242	サウンズオブアースの手作りチョコ	20
+10243	ロイスアンドロイスの手作りチョコ	20
+1000101	Special Week's Special Chocolate	20
+1000102	Special Week's Special Chocolate	20
+1000103	Special Week's Special Chocolate	20
+1000201	Silence Suzuka's Special Chocolate	20
+1000202	サイレンススズカの特別チョコ	20
+1000301	Tokai Teio's Special Chocolate	20
+1000302	Tokai Teio's Special Chocolate	20
+1000303	トウカイテイオーの特別チョコ	20
+1000401	Maruzensky's Special Chocolate	20
+1000402	Maruzensky's Special Chocolate	20
+1000403	マルゼンスキーの特別チョコ	20
+1000501	Fuji Kiseki's Special Chocolate	20
+1000502	Fuji Kiseki's Special Chocolate	20
+1000601	Oguri Cap's Special Chocolate	20
+1000602	Oguri Cap's Special Chocolate	20
+1000603	オグリキャップの特別チョコ	20
+1000701	Gold Ship's Special Chocolate	20
+1000702	Gold Ship's Special Chocolate	20
+1000703	ゴールドシップの特別チョコ	20
+1000801	Vodka's Special Chocolate	20
+1000802	Vodka's Special Chocolate	20
+1000901	Daiwa Scarlet's Special Chocolate	20
+1000902	Daiwa Scarlet's Special Chocolate	20
+1001001	Taiki Shuttle's Special Chocolate	20
+1001002	Taiki Shuttle's Special Chocolate	20
+1001003	タイキシャトルの特別チョコ	20
+1001101	Grass Wonder's Special Chocolate	20
+1001102	Grass Wonder's Special Chocolate	20
+1001103	グラスワンダーの特別チョコ	20
+1001201	Hishi Amazon's Special Chocolate	20
+1001202	ヒシアマゾンの特別チョコ	20
+1001301	Mejiro McQueen's Special Chocolate	20
+1001302	Mejiro McQueen's Special Chocolate	20
+1001303	Mejiro McQueen's Special Chocolate	20
+1001401	El Condor Pasa's Special Chocolate	20
+1001402	El Condor Pasa's Special Chocolate	20
+1001501	T.M. Opera O's Special Chocolate	20
+1001502	T.M. Opera O's Special Chocolate	20
+1001601	Narita Brian's Special Chocolate	20
+1001602	Narita Brian's Special Chocolate	20
+1001701	Symboli Rudolf's Special Chocolate	20
+1001702	Symboli Rudolf's Special Chocolate	20
+1001801	Air Groove's Special Chocolate	20
+1001802	Air Groove's Special Chocolate	20
+1001901	Agnes Digital's Special Chocolate	20
+1001902	Agnes Digital's Special Chocolate	20
+1002001	Seiun Sky's Special Chocolate	20
+1002002	Seiun Sky's Special Chocolate	20
+1002101	Tamamo Cross's Special Chocolate	20
+1002102	Tamamo Cross's Special Chocolate	20
+1002201	Fine Motion's Special Chocolate	20
+1002202	Fine Motion's Special Chocolate	20
+1002301	Biwa Hayahide's Special Chocolate	20
+1002302	Biwa Hayahide's Special Chocolate	20
+1002303	ビワハヤヒデの特別チョコ	20
+1002401	Mayano Top Gun's Special Chocolate	20
+1002402	Mayano Top Gun's Special Chocolate	20
+1002403	マヤノトップガンの特別チョコ	20
+1002501	Manhattan Cafe's Special Chocolate	20
+1002502	マンハッタンカフェの特別チョコ	20
+1002601	Mihono Bourbon's Special Chocolate	20
+1002602	Mihono Bourbon's Special Chocolate	20
+1002701	Mejiro Ryan's Special Chocolate	20
+1002702	Mejiro Ryan's Special Chocolate	20
+1002801	Hishi Akebono's Special Chocolate	20
+1002802	ヒシアケボノの特別チョコ	20
+1002901	Yukino Bijin's Special Chocolate	20
+1002902	ユキノビジンの特別チョコ	20
+1003001	Rice Shower's Special Chocolate	20
+1003002	Rice Shower's Special Chocolate	20
+1003003	ライスシャワーの特別チョコ	20
+1003101	Ines Fujin's Special Chocolate	20
+1003102	Ines Fujin's Special Chocolate	20
+1003103	アイネスフウジンの特別チョコ	20
+1003201	Agnes Tachyon's Special Chocolate	20
+1003202	アグネスタキオンの特別チョコ	20
+1003203	アグネスタキオンの特別チョコ	20
+1003301	Admire Vega's Special Chocolate	20
+1003302	アドマイヤベガの特別チョコ	20
+1003401	Inari One's Special Chocolate	20
+1003402	Inari One's Special Chocolate	20
+1003501	Winning Ticket's Special Chocolate	20
+1003502	Winning Ticket's Special Chocolate	20
+1003503	ウイニングチケットの特別チョコ	20
+1003601	Air Shakur's Special Chocolate	20
+1003602	エアシャカールの特別チョコ	20
+1003701	Eishin Flash's Special Chocolate	20
+1003702	Eishin Flash's Special Chocolate	20
+1003703	エイシンフラッシュの特別チョコ	20
+1003801	Curren Chan's Special Chocolate	20
+1003802	Curren Chan's Special Chocolate	20
+1003901	Kawakami Princess's Special Chocolate	20
+1003902	カワカミプリンセスの特別チョコ	20
+1004001	Gold City's Special Chocolate	20
+1004002	Gold City's Special Chocolate	20
+1004003	ゴールドシチーの特別チョコ	20
+1004101	Sakura Bakushin O's Special Chocolate	20
+1004102	サクラバクシンオーの特別チョコ	20
+1004201	Seeking the Pearl's Special Chocolate	20
+1004202	シーキングザパールの特別チョコ	20
+1004301	Shinko Windy's Special Chocolate	20
+1004401	Sweep Tosho's Special Chocolate	20
+1004402	スイープトウショウの特別チョコ	20
+1004501	Super Creek's Special Chocolate	20
+1004502	Super Creek's Special Chocolate	20
+1004503	スーパークリークの特別チョコ	20
+1004601	Smart Falcon's Special Chocolate	20
+1004602	Smart Falcon's Special Chocolate	20
+1004603	スマートファルコンの特別チョコ	20
+1004701	Zenno Rob Roy's Special Chocolate	20
+1004702	ゼンノロブロイの特別チョコ	20
+1004801	Tosen Jordan's Special Chocolate	20
+1004802	トーセンジョーダンの特別チョコ	20
+1004803	トーセンジョーダンの特別チョコ	20
+1004901	Nakayama Festa's Special Chocolate	20
+1004902	ナカヤマフェスタの特別チョコ	20
+1005001	Narita Taishin's Special Chocolate	20
+1005002	Narita Taishin's Special Chocolate	20
+1005003	ナリタタイシンの特別チョコ	20
+1005101	Nishino Flower's Special Chocolate	20
+1005102	ニシノフラワーの特別チョコ	20
+1005201	Haru Urara's Special Chocolate	20
+1005202	Haru Urara's Special Chocolate	20
+1005301	Bamboo Memory's Special Chocolate	20
+1005302	バンブーメモリーの特別チョコ	20
+1005401	ビコーペガサスの特別チョコ	20
+1005501	マーベラスサンデーの特別チョコ	20
+1005502	マーベラスサンデーの特別チョコ	20
+1005601	Matikanefukukitaru's Special Chocolate	20
+1005602	Matikanefukukitaru's Special Chocolate	20
+1005701	ミスターシービーの特別チョコ	20
+1005702	ミスターシービーの特別チョコ	20
+1005801	Meisho Doto's Special Chocolate	20
+1005802	Meisho Doto's Special Chocolate	20
+1005901	Mejiro Dober's Special Chocolate	20
+1005902	Mejiro Dober's Special Chocolate	20
+1006001	Nice Nature's Special Chocolate	20
+1006002	Nice Nature's Special Chocolate	20
+1006003	ナイスネイチャの特別チョコ	20
+1006101	King Halo's Special Chocolate	20
+1006102	King Halo's Special Chocolate	20
+1006103	キングヘイローの特別チョコ	20
+1006201	Matikanetannhauser's Special Chocolate	20
+1006202	マチカネタンホイザの特別チョコ	20
+1006301	イクノディクタスの特別チョコ	20
+1006302	イクノディクタスの特別チョコ	20
+1006401	Mejiro Palmer's Special Chocolate	20
+1006402	メジロパーマーの特別チョコ	20
+1006501	Daitaku Helios's Special Chocolate	20
+1006502	ダイタクヘリオスの特別チョコ	20
+1006601	ツインターボの特別チョコ	20
+1006701	Satono Diamond's Special Chocolate	20
+1006702	Satono Diamond's Special Chocolate	20
+1006703	サトノダイヤモンドの特別チョコ	20
+1006801	Kitasan Black's Special Chocolate	20
+1006802	Kitasan Black's Special Chocolate	20
+1006803	キタサンブラックの特別チョコ	20
+1006901	Sakura Chiyono O's Special Chocolate	20
+1006902	サクラチヨノオーの特別チョコ	20
+1007001	シリウスシンボリの特別チョコ	20
+1007002	シリウスシンボリの特別チョコ	20
+1007101	Mejiro Ardan's Special Chocolate	20
+1007102	メジロアルダンの特別チョコ	20
+1007201	Yaeno Muteki's Special Chocolate	20
+1007202	ヤエノムテキの特別チョコ	20
+1007301	ツルマルツヨシの特別チョコ	20
+1007401	Mejiro Bright's Special Chocolate	20
+1007402	メジロブライトの特別チョコ	20
+1007601	サクラローレルの特別チョコ	20
+1007602	サクラローレルの特別チョコ	20
+1007701	ナリタトップロードの特別チョコ	20
+1007702	ナリタトップロードの特別チョコ	20
+1007801	Yamanin Zephyr's Special Chocolate	20
+1007802	ヤマニンゼファーの特別チョコ	20
+1007901	フリオーソの特別チョコ	20
+1008001	トランセンドの特別チョコ	20
+1008002	トランセンドの特別チョコ	20
+1008101	エスポワールシチーの特別チョコ	20
+1008201	ノースフライトの特別チョコ	20
+1008301	シンボリクリスエスの特別チョコ	20
+1008302	シンボリクリスエスの特別チョコ	20
+1008401	タニノギムレットの特別チョコ	20
+1008402	タニノギムレットの特別チョコ	20
+1008501	ダイイチルビーの特別チョコ	20
+1008502	ダイイチルビーの特別チョコ	20
+1008601	メジロラモーヌの特別チョコ	20
+1008602	メジロラモーヌの特別チョコ	20
+1008701	Aston Machan's Special Chocolate	20
+1008702	アストンマーチャンの特別チョコ	20
+1008801	サトノクラウンの特別チョコ	20
+1008802	サトノクラウンの特別チョコ	20
+1008901	シュヴァルグランの特別チョコ	20
+1008902	シュヴァルグランの特別チョコ	20
+1009001	ヴィルシーナの特別チョコ	20
+1009101	ヴィブロスの特別チョコ	20
+1009102	ヴィブロスの特別チョコ	20
+1009201	ダンツフレームの特別チョコ	20
+1009301	ケイエスミラクルの特別チョコ	20
+1009302	ケイエスミラクルの特別チョコ	20
+1009401	ジャングルポケットの特別チョコ	20
+1009501	ビリーヴの特別チョコ	20
+1009601	ノーリーズンの特別チョコ	20
+1009701	スティルインラブの特別チョコ	20
+1009801	Copano Rickey's Special Chocolate	20
+1009802	コパノリッキーの特別チョコ	20
+1009901	Hokko Tarumae's Special Chocolate	20
+1009902	ホッコータルマエの特別チョコ	20
+1010001	Wonder Acute's Special Chocolate	20
+1010002	ワンダーアキュートの特別チョコ	20
+1010201	サウンズオブアースの特別チョコ	20
+1010202	サウンズオブアースの特別チョコ	20
+1010301	ロイスアンドロイスの特別チョコ	20
+1010401	カツラギエースの特別チョコ	20
+1010402	カツラギエースの特別チョコ	20
+1010501	ネオユニヴァースの特別チョコ	20
+1010502	ネオユニヴァースの特別チョコ	20
+1010601	ヒシミラクルの特別チョコ	20
+1010602	ヒシミラクルの特別チョコ	20
+1010701	タップダンスシチーの特別チョコ	20
+1010702	タップダンスシチーの特別チョコ	20
+1010801	ドゥラメンテの特別チョコ	20
+1010901	ラインクラフトの特別チョコ	20
+1010902	ラインクラフトの特別チョコ	20
+1011001	シーザリオの特別チョコ	20
+1011002	シーザリオの特別チョコ	20
+1011101	エアメサイアの特別チョコ	20
+1011301	フサイチパンドラの特別チョコ	20
+1011401	ブエナビスタの特別チョコ	20
+1011501	オルフェーヴルの特別チョコ	20
+1011601	ジェンティルドンナの特別チョコ	20
+1011701	ウインバリアシオンの特別チョコ	20
+1011901	ドリームジャーニーの特別チョコ	20
+1011902	ドリームジャーニーの特別チョコ	20
+1012001	カルストンライトオの特別チョコ	20
+1012101	デュランダルの特別チョコ	20
+1012401	バブルガムフェローの特別チョコ	20
+1012402	バブルガムフェローの特別チョコ	20
+1012701	フェノーメノの特別チョコ	20
+1013101	グランアレグリアの特別チョコ	20
+1013201	ラヴズオンリーユーの特別チョコ	20
+1013301	クロノジェネシスの特別チョコ	20
+1013501	ステイゴールドの特別チョコ	20
+1013701	キセキの特別チョコ	20
+
+======================================================================
+TRAINEE CARDS  (send-mail category = 50)
+card_id	name
+100101	[Special Dreamer] Special Week
+100102	[Hopp'n♪Happy Heart] Special Week
+100103	[Ruler of Japan] Special Week
+100201	[Innocent Silence] Silence Suzuka
+100202	[Emerald Tidings] Silence Suzuka
+100301	[Peak Joy] Tokai Teio
+100302	[Beyond the Horizon] Tokai Teio
+100303	[紫雲の夢見取り]トウカイテイオー
+100401	[Formula R] Maruzensky
+100402	[Hot☆Summer Night] Maruzensky
+100403	[祝ひ寿ぐ神速天女]マルゼンスキー
+100501	[Shooting Star Revue] Fuji Kiseki
+100502	[Succès Étoilé] Fuji Kiseki
+100503	[ブランシュ・エトワール]フジキセキ
+100601	[Starlight Beat] Oguri Cap
+100602	[Ashen Miracle] Oguri Cap
+100603	[シンデレラグレイ]オグリキャップ
+100701	[Red Strife] Gold Ship
+100702	[RUN! RUIN! LAUNCHER!] Gold Ship
+100703	[La mode 564]ゴールドシップ
+100801	[Wild Top Gear] Vodka
+100802	[Fiery Aqua Vitae] Vodka
+100901	[Peak Blue] Daiwa Scarlet
+100902	[Nuit Étoilée de Scarlet] Daiwa Scarlet
+101001	[Wild Frontier] Taiki Shuttle
+101002	[Bubblegum☆Memories] Taiki Shuttle
+101003	[Baa Baa Patisserie]タイキシャトル
+101101	[Stone-Piercing Blue] Grass Wonder
+101102	[Saintly Jade Cleric] Grass Wonder
+101103	[蒼炎の誉]グラスワンダー
+101201	[Azure Amazon] Hishi Amazon
+101202	[Hungry Veil] Hishi Amazon
+101301	[Frontline Elegance] Mejiro McQueen
+101302	[End of the Skies] Mejiro McQueen
+101303	[Fair Lady of the Waves] Mejiro McQueen
+101401	[El☆Número 1] El Condor Pasa
+101402	[Kukulkan Warrior] El Condor Pasa
+101501	[O Sole Suo!] T.M. Opera O
+101502	[New Year, Same Radiance!] T.M. Opera O
+101601	[Maverick] Narita Brian
+101602	[Ravenous Wolf] Narita Brian
+101701	[Emperor's Path] Symboli Rudolf
+101702	[Archer by Moonlight] Symboli Rudolf
+101801	[Empress Road] Air Groove
+101802	[Quercus Civilis] Air Groove
+101901	[Full-Color Fangirling] Agnes Digital
+101902	[Fanatic♡Jiangshi] Agnes Digital
+102001	[Reeling in the Big One] Seiun Sky
+102002	[Soirée des Chatons] Seiun Sky
+102003	[渚のきまぐれオランジュ]セイウンスカイ
+102101	[Fast as Lightning] Tamamo Cross
+102102	[Raging Thunder] Tamamo Cross
+102201	[Noble Seamair] Fine Motion
+102202	[Titania] Fine Motion
+102203	[麺華煌彩伝・極]ファインモーション
+102301	[pf. Winning Equation...] Biwa Hayahide
+102302	[Rouge Caroler] Biwa Hayahide
+102303	[Engineered Victory]ビワハヤヒデ
+102401	[Scramble☆Zone] Mayano Top Gun
+102402	[Sunlight Bouquet] Mayano Top Gun
+102403	[ろっきん☆MewMeow]マヤノトップガン
+102501	[Creeping Shadow] Manhattan Cafe
+102502	[柳緑小夜]マンハッタンカフェ
+102503	[幽玄薔薇]マンハッタンカフェ
+102601	[MB-19890425] Mihono Bourbon
+102602	[CODE: ICING] Mihono Bourbon
+102701	[Down the Line] Mejiro Ryan
+102702	[Marguerite Latte] Mejiro Ryan
+102801	[Buono ☆ Alla Moda] Hishi Akebono
+102802	[マジックナイトガーランド]ヒシアケボノ
+102901	[Darl'n Snowflake] Yukino Bijin
+102902	[茶の子雪ん子]ユキノビジン
+103001	[Rosy Dreams] Rice Shower
+103002	[Vampire Makeover!] Rice Shower
+103003	[Yummy Dreamy Fairy]ライスシャワー
+103101	[Always Electrifying] Ines Fujin
+103102	[Melt Your Heart] Ines Fujin
+103103	[Hello Hello Island]アイネスフウジン
+103201	[Tach-nology] Agnes Tachyon
+103202	[Lunatic Lab] Agnes Tachyon
+103203	[Σ Experiment]アグネスタキオン
+103301	[Starry Nocturne] Admire Vega
+103302	[Glacialis Vega]アドマイヤベガ
+103401	[Edomurasaki] Inari One
+103402	[Golden Dream] Inari One
+103501	[Get to Winning!] Winning Ticket
+103502	[Dream Deliverer] Winning Ticket
+103503	[Glorious Coat]ウイニングチケット
+103601	[unsigned] Air Shakur
+103602	[Belphegor's Prime]エアシャカール
+103701	[Meisterschaft] Eishin Flash
+103702	[Precise Chocolatier] Eishin Flash
+103703	[Reines Plätschern]エイシンフラッシュ
+103801	[Fille Éclair] Curren Chan
+103802	[Ma Chérie of the New Moon] Curren Chan
+103901	[Princess of Pink] Kawakami Princess
+103902	[水干撫子]カワカミプリンセス
+104001	[Authentic / 1928] Gold City
+104002	[Autumn Cosmos] Gold City
+104003	[Boho Flare]ゴールドシチー
+104101	[Blossom in Learning] Sakura Bakushin O
+104102	[Red Hot☆Leader] Sakura Bakushin O
+104103	[春雷の韋駄天]サクラバクシンオー
+104201	[Rocket☆Star] Seeking the Pearl
+104202	[Be♪Witched]シーキングザパール
+104301	[Wicked Punk] Shinko Windy
+104302	[ガブガブ☆スキャンプ]シンコウウインディ
+104401	[Platanus Witch] Sweep Tosho
+104402	[リアライズ・ルーン]スイープトウショウ
+104501	[Murmuring Stream] Super Creek
+104502	[Chiffon-Wrapped Mummy] Super Creek
+104503	[慈雨華影]スーパークリーク
+104601	[LOVE☆4EVER] Smart Falcon
+104602	[Twilight Triumph] Smart Falcon
+104603	[ルミナス☆トワラー]スマートファルコン
+104701	[Heroic Author] Zenno Rob Roy
+104702	[Inlaid Stories]ゼンノロブロイ
+104801	[Jokester ☆ Vibes] Tosen Jordan
+104802	[Aurore☆Vacances] Tosen Jordan
+104803	[Highkey☆Hallowed]トーセンジョーダン
+104901	[Desperate Measures] Nakayama Festa
+104902	[祝祭遊戯]ナカヤマフェスタ
+105001	[Nevertheless] Narita Taishin
+105002	[Difference Engineer] Narita Taishin
+105003	[迷光オーヴァライド]ナリタタイシン
+105101	[Layered Petals] Nishino Flower
+105102	[Sweet Juneberry] Nishino Flower
+105201	[Bestest Prize ♪] Haru Urara
+105202	[New Year ♪ New Urara!] Haru Urara
+105301	[Iron Ambition] Bamboo Memory
+105302	[Ultra☆Marine] Bamboo Memory
+105401	[疾風ペガサス・零式]ビコーペガサス
+105501	[★Super∞Marvel∞Tastic☆] Marvelous Sunday
+105502	[トリック☆リボネッタ]マーベラスサンデー
+105601	[Rising☆Fortune] Matikanefukukitaru
+105602	[Lucky Tidings] Matikanefukukitaru
+105701	[Clear Bliss] Mr. C.B.
+105702	[絢爛花道歌舞く君]ミスターシービー
+105801	[Turbulent Blue] Meisho Doto
+105802	[Dot-o'-Lantern] Meisho Doto
+105901	[Off the Line] Mejiro Dober
+105902	[Sapphire Sojourn] Mejiro Dober
+106001	[Poinsettia Ribbon] Nice Nature
+106002	[Run & Win] Nice Nature
+106003	[ネガイノカサネ]ナイスネイチャ
+106101	[King of Emeralds] King Halo
+106102	[Cheerleader in Noble White] King Halo
+106103	[Evergreen Identity]キングヘイロー
+106201	[Clippety-Tippety-Clop] Matikanetannhauser
+106202	[Blue Turbulence] Matikanetannhauser
+106301	[Mantle of Steel]イクノディクタス
+106302	[逍遥、整然たる路を]イクノディクタス
+106401	[Line Breakthrough] Mejiro Palmer
+106402	[赤心のトナカイさん]メジロパーマー
+106501	[Fun☆Fun☆Party Night] Daitaku Helios
+106502	[Joyful Jamboree!]ダイタクヘリオス
+106601	[Turbo Engine! Full Throttle!] Twin Turbo
+106701	[Natural Brilliance] Satono Diamond
+106702	[Jade's Prosperity] Satono Diamond
+106703	[シュヴァリエ・ブル]サトノダイヤモンド
+106801	[Gilded Shrine to Glory] Kitasan Black
+106802	[Crane's Ambition] Kitasan Black
+106803	[結願のしまい華]キタサンブラック
+106901	[Strength in Full Bloom] Sakura Chiyono O
+106902	[Fleur Enneigée] Sakura Chiyono O
+107001	[Féroce] Sirius Symboli
+107002	[Louve stellaire]シリウスシンボリ
+107101	[Crystalline] Mejiro Ardan
+107102	[Neige Émeraude] Mejiro Ardan
+107201	[Blazed Head, Covered Fists] Yaeno Muteki
+107202	[黒将Zen]ヤエノムテキ
+107301	[志、高し、強し！]ツルマルツヨシ
+107401	[Brunissage Line] Mejiro Bright
+107402	[清らに星澄むスノーロリィタ]メジロブライト
+107403	[海辺のエレガンスシフォン]メジロブライト
+107601	[Saisir le rêve] Sakura Laurel
+107602	[Nouvelle pousse]サクラローレル
+107701	[The Proud Road]ナリタトップロード
+107702	[Celestial Road]ナリタトップロード
+107703	[万福龍湯伝・頂]ナリタトップロード
+107801	[Fluttertail Spirit] Yamanin Zephyr
+107802	[Sugary Wind]ヤマニンゼファー
+107901	[衣錦還郷の瑞星]フリオーソ
+108001	[ZOKU-ZOKU GIZMO]トランセンド
+108002	[宵闇ネオカグラ]トランセンド
+108101	[Red Devil Gear]エスポワールシチー
+108201	[Looking Fly!]ノースフライト
+108202	[水縹の一閃]ノースフライト
+108301	[Onyx Soldier] Symboli Kris S
+108302	[Jetblack Automaton]シンボリクリスエス
+108401	[Mantle of Keravnos] Tanino Gimlet
+108402	[With a Twist]タニノギムレット
+108501	[Opulent Gem] Daiichi Ruby
+108502	[Flowing Blue]ダイイチルビー
+108601	[オニキス・ライン]メジロラモーヌ
+108602	[Untouchable Eden]メジロラモーヌ
+108701	[Flare] Aston Machan
+108702	[溶けない砂糖菓子]アストンマーチャン
+108801	[黒翠千里行]サトノクラウン
+108802	[晴島花麗]サトノクラウン
+108901	[Grand itinéraire]シュヴァルグラン
+108902	[夏凪ネイビードロップ]シュヴァルグラン
+109001	[Le beau sommet]ヴィルシーナ
+109101	[Voyage étincelant]ヴィブロス
+109102	[Éclat d'été]ヴィブロス
+109201	[まんなか◎スポットライト]ダンツフレーム
+109301	[Prism]ケイエスミラクル
+109302	[秋日色アンダンテ]ケイエスミラクル
+109401	[王者の喊声]ジャングルポケット
+109402	[ヴァーミリオン・ヘッド]ジャングルポケット
+109501	[精粋]ビリーヴ
+109601	[紅色塗早駆具足]ノーリーズン
+109701	[緋想の誓衣]スティルインラブ
+109801	[Eightfold☆Fortune] Copano Rickey
+109802	[光彩陸離☆招福衣]コパノリッキー
+109901	[Starry Lightship] Hokko Tarumae
+109902	[パステルマリン・ロコドル]ホッコータルマエ
+110001	[Butterfly Sting] Wonder Acute
+110002	[柔灯・湯の香の装い]ワンダーアキュート
+110201	[リトモ・デッラ・テッラ]サウンズオブアース
+110202	[ソナタ・アッラ・メンタ]サウンズオブアース
+110301	[Inspiring Genius]ロイスアンドロイス
+110401	[Dragon Rising] Katsuragi Ace
+110402	[雅号・墨龍]カツラギエース
+110501	[Universe-Naut] Neo Universe
+110502	[Like “ZEER”]ネオユニヴァース
+110601	[Miracle Maker] Hishi Miracle
+110602	[ハッピー・リトル・ノーツ]ヒシミラクル
+110701	[GLITTER!]タップダンスシチー
+110702	[Tap! Tap! Tap!]タップダンスシチー
+110801	[Red in Black]ドゥラメンテ
+110901	[Dream Successor]ラインクラフト
+110902	[Eternal Fairytale]ラインクラフト
+111001	[Future Weaver]シーザリオ
+111002	[Twinbell Queen]シーザリオ
+111101	[Inherited Hope]エアメサイア
+111201	[Daring Darling!]デアリングハート
+111301	[Assorted Cuteness♡]フサイチパンドラ
+111302	[Snatchin' Hearts ♡]フサイチパンドラ
+111401	[Heroína Inocente]ブエナビスタ
+111501	[総攬]オルフェーヴル
+111601	[Regina dei fiori]ジェンティルドンナ
+111602	[La dama perfetta]ジェンティルドンナ
+111701	[ドラマティック・チュチュ]ウインバリアシオン
+111801	[Glacial Queen]アドマイヤグルーヴ
+111901	[夢路のよすが]ドリームジャーニー
+111902	[雪白の夢路]ドリームジャーニー
+112001	[真実一路]カルストンライトオ
+112101	[Chevalier fidèle]デュランダル
+112401	[POPPING!]バブルガムフェロー
+112402	[暁光]バブルガムフェロー
+112701	[義心の黒焔]フェノーメノ
+112702	[剛毅なる紫焔]フェノーメノ
+112901	[The Changer]アーモンドアイ
+113001	[万折不撓の纏]ラッキーライラック
+113101	[すまいる・まい・うぇい！]グランアレグリア
+113201	[9927 Wishes]ラヴズオンリーユー
+113202	[Love-Linked Aster]ラヴズオンリーユー
+113301	[陸離の編纂者]クロノジェネシス
+113401	[花宿しのクチュール]カレンブーケドール
+113501	[Sunlit Outsider]ステイゴールド
+113601	[Divine Raiment]レッドディザイア
+113701	[Miracle Author]キセキ
+114101	[Fate's Chosen Star]エピファネイア
+114301	[Lueur Angélique]ヴィクトワールピサ
+114401	[Éclat de Roseraie]ローズキングダム
+114501	[Monochrome GM]ルーラーシップ
+114901	[絶佳の暁闇]ファレノプシス
+9100101	[Special Dreamer] Special Week
+9101101	[Stone-Piercing Blue] Grass Wonder
+
+======================================================================
+SUPPORT CARDS  (send-mail category = 51)
+support_card_id	name
+10001	[Tracen Academy] Special Week
+10002	[Tracen Academy] Silence Suzuka
+10003	[Tracen Academy] Tokai Teio
+10004	[Tracen Academy] Maruzensky
+10005	[Tracen Academy] Oguri Cap
+10006	[Tracen Academy] Gold Ship
+10007	[Tracen Academy] Vodka
+10008	[Tracen Academy] Taiki Shuttle
+10009	[Tracen Academy] Grass Wonder
+10010	[Tracen Academy] Mejiro McQueen
+10011	[Tracen Academy] El Condor Pasa
+10012	[Tracen Academy] T.M. Opera O
+10013	[Tracen Academy] Symboli Rudolf
+10014	[Tracen Academy] Seiun Sky
+10015	[Tracen Academy] Rice Shower
+10016	[Tracen Academy] Winning Ticket
+10017	[Tracen Academy] Gold City
+10018	[Tracen Academy] Sakura Bakushin O
+10019	[Tracen Academy] Super Creek
+10020	[Tracen Academy] Haru Urara
+10021	[Tracen Academy] Tazuna Hayakawa
+10022	[Tracen Academy] Aoi Kiryuin
+10023	[Tracen Academy] Daiwa Scarlet
+10024	[Tracen Academy] Hishi Amazon
+10025	[Tracen Academy] Air Groove
+10026	[Tracen Academy] Agnes Digital
+10027	[Tracen Academy] Tamamo Cross
+10028	[Tracen Academy] Fine Motion
+10029	[Tracen Academy] Biwa Hayahide
+10030	[Tracen Academy] Mayano Top Gun
+10031	[Tracen Academy] Manhattan Cafe
+10032	[Tracen Academy] Mihono Bourbon
+10033	[Tracen Academy] Mejiro Ryan
+10034	[Tracen Academy] Yukino Bijin
+10035	[Tracen Academy] Ines Fujin
+10036	[Tracen Academy] Agnes Tachyon
+10037	[Tracen Academy] Air Shakur
+10038	[Tracen Academy] Eishin Flash
+10039	[Tracen Academy] Smart Falcon
+10040	[Tracen Academy] Narita Taishin
+10041	[Tracen Academy] Nishino Flower
+10042	[Tracen Academy] Biko Pegasus
+10043	[Tracen Academy] Marvelous Sunday
+10044	[Tracen Academy] Matikanefukukitaru
+10045	[Tracen Academy] Meisho Doto
+10046	[Tracen Academy] Mejiro Dober
+10047	[Tracen Academy] Nice Nature
+10048	[Tracen Academy] King Halo
+10049	[Tracen Academy] Fuji Kiseki
+10050	[Tracen Academy] Sweep Tosho
+10051	[Tracen Academy] Twin Turbo
+10052	[Tracen Academy] Daitaku Helios
+10053	[Tracen Academy] Ikuno Dictus
+10054	[Tracen Academy] Mejiro Palmer
+10055	[Tracen Academy] Kitasan Black
+10056	[Tracen Academy] Satono Diamond
+10057	[Tracen Academy] Matikanetannhauser
+10058	[Tracen Academy] Yaeno Muteki
+10059	[Tracen Academy] Zenno Rob Roy
+10060	[Tracen Academy] Riko Kashimoto
+10061	[Tracen Academy] Seeking the Pearl
+10062	[Tracen Academy] Sakura Chiyono O
+10063	[Tracen Academy] Kawakami Princess
+10064	[Tracen Academy] Hishi Akebono
+10065	[Tracen Academy] Bamboo Memory
+10066	[Tracen Academy] Shinko Windy
+10067	[Tracen Academy] Nakayama Festa
+10068	[Tracen Academy] Inari One
+10069	[Tracen Academy] Mejiro Ardan
+10070	[Tracen Academy] Tosen Jordan
+10071	[Tracen Academy] Sirius Symboli
+10072	[Tracen Academy] Narita Brian
+10073	[Tracen Academy] Curren Chan
+10074	[Acupuncturist] Sasami Anshinzawa
+10075	[Tracen Academy] Admire Vega
+10076	[Tracen Academy] Mejiro Bright
+10077	[Tracen Academy] Narita Top Road
+10078	[Tracen Academy] Mr. C.B.
+10079	[Tracen Academy] Daiichi Ruby
+10080	[Tracen Academy] K.S.Miracle
+10081	[Tracen Academy] Tsurumaru Tsuyoshi
+10082	[Tracen Academy] Symboli Kris S
+10083	[Event Producer] Light Hello
+10084	[Tracen Academy] Tanino Gimlet
+10085	[Tracen Academy] Sakura Laurel
+10086	[Tracen Academy] Yamanin Zephyr
+10087	[Tracen Academy] Aston Machan
+10088	[Tracen Academy] Mejiro Ramonu
+10089	[Tracen Academy] Jungle Pocket
+10090	[トレセン学園]ホッコータルマエ
+10091	[Tracen Academy] Katsuragi Ace
+10092	[Tracen Academy] Copano Rickey
+10093	[Tracen Academy] Wonder Acute
+10094	[URA職員]佐岳メイ
+10095	[トレセン学園]タップダンスシチー
+10096	[トレセン学園]スティルインラブ
+10097	[トレセン学園]ヴィルシーナ
+10098	[トレセン学園]サウンズオブアース
+10099	[トレセン学園]ヴィブロス
+10100	[トレセン学園]ロイスアンドロイス
+10101	[トレセン学園]ドゥラメンテ
+10102	[トレセン学園]ノースフライト
+10103	[トレセン学園]オルフェーヴル
+10104	[プロデューサー]都留岐涼花
+10105	[トレセン学園]シュヴァルグラン
+10106	[トレセン学園]ネオユニヴァース
+10107	[トレセン学園]ヒシミラクル
+10108	[トレセン学園]ダンツフレーム
+10109	[トレセン学園]秋川理事長
+10110	[トレセン学園]エスポワールシチー
+10111	[トレセン学園]バブルガムフェロー
+10113	[トレセン学園]ジェンティルドンナ
+10114	[トレセン学園]ラインクラフト
+10115	[トレセン学園]シーザリオ
+10116	[トレセン学園]ブラストワンピース
+10117	[トレセン学園]ノーリーズン
+10118	[トレセン学園]ブエナビスタ
+10119	[トレセン学園]ドリームジャーニー
+10120	[トレセン学園]デアリングタクト
+10121	[トレセン学園]デアリングハート
+10122	[トレセン学園]アーモンドアイ
+10123	[トレセン学園]ラッキーライラック
+10124	[トレセン学園]グランアレグリア
+10125	[トレセン学園]トランセンド
+10126	[トレセン学園]カレンブーケドール
+10127	[トレセン学園]エアメサイア
+10128	[無人島PJ責任者]タッカーブライン
+10129	[トレセン学園]フサイチパンドラ
+10131	[トレセン学園]ウインバリアシオン
+10132	[トレセン学園]ステイゴールド
+10133	[トレセン学園]アドマイヤグルーヴ
+10134	[トレセン学園]クロノジェネシス
+10135	[トレセン学園]カルストンライトオ
+10136	[トレセン学園]デュランダル
+10137	[トレセン学園]サクラチトセオー
+10138	[ゆこま旅館女将]保科健子
+10139	[トレセン学園]フェノーメノ
+10140	[トレセン学園]フォーエバーヤング
+10141	[『DREAMS』責任者]カジノドライヴ
+10142	[トレセン学園]レッドディザイア
+10143	[トレセン学園]ヴィクトワールピサ
+10144	[トレセン学園]マルシュロレーヌ
+10145	[トレセン学園]キセキ
+10146	[トレセン学園]エフフォーリア
+10147	[トレセン学園]ルーラーシップ
+10148	[トレセン学園]サムソンビッグ
+20001	[Well, Look Who's Home] Fuji Kiseki
+20002	[Nothing Hard Work Can't Solve!] Daiwa Scarlet
+20003	[Reach the Top!] Hishi Amazon
+20004	[Nothing Escapes the Vice Prez] Air Groove
+20005	[Digital's Recharge Station] Agnes Digital
+20006	[Trial Initiation] Biwa Hayahide
+20007	[Cute + Cute = ?] Mayano Top Gun
+20008	[My Solo Drawn to Raindrop Drums] Manhattan Cafe
+20009	[Pal-Assisted Training] Mihono Bourbon
+20010	[On and Off the Court] Mejiro Ryan
+20011	[City Girl 101] Yukino Bijin
+20012	[Experimental Studies on Subject A] Agnes Tachyon
+20013	[5:00 a.m.—Right on Schedule] Eishin Flash
+20014	[Poolside High Tides] Narita Taishin
+20015	[A Marvelous ☆ Plan] Marvelous Sunday
+20016	[Fate's Forecast] Matikanefukukitaru
+20017	[Fighting for Fortune] Meisho Doto
+20018	[Ignore the Stares] Mejiro Dober
+20019	[It's Just Water] Nice Nature
+20020	[First-Rate Plan] King Halo
+20021	[Trainers' Teamwork] Aoi Kiryuin
+20022	[Now Dat's What I Call Grilled Squid!] Tamamo Cross
+20023	[Lamplit Training of a Witch-to-Be] Sweep Tosho
+20024	[Let's Get This Party Lit!] Daitaku Helios
+20025	[Never Skip Warm-Ups] Ikuno Dictus
+20026	[Messing Around] Nice Nature
+20027	[Lifting Your Spirits] Nishino Flower
+20028	[The Perfect Book for You] Zenno Rob Roy
+20029	[The World's My Oyster] Seeking the Pearl
+20030	[You Earned It!] Ines Fujin
+20031	[///WARNING GATE///] Shinko Windy
+20032	[Laughing through the Mud] Inari One
+20033	[Mud-Caked Compañero] El Condor Pasa
+20034	[My Heart Will Go On] Mejiro Ardan
+20035	[Turf as Nails] Tosen Jordan
+20036	[救いはあるよっ♪]メジロパーマー
+20037	[Grma, Ramen ♪] Fine Motion
+20038	[The Brightest Star Shines On] Sirius Symboli
+20039	[An Annoying Supervisor] Vodka
+20040	[Hot Hearts and Cool Drinks] Mejiro Ryan
+20041	[Aim for the Brightest] Admire Vega
+20042	[The Perfect Morning Greeting!] Sakura Bakushin O
+20043	[At the End of the Day] Special Week
+20044	[Cozy Cute Memory ♪] Curren Chan
+20045	[Almost... an Umadol?! ♡] Smart Falcon
+20046	[Reckless Witch Training] Sweep Tosho
+20047	[Step! Smile! Wink!] Tokai Teio
+20048	[I Love You... Dear Food] Oguri Cap
+20049	[Going for Gold] Gold City
+20050	[Bobbing with the Waves] Seiun Sky
+20051	[The 3rd Miracle] K.S.Miracle
+20052	[Go, Go! Tsuyoshi!] Tsurumaru Tsuyoshi
+20053	[Stop, Prez!] Narita Top Road
+20054	[Mighty Fotografia] T.M. Opera O
+20055	[A Clip to Keep Your Heart Warm] Aston Machan
+20056	[Dead End: Blocking the Path] Jungle Pocket
+20057	[Gentle and Sleek] Mejiro Dober
+20058	[Your Laugh After School] Symboli Rudolf
+20059	[Ah, Wonderful Saccharinity] Agnes Tachyon
+20060	[Try a Sweet Swim Ring] Hishi Akebono
+20061	[Golshi's House Specialty] Gold Ship
+20062	[One Bomb Drive ♪] Maruzensky
+20063	[Summer Evening Shower] Silence Suzuka
+20064	[Gods of Luck Are Early to Rise] Copano Rickey
+20065	[The Splendid Aftertaste of Good Tea] Grass Wonder
+20066	[お助け大将と小さな魔女]キタサンブラック
+20067	[あまえんぼNight]タイキシャトル
+20068	[とびっきりの金メダル]ナイスネイチャ
+20069	[あくもー退散！？]マチカネタンホイザ
+20070	[長姉は大変？]ヴィルシーナ
+20071	[『最強』は作れる！]ロイスアンドロイス
+20072	[ギャラルホルンを磨き上げよ]タニノギムレット
+20073	[Time flies]トーセンジョーダン
+20074	[護るべきは無垢の瞳]ヤエノムテキ
+20075	[Cheers!]タップダンスシチー
+20076	[道端フィードバック]エアシャカール
+20077	[ぬりぬりシェイプアップ！]ダンツフレーム
+20078	[お守りパワーで福徳円満！]マチカネフクキタル
+20079	[みんなにグッドマーベラス☆]マーベラスサンデー
+20080	[君の花衣]サクラローレル
+20081	[お任せ！オートクチュール]ノースフライト
+20082	[先陣スプラッシュ！]バブルガムフェロー
+20083	[月下麗人]メジロラモーヌ
+20084	[喜びの咲く刻]ラッキーライラック
+20085	[メロンなささやき]メジロマックイーン
+20086	[『しあわせの青いバラ』]ライスシャワー
+20087	[Daring Music]デアリングハート
+20088	[一輪ずつ、喜びを束ねて]カレンブーケドール
+20089	[私たちのプリンセス流儀]カワカミプリンセス
+20090	[ニャンともイカすヒーローさ]ビコーペガサス
+20091	[静寂を煎じ]サクラチトセオー
+20092	[続け故郷へ、けっぱり道！]ホッコータルマエ
+20093	[ぬくもりフォー・ユー]メジロドーベル
+20094	[私たちのアイディアノート]サトノダイヤモンド
+20095	[Fervent Yearning]レッドディザイア
+20096	[Sushi-Go-Round!]タイキシャトル
+20097	[温もりの一皿、召し上がれ♪]スーパークリーク
+20098	[そびえ立つ背中]ヒシアマゾン
+20099	[夕映えに身をゆだねて]メジロアルダン
+20100	[瞬光]カルストンライトオ
+20101	[清く、やわらかな夜]ゼンノロブロイ
+30001	[The Brightest Star in Japan!] Special Week
+30002	[Beyond This Shining Moment] Silence Suzuka
+30003	[Dream Big!] Tokai Teio
+30004	[Breakaway Battleship] Gold Ship
+30005	[Wild Rider] Vodka
+30006	[Fairest Fleur] Grass Wonder
+30007	[Champion's Passion] El Condor Pasa
+30008	[Foolproof Plan] Seiun Sky
+30009	[Split the Sky, White Lightning!] Tamamo Cross
+30010	[Wave of Gratitude] Fine Motion
+30011	[Watch My Star Fly!] Ines Fujin
+30012	[BNWinner!] Winning Ticket
+30013	[7 More Centimeters] Air Shakur
+30014	[Run(my)way] Gold City
+30015	[Eat Fast! Yum Fast!] Sakura Bakushin O
+30016	[Piece of Mind] Super Creek
+30017	[My Umadol Way! ☆] Smart Falcon
+30018	[Even the Littlest Bud] Nishino Flower
+30019	[Urara's Day Off!] Haru Urara
+30020	[Double Carrot Punch!] Biko Pegasus
+30021	[Tracen Reception] Tazuna Hayakawa
+30022	[Your Team Ace] Mejiro McQueen
+30023	[Showered in Joy] Rice Shower
+30024	[Get Lots of Hugs for Me] Oguri Cap
+30025	[The Setting Sun and Rising Stars] Special Week
+30026	[Turbo Booooost!] Twin Turbo
+30027	[Go Ahead and Laugh] Mejiro Palmer
+30028	[Fire at My Heels] Kitasan Black
+30029	[The Will to Overtake] Satono Diamond
+30030	[Just Keep Going] Matikanetannhauser
+30031	[Hometown Cheers] Yukino Bijin
+30032	[Fiery Discipline] Yaeno Muteki
+30033	[Dreams <I>Do</I> Come True!] Winning Ticket
+30034	[Happiness Just around the Bend] Rice Shower
+30036	[Planned Perfection] Riko Kashimoto
+30037	[The Unequivocal Emperor] Symboli Rudolf
+30038	[Peak Sakura Season] Sakura Chiyono O
+30039	[Princess Bride] Kawakami Princess
+30040	[Who Wants the First Bite?] Hishi Akebono
+30041	[My Thoughts, My Desires] Mejiro Dober
+30042	[Head-on Fight!] Bamboo Memory
+30043	[43, 8, 1] Nakayama Festa
+30044	[Two Pieces] Narita Brian
+30045	[It's All Mine!] Sweep Tosho
+30046	[Full-Blown Tantrum] Winning Ticket
+30047	[Mini☆Vacation] Daiwa Scarlet
+30048	[Winning Pitch] Mejiro Ryan
+30052	[From the Ground Up] Light Hello
+30053	[Hands Up, Crook!] Taiki Shuttle
+30054	[Daring to Dream] Nice Nature
+30055	[Paint the Sky Red] Seiun Sky
+30056	[Tonight, We Waltz] King Halo
+30057	[That Time I Became the Strongest] Gold Ship
+30058	[Regal Racers] Tokai Teio
+30059	[Fugue of Fortune] Mihono Bourbon
+30060	[Constellation of Stars] Twin Turbo
+30061	[Our Resounding Steps] Biwa Hayahide
+30062	[Winning Dream] Silence Suzuka
+30063	[Warm Heart, Soft Steps] Ikuno Dictus
+30064	[Beware! Halloween Night!] Tamamo Cross
+30065	[Magical Heroine] Zenno Rob Roy
+30066	[The Ghost Finds Halloween Magic] Mihono Bourbon
+30067	[Esteemed and Adored] Heirs to the Throne
+30068	[Cutie Pie with Shining Eyes] Curren Chan
+30069	[The Whistling Arrow's Taunt] Narita Brian
+30070	[Dancing Light into the Night] Yukino Bijin
+30071	[Make! Some! NOISE!] Daitaku Helios
+30072	[Party Formation] Mayano Top Gun
+30073	[Strict Shopper] Narita Taishin
+30074	[Dazzling Day in the Snow] Marvelous Sunday
+30075	[My Solo Spun in Spiraling Runs] Manhattan Cafe
+30076	[Searching for Unseen Sights] Silence Suzuka
+30077	[Lucky Star in the Sky] Admire Vega
+30078	[Touching Sleeves Is Good Luck! ♪] Matikanefukukitaru
+30079	[Leaping into the Unknown] Meisho Doto
+30080	[This Might Sting!] Sasami Anshinzawa
+30081	[Passing the Dream On] Team Sirius
+30082	[Little Cupcakes, Big Emotions] Nishino Flower
+30083	[Super! Sonic! Flower Power!] Sakura Bakushin O
+30084	[My Way] Tosen Jordan
+30085	[A Fan's Joy] Agnes Digital
+30086	[Peachy Silhouette] Narita Top Road
+30087	[Little by Little] Mejiro Bright
+30088	[Special Dreamers!] Satono Diamond
+30089	[A MORE MARVELOUS WORLD! ☆] Marvelous Sunday
+30090	[Enchaînement] Symboli Rudolf
+30091	[Escorte Étoile] Sirius Symboli
+30092	[Mag!c Number] Air Shakur
+30093	[Number 1 Outfit] Daiwa Scarlet
+30094	[Make These Feelings Reach You!] Bamboo Memory
+30095	[Cheer that Changed the World] Seeking the Pearl
+30096	[Go Go☆Princess!] Kawakami Princess
+30097	[Dear Mr. C.B.] Mr. C.B.
+30098	[Sunny Passion ♪] Haru Urara
+30099	[Beloved Orchid Bouquet] Ikuno Dictus
+30100	[Day I Dreamed Of] Rice Shower
+30101	[Q≠0] Agnes Tachyon
+30102	[Twinkle in Your Eyes ∞] El Condor Pasa
+30103	[Machitan☆Adventure] Matikanetannhauser
+30104	["Rhodonite and the Dreamstone"] Zenno Rob Roy
+30105	[Take Hold of Our Dreams!] Special Week
+30106	[Tailwind to My Goals] Air Groove
+30107	[Sentimental Flare ♪] Maruzensky
+30108	[Trusting the Dice] Nakayama Festa
+30109	[A Good Heart Blossoms to Its Fullest] Sakura Chiyono O
+30110	[It's on the House] Manhattan Cafe
+30111	[Teio-Oo-Oo!!!] Tokai Teio
+30112	[TT Ignition!] Twin Turbo
+30113	[Uchronia Architect] Biwa Hayahide
+30114	[Ah, Such Majesty] Daiichi Ruby
+30115	[Moonlit Devil ♪] Mejiro Palmer
+30116	[Sunlit Angel ♪] Daitaku Helios
+30117	[Onwards, Demon Queen Lackeys!] Shinko Windy
+30118	[A Win Foreshadowed] Symboli Kris S
+30119	[Hopeful Petals Dancing in the Night] Mejiro Ardan
+30120	[Pious Flame, Heavens Scorcher] Yaeno Muteki
+30121	[U & Me] Mihono Bourbon
+30122	[Danke Schön] Eishin Flash
+30123	[Glad Tidings] Narita Brian
+30124	[Are You Merry?] Air Groove
+30125	[Don't Stop Anymore!] Sakura Laurel
+30126	[To Winds Untraveled] Yamanin Zephyr
+30127	[Outrunning Misfortune] Special Week
+30128	[Capricious Excellence] Sweep Tosho
+30129	[From Icy Blues to Verdant Hues] Grass Wonder
+30130	[To You] K.S.Miracle
+30131	[Marvelous☆Chocolate Show] Marvelous Sunday
+30132	[Transform! Garçon Form!] Biko Pegasus
+30133	[Fondente Smile] Hishi Akebono
+30134	[Radiant] Mejiro Ramonu
+30135	[Hold Aloft the Blazing Torch] Katsuragi Ace
+30136	[Unyielding Resolve] Symboli Kris S
+30137	[Chasing Eternal Glory] Progenitors and Guides
+30138	[Don't Close Your Eyes Now] Nice Nature
+30139	[Heart Aflutter in the Evening Breeze] Mejiro McQueen
+30140	[Soaring Waltz] Tokai Teio
+30141	[Mission: Nourishing the Soul] Mihono Bourbon
+30142	[Among Cherry Blossoms in Bloom] Sakura Laurel
+30143	[The View at Journey's End] Ikuno Dictus
+30145	[Welcome to Umayuru] Tanino Gimlet
+30146	[Run Forth! Dash On! Ever Forward!] Oguri Cap
+30147	[The Frontier] Jungle Pocket
+30148	[Something Blue] Daiwa Scarlet
+30149	[Haute Couture Memory] Aston Machan
+30150	[Heart Ignition!] Vodka
+30151	[Chill Chill Night] Mayano Top Gun
+30152	[All'alba Vincerò!] T.M. Opera O
+30153	[Gentle Moon] Gold City
+30154	[As the Seagulls Soar] Mejiro Palmer
+30155	[#Summer #NewMe] Daitaku Helios
+30156	[Lifelong Wonder] Wonder Acute
+30157	[The Bubbles We Gaze upon Together] Manhattan Cafe
+30158	[Summer Splash] Jungle Pocket
+30159	[Seaside Bloom] Air Groove
+30160	[L'aubeは迫りて]佐岳メイ
+30161	[大望は飛んでいく]エルコンドルパサー
+30162	[Precious☆Moments]アドマイヤベガ
+30163	[鉄火場に咲く菫]ナカヤマフェスタ
+30164	[炎々、闘志を抱き]ヒシアマゾン
+30165	[フォルトゥーナの喝采]タニノギムレット
+30166	[高らかにYO-HO!]タップダンスシチー
+30167	[Hello my clover]ファインモーション
+30168	[波をかきわけ夢がゆく]ゴールドシップ
+30169	[天より遣われし微笑み]ツルマルツヨシ
+30170	[我が舞、巡りて]キングヘイロー
+30171	[ああ、楽しや、楽しや！]ハルウララ
+30172	[かっとばせー！ですわ！？]メジロマックイーン
+30173	[大地と我らのアンサンブル]サウンズオブアース
+30174	[聖夜、変わるために]メジロドーベル
+30175	[冬溶かす熾火]メジロラモーヌ
+30176	[選んで選んで、想いを込めて]メジロライアン
+30177	[会心のウイニングスマイル]ヴィブロス
+30178	[血脈の胎動]ドゥラメンテ
+30179	[百花の願いをこの胸に]サトノダイヤモンド
+30180	[この先も！]刻み続ける者たち
+30181	[ウタエミンナノ]ツインターボ
+30182	[白い翼は舞い戻りて]ホッコータルマエ
+30183	[小さな笑顔、2つ]ウイニングチケット
+30184	[感謝感謝！サクラ吹雪！！]サクラバクシンオー
+30185	[ゴー・ファッショニスタ！]ノースフライト
+30186	[Balliamo?]ジェンティルドンナ
+30187	[只、君臨す。]オルフェーヴル
+30188	[共に描くキラメキ]都留岐涼花
+30189	[2人のバウンス・シャッセ]キタサンブラック
+30190	[激情のピッツィカ]ドゥラメンテ
+30191	[ブリッランテな旋律を君と]サウンズオブアース
+30192	[とっておきのレヴェランス]ヴィブロス
+30193	[Over the Ocean]シュヴァルグラン
+30194	[ティアラが描くレイライン]ラインクラフト
+30195	[白い鳥のアラベスク]ケイエスミラクル
+30196	[浚いの風]ヤマニンゼファー
+30197	[Burning!!]バンブーメモリー
+30198	[V.E.R.2285のあなたへ]ネオユニヴァース
+30199	[わーく・あ・みらくる！]ヒシミラクル
+30200	[大胆不敵の兵よ]ノーリーズン
+30201	[Take Them Down!]ナリタタイシン
+30202	[明日のライド・オン]ウオッカ
+30203	[新時代を開く者]ジャングルポケット
+30204	[幸福の匂いにまどろむ]セイウンスカイ
+30205	[紺碧の戴冠式]ヴィルシーナ
+30206	[アルストロメリアの夢]ヴィブロス
+30207	[謹製ッ！特大夢にんじん！]秋川理事長
+30208	[朝焼け苺の畑にて]ニシノフラワー
+30209	[そして幕は上がる]ダンツフレーム
+30210	[波間のオフショット]スマートファルコン
+30211	[Lucky☆Summertime]コパノリッキー
+30212	[あの夏のキリトリ線]ワンダーアキュート
+30213	[開催☆ハチャメチャGP！]トウカイテイオー
+30214	[歴史も美食も余すところなく]ファインモーション
+30215	[Devilish Whispers]スティルインラブ
+30216	[我が学び舎へ、愛をこめて]ブエナビスタ
+30217	[慈恵のMother Sea]シーザリオ
+30218	[月下のSunshine]タイキシャトル
+30219	[悩み事かい？ポニーちゃん]フジキセキ
+30220	[Rewarding Job]シンボリクリスエス
+30221	[今日もたのしく、おいしく。]サトノダイヤモンド
+30222	[KNOCK 'EM DOWN!]エスポワールシチー
+30223	[牙を立て、リフレイン]ヒシアマゾン
+30224	[咆哮のアポヤンド]ナリタブライアン
+30225	[メークパワートリオ]マチカネフクキタル
+30226	[Cocoon]エアシャカール
+30227	[緋色の君へ風が吹く]ダイワスカーレット
+30228	[COOL⇔CRAZY/Buddy]シンボリクリスエス
+30229	[【告知】新刊あります！]アグネスデジタル
+30230	[不屈の遠吠え]メイショウドトウ
+30231	[王を統べて覇す者]テイエムオペラオー
+30232	[Blast Off!]ブラストワンピース
+30233	[雲煙飛動]シンボリルドルフ
+30234	[深窓の少女へ]メジロアルダン
+30235	[ふりさけみれば天花のわらう]マルゼンスキー
+30236	[飛び立つヴィーナス]シーキングザパール
+30237	[Cutest in Ur ♡]カレンチャン
+30238	[鉄の乙女も微笑んで]イクノディクタス
+30239	[これきり、特別ですよ？]ナイスネイチャ
+30240	[『最強は俺だ！！』]ジャングルポケット
+30241	[導きの光]伝説の体現者
+30242	[世界を変える眼差し]アーモンドアイ
+30243	[NEW TALES AWAIT]グランアレグリア
+30244	[春、来たれり]メジロブライト
+30245	[Ballroom Tempest]ウオッカ
+30246	[誘うは夢心地]ドリームジャーニー
+30247	[Operation: Escort]シンボリクリスエス
+30248	[無垢の白妙]デアリングタクト
+30249	[繋がれパレード・ノーツ♪]トランセンド
+30250	[Luz de ensueño]ブエナビスタ
+30251	[約束のglitter]エスポワールシチー
+30252	[My Beloved Scenery]サイレンススズカ
+30253	[Unveiled Dream]ラインクラフト
+30254	[Blooming Buds]デアリングハート
+30255	[いつか深まる若草]エアメサイア
+30256	[白き稲妻の如く]タマモクロス
+30257	[本能は吼えているか！？]タッカーブライン
+30258	[瞳に闘志を胸に勝利の渇望を]メジロライアン
+30259	[ゼッタイ☆天才伝説]フサイチパンドラ
+30260	[グレイッシュPARTY☆]メジロマックイーン
+30261	[水面のプリンシパル]ウインバリアシオン
+30262	[Tranquillo]ドゥラメンテ
+30263	[極上スマイルはっし～ん♪]ヴィブロス
+30264	[気まぐれ渡り星]ステイゴールド
+30265	[氷結晶の静域]アドマイヤグルーヴ
+30266	[この先の未来で]クロノジェネシス
+30267	[カルストンライトオ、猫です]カルストンライトオ
+30268	[今宵、我が君のために]デュランダル
+30269	[今日が楽しかったから、]ダンツフレーム
+30270	[Inseparable]ダイイチルビー
+30271	[壇上より魔法を込めて]フジキセキ
+30272	[Zirkus der Träume]エイシンフラッシュ
+30273	[All-Out Brilliance]トーセンジョーダン
+30274	[決意のフローラ]カレンブーケドール
+30275	[天才的ユートピア]トウカイテイオー
+30276	[ゆるり、ゆこま旅館]保科健子
+30277	[無機の闘志]ミホノブルボン
+30278	[激録！爆走トナカイ事件]ゴールドシップ
+30279	[ぬくもりのノエル]フェノーメノ
+30280	[黄金の夢に溺れよ]オルフェーヴル
+30281	[故郷に錦を飾るんでい！]イナリワン
+30282	[心覚えし、京の華]エアグルーヴ
+30283	[ゆかし、きらめきの旅路]ファインモーション
+30284	[琴線弾きて、風光る]バブルガムフェロー
+30285	[私のためのショッピング]キングヘイロー
+30286	[吉兆招福チョコ来たる]マチカネフクキタル
+30287	[星跨ぐメッセージ]ネオユニヴァース
+30288	[ギュッとしてマイフレンド]サイレンススズカ
+30289	[Innovator]フォーエバーヤング
+30290	[American Dream]カジノドライヴ
+30291	[Let's Go Together!]ヴィクトワールピサ
+30292	[響け、二人の凱歌]マルシュロレーヌ
+30293	[白に至る純真]デアリングタクト
+30294	[白に至る覚悟]デアリングハート
+30295	[花ども集いて束となる]カレンブーケドール
+30296	[単焦点でつかまえて]アストンマーチャン
+30297	[全てに挑む勇ましき者]アグネスデジタル
+30298	[刀光散らしてClash！]タップダンスシチー
+30299	[無辺際ラボラトリィ]アグネスタキオン
+30300	[賑やかな未来を乗せて走れ！]サクラチヨノオー
+30301	[スマイル・エバーアフター]グランアレグリア
+30302	[永久の誓い、永久の輝き]サトノダイヤモンド
+30303	[『ずーっと一緒、だぞー！』]ブラストワンピース
+30304	[その執念は怒濤が如く]メイショウドトウ
+30305	[一杯のノスタルジア]駿川たづな
+30306	[両手いっぱい、小倉愛]ナイスネイチャ
+30307	[巻頭カラーの夏]キセキ
+30308	[夏空チルタイム]アーモンドアイ
+30309	[天才的ガチエモSUMMER!!]フサイチパンドラ
+30310	[ガブッと、笑顔に]レッドディザイア
+30311	[As if Guided]エフフォーリア
+30312	[時に交わる海と空]ミスターシービー
+30313	[Endless Game]ルーラーシップ
+30314	[わたしときみの交換こ♪]ハルウララ
+30315	[ちょいワルヒーロー、見参！]ビコーペガサス
+30316	[世界一小さなビッグバン]サムソンビッグ
+30317	[行き先はあたたかな場所]マチカネタンホイザ
+
+======================================================================
+JUKEBOX MUSIC / CONCERT SONGS  (send-mail category = 80)
+members = singers in the live (tells same-title versions apart);
+live-only = in live_data but not jukebox_music_data (mail unlock untested)
+music_id	name	members	note
+1001	Umapyoi Legend	18
+1003	Run n' Run!	18
+1004	Never Looking Back	18
+1005	Brilliant Phantasia	18
+1006	Make Debut!	18
+1007	Endless Dream!!	18
+1008	NEXT FRONTIER	18
+1009	UNLIMITED IMPACT	18
+1010	Special Record!	18
+1012	Grow Up and Shine!	18
+1013	Find My Only Way	18
+1021	世界は僕らの言いなりさ	18
+1023	Our Blue Bird Days	18
+1024	Precious Treasure Box	18
+1025	Signal of Something New	1
+1026	A Little Prayer	1
+1027	Instinctive Speed	18
+1028	Winning the Soul	18
+1029	Girls' Legend U	18	live-only
+1030	Those Tears Are for Tomorrow's Sake!	3
+1031	BLAZE	1
+1032	Run for Our Dream!	15
+1033	Sparkly Magic Show	3
+1034	Hoppity Sunny Days♪	5
+1035	WINnin' 5	10
+1036	Girls' Legend U	6
+1037	Transforming	2
+1040	Here Comes Our Time	18
+1041	Dream Sky	18
+1042	Go This Way	18
+1043	Sunbeam Cheer	18
+1044	Full Speed Ahead! Umadol Power☆	18
+1046	Getaway! Fallin' Love	18
+1047	Ring Ring Diary	18
+1048	Blow My Gale	18
+1049	Bakushin Bakushin Bakushinshin	18
+1050	We are DREAMERS!!	18
+1051	Precious Smiles (Beyond the Future!)	7
+1052	Prom Dance	2	live-only
+1053	Gaze on Me!	18
+1054	Ms. Victoria	9
+1055	Golshin Golshin Golshinshin	18
+1056	The Mejiro Anthem	18
+1057	Zero Is Where the Center Stands!	18
+1058	Everlasting Beats	18
+1059	Overrunner!	18
+1060	Dramatic Journey	18
+1061	Yuru Paka Happy Days!	18
+1062	My Mark's a Top Favorite ◎	18
+1063	Unbreakable	18
+1064	SEVEN	18
+1065	Softly, Slowly	18
+1066	My Resistance	18
+1067	Out of This Triangle	18
+1068	Shape of Our Wish	18
+1069	Glass Étoile	18
+1070	Like the Wind	18
+1071	Heart-Fluttering Scramble	18
+1072	Youthful Eyes	18
+1073	Let's Just Smile!	18
+1074	Memory Lapse	18
+1075	Golshi Rap: No Way José	18
+1076	Precious Star Dreamer	18
+1077	Midnight Epilogue	18
+1078	Ambitious World	18
+1079	Winning the Soul (PandaBoY Remix)	18
+1080	Droite Dance	12	live-only
+1081	Glorious Moment!	18
+1082	L'Arc de gloire	20
+1083	トレセン音頭	18
+1084	ソシテミンナノ	18
+1085	どどっと優勝！大感謝祭！！！	18
+1086	Hat on Your Head!	18
+1087	GSK ☆	18
+1088	爆熱マイソウル	18
+1089	U.M.A. NEW WORLD!!	18
+1091	ドロワダンスパート2024	7	live-only
+1092	ウマすぎ！グルメパレード	6
+1093	UMA Summer	14
+1094	O - ロライズ	7
+1095	彩 Phantasia	19	live-only
+1096	Dance 2 Endless Beat	18
+1097	Bright Melody	18
+1098	Eternity's Palette	18
+1099	The First Star Across the Sky	18
+1100	Make Debut! (Morisee (Awesome City Club) Remix)	18
+1101	Never Looking Back (PandaBoY Remix)	18
+1102	Do Your Best! Shining Straight Ahead	18
+1103	Composed Leisure	18
+1104	Reins and Bonds	18
+1105	Air Race	18
+1106	THE SUPER STRONG S	18
+1107	Play Again	18
+1108	Lucky Happy Fantastic	18
+1109	Destroy for Dasein	18
+1110	Lightless	18
+1111	I'll Be Right Beside You...!	18
+1112	Forever Gold	18
+1113	Like a Shooting Star	18
+1114	Give It Another Shot	18
+1115	DANCE！DANCE！“ROMAN”	18
+1116	TAILWIND	18
+1117	Excellent Condition	18
+1118	▷▷▷▶ぶっとび かっとび 全開エンジン！	18
+1119	Secret GRADUATION	18
+1120	今日もウララかケセラセラ！	18
+1121	素顔のココロ	18
+1122	GALACTIC PLAYER	18
+1123	You know me	18
+1124	Comeback Story V	18
+1125	アコガレChallenge Dash!!	18
+1126	Ready!! Steady!! Derby!!	12
+1127	ピスピス☆スピスピ ゴルシちゃんのうた	18
+1128	ロストシャイン	18
+1129	夢のこたえ	18
+1130	Confident	18
+1131	光の後ろ姿	18
+1132	空のほほえみ方	18
+1133	帝笑歌劇〜讃えよ永久に〜	18
+1134	EXCEED	18
+1135	CATCH THE VICTORY!	18
+1136	WINNING MELODY	18
+1137	Lucky Comes True!	18
+1138	Unite!!	18
+1139	平凡、時にミラクル	18
+1140	一撃入魂☆ペガサスパンチ	18
+1141	楽園	18
+1142	シャドーロールの誓い (The Solid Revision)	18
+1143	僕が憧れた青	18
+1144	朝露は大河の夢を見る	18
+1145	十帰りの花	18
+1146	QueenBee	18
+1147	Over a Tiara	18
+1148	宇宙走娘＜コスモピュエラ＞　銀河冒険譚	18
+1149	GOCHISO様	18
+1150	STARTING FORCE	18
+1151	Legend-Changer	15
+1152	SHAKEROCK	10
+1153	2025年ドロワダンスパート	3	live-only
+1154	タッカー's スキルアップアイランド	7
+1155	ギフト	1
+1156	めにしゅき♡ラッシュっしゅ！	10
+1157	ゆこまロマン純情派	8
+1158	BoC-izm	18
+1159	灰のmemoire	18
+1160	ピヨっピヨにしてやんよッ！	18
+1161	ZOKZOK	18
+1162	Dear My Dream	18
+1163	Love Will Come Through	18
+1164	愛舞い、喰らい。	18
+1165	LADY G DONNA	18
+1166	夢疾風	18
+1167	どこまで走れば	18
+1168	以下、勅命	18
+1169	Stay on Course	18
+1170	Glory Eyes	18
+1171	黎明に咲く華	18
+1172	AmpReFire	18
+1173	Shake The World!!	18
+1174	僕らの帰り道	5
+1175	ハロー・ポラリス	2
+1176	VOLTAGE	14
+1177	UMA IN AMERICA	4
+1178	BRIGHTEST HEART	18
+1179	∞	18
+1180	2026年ドロワダンスパート	2	live-only
+1181	トレセンラーメン列伝	6
+1182	#カワイイって言って？	18
+1183	私が主役じゃダメですか？	18
+1184	I Can't Choose to Give Up!	18
+1185	マリンブルー・マジック♡	18
+1186	魔法がなくちゃはじまらないでしょ？	18
+1187	豪快突破☆プリンセス！	18
+1188	パラ・シエンプレ	18
+1189	Logue	18
+1190	限界までPom Pon！！	18
+1191	Close my eyes	18
+1192	ふたり	18
+1193	Beyond	10
+1194	Gold-Triumph	6
+1200	【おやすみ配信】みんなとラヴ補充した～い	18
+1201	ちょっとだけの勇気。	18
+1202	仰げば尊Mission!	18
+1203	希望よ永遠に	18
+1204	Mile×Rule Star	18
+1205	You! Aim! A!!	18
+1206	恋する世界	18
+1207	ゆーてネタだかんね♡	18
+1208	Gold-Recollection	18
+1209	最強ROARING	18
+1210	Beyond the Finale	18
+1211	ガブッと！	18
+3155	【編集不可】【メインストーリーサウンド用】ギフト	1	live-only
+3180	【編集不可】【第1話サウンド用】2026年ドロワダンスパート	2	live-only
+3193	【編集不可】【写真撮影機能用】Beyond	10	live-only
+8501	StarHorse TV	18
+8502	Race with Requirements	18
+8503	Birth of the Beast	18
+8504	Who to Inherit	18
+8505	Making a New Legend	18
+8506	春の憧憬	18
+8507	夏の情景	18
+8508	秋の風韻	18
+8509	冬の雪景	18
+8510	闘いの輪舞	18
+9051	Precious Smiles (Beyond the Future!) (MC Ver.)	7	live-only

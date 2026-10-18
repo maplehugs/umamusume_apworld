@@ -1,0 +1,26 @@
+{
+ "ts": 1784318149.6470025,
+ "direction": "REQ",
+ "endpoint": "single_mode_team/race_out",
+ "data": {
+  "payload": {
+   "current_turn": 68,
+   "viewer_id": "<redacted>",
+   "device": 4,
+   "device_id": "REDACTED",
+   "device_name": "REDACTED",
+   "graphics_device_name": "REDACTED",
+   "ip_address": "REDACTED",
+   "platform_os_version": "Windows 11  (10.0.26200) 64bit",
+   "carrier": "",
+   "keychain": 0,
+   "locale": "JPN",
+   "button_info": "REDACTED",
+   "dmm_viewer_id": null,
+   "dmm_onetime_token": null,
+   "steam_id": "REDACTED",
+   "steam_session_ticket": "REDACTED"
+  }
+ },
+ "req_id": "2ec27d2d"
+}
