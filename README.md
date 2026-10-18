@@ -91,4 +91,5 @@ never renumber an id.
 
 - `server/` is UmamusumePS by systemless10 with Archipelago support added,
   licensed [AGPL-3.0](server/LICENSE) like the original.
-- `apworld/` and `source_code_dll/` are by Maple.
+- `apworld/` and `source_code_dll/` are by Maple, also licensed
+  [AGPL-3.0](LICENSE), so the whole repo is under one license.
