@@ -6,7 +6,8 @@ No. Goal races of a career are never locked, rank checks a scenario can't reach
 ask for what your careers are expected to reach (with `team_trials_roulette` they
 never hold progression). "Finish a <scenario> career" needs that scenario's final won; a lost
 final just means another career, and it still counts for the trainee's check.
-If something hangs, the server log (`server/server/logs/server.log`) says what it served.
+If something hangs, the server log says what it served: **Download logs** in the
+panel's Connection section zips it for a bug report.
 
 **What does a trap do, and for how long?**
 Traps hit your **next** career, at most `trap_cap` (default 2) per career; the

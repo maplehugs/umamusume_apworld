@@ -19,7 +19,8 @@ The server applies the items and reports the checks. Every account on it plays
 Archipelago; a new seed starts that account over.
 
 Screenshots of it running: [docs/showcase.md](docs/showcase.md).
-Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE).
+Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE) (attach the zip from the
+panel's **Download logs** button).
 
 ## Quick start
 

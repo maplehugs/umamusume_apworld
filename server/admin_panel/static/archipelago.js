@@ -35,7 +35,9 @@ function apPage(settings) {
   return `
     <div id="ap-awaken"></div>
     ${apSec("Connection", `<div class="ap-panel ap-col" id="ap-status"><span class="faint">Press "Check connection".</span></div>`,
-      `<span class="grow"></span><button class="btn sm" type="button" data-a="check">Check connection</button>`)}
+      `<span class="grow"></span><a class="btn sm" href="/logs.zip" download="umaps-archipelago-logs.zip"
+        title="server.log and the connection status, for a bug report">Download logs</a>
+      <button class="btn sm" type="button" data-a="check">Check connection</button>`)}
     ${apSec("Room", `<div class="ap-panel">
       ${FIELDS.map(([k, label, help]) => `<div class="ed-row"><label style="flex:1">${esc(label)}<span class="faint" style="font-size:11px">${esc(help)}</span></label>
         <input class="wide" data-k="${k}" type="${k.endsWith("password") ? "password" : "text"}" value="${esc(settings[k] ?? "")}"></div>`).join("")}

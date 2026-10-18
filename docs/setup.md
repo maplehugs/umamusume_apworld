@@ -119,4 +119,6 @@ ticket counts), go back to the title screen, or restart the game.
 - **No Legend Race in the game**: log in again (or restart the game) so it reads
   the ladder.
 - **Team Trials error 2801**: you have no team yet; register one in Team Trials > Edit Team.
-- The server's full log is `server/server/logs/server.log`.
+- The server's full log is `server/server/logs/server.log`. For a bug report, press
+  **Download logs** in the panel's Connection section: it zips the log and the
+  connection status.

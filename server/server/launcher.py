@@ -195,16 +195,7 @@ def newest_mtime(paths: list[Path]) -> float:
 
 def ensure_engines() -> None:
     step("Race engines (Rust)")
-    cargo = find_cargo()
-    if not cargo:
-        say("  Rust is not installed. The race simulator is written in Rust and has to be")
-        say("  built once on this machine (a few minutes).")
-        if not ask("  Install Rust now via rustup (https://rustup.rs)?"):
-            die("Rust is required. Install it from https://rustup.rs and re-run this launcher.")
-        install_rust()
-        cargo = find_cargo()
-        if not cargo:
-            die("Rust was installed but cargo isn't found. Open a new terminal and re-run.")
+    cargo = None  # only needed when an engine isn't built yet (a release package ships them built)
     for crate in ("race_exact_rs", "race_engine_rs"):
         root = SERVER / crate
         binary = root / "target" / "release" / (crate + (".exe" if WINDOWS else ""))
@@ -212,6 +203,17 @@ def ensure_engines() -> None:
         if binary.exists() and binary.stat().st_mtime >= newest_mtime(sources):
             say(f"  {crate}: up to date")
             continue
+        if cargo is None:
+            cargo = find_cargo()
+        if not cargo:
+            say("  Rust is not installed. The race simulator is written in Rust and has to be")
+            say("  built once on this machine (a few minutes).")
+            if not ask("  Install Rust now via rustup (https://rustup.rs)?"):
+                die("Rust is required. Install it from https://rustup.rs and re-run this launcher.")
+            install_rust()
+            cargo = find_cargo()
+            if not cargo:
+                die("Rust was installed but cargo isn't found. Open a new terminal and re-run.")
         say(f"  building {crate} ...")
         cmd = [cargo, "build", "--release", "--quiet", "--manifest-path", root / "Cargo.toml",
                "--target-dir", root / "target"]

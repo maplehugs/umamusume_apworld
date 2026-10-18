@@ -27,7 +27,23 @@ from . import icons
 from .workers import Pool, WorkerError
 
 STATIC = (Path(__file__).resolve().parent / "static").resolve()
+SERVER = Path(__file__).resolve().parents[1] / "server"
 MAX_BODY = 128 * 1024 * 1024        # whole-save imports can be tens of MB
+
+
+def _logs_zip() -> bytes:
+    """The game server's logs (server.log and its rotations) plus the
+    Archipelago connection status, zipped for a bug report."""
+    import io
+    import zipfile
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted((SERVER / "logs").glob("server.log*")):
+            z.write(f, f.name)
+        status = SERVER / "data" / "archipelago_status.json"
+        if status.is_file():
+            z.write(status, status.name)
+    return buf.getvalue()
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -61,6 +77,8 @@ class Handler(BaseHTTPRequestHandler):
         path = urlsplit(self.path).path
         if path == "/api/status":
             return self._json(200, self.server.pool.status())
+        if path == "/logs.zip":
+            return self._send(200, _logs_zip(), "application/zip")
         if path.startswith("/custom-icons/"):
             import base64
             parts = path.strip("/").split("/")
