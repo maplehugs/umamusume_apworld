@@ -10,6 +10,13 @@ this repo:
 - [`source_code_dll/`](source_code_dll/README.md): `umapd_archipelago.dll`, the
   Hachimi Edge plugin the game needs to pick up what the server changes.
 
+> [!WARNING]
+> **Early and rough.** The Archipelago basics work (checks, items, generating
+> and playing a seed), but it needs a lot more testing and balancing, and parts
+> of it are still broken. If something fails, please report it on
+> [Discord](https://discord.gg/tAqwpQCgaE) with the zip from the panel's
+> **Download logs** button.
+
 Every career is a run. Winning G1s and finishing careers sends items to the
 other players in your multiworld; what comes back are scenarios, trainees,
 support cards and permanent buffs that make the next career stronger. Your goal
