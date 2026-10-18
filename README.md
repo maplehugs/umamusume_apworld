@@ -7,8 +7,8 @@ this repo:
 - [`server/`](server/README.md): the private server, [UmamusumePS](https://github.com/systemless10/UmamusumePS)
   by systemless10 with Archipelago support added, and its web panel.
 - [`apworld/`](apworld/): the world Archipelago generates seeds with.
-- [`source_code_dll/`](source_code_dll/README.md): an optional Hachimi Edge
-  plugin so the running game picks up changes without a restart.
+- [`source_code_dll/`](source_code_dll/README.md): `umapd_archipelago.dll`, the
+  Hachimi Edge plugin the game needs to pick up what the server changes.
 
 Every career is a run. Winning G1s and finishing careers sends items to the
 other players in your multiworld; what comes back are scenarios, trainees,
@@ -18,18 +18,19 @@ is one great career (default: rank score 20000, UG1).
 The server applies the items and reports the checks. Every account on it plays
 Archipelago; a new seed starts that account over.
 
-Screenshots of it running: [docs/showcase.md](docs/showcase.md).
 Questions and bugs: [Discord](https://discord.gg/tAqwpQCgaE) (attach the zip from the
 panel's **Download logs** button).
 
 ## Quick start
 
-1. **Start the server**: in `server/`, run `./start-global.sh` (Linux/macOS) or
+1. **Start the server**: download the server package for your OS from the
+   [releases](../../releases/latest) (or use this repo's `server/`). In it, run `./start-global.sh` (Linux/macOS) or
    right-click `start-global.ps1` > *Run with PowerShell* (Windows). It needs
    Python 3.11+ and sets up the rest the first time. Leave its window open; the
    web panel opens at <http://localhost:8189>.
-2. **Point the game at it**: install Hachimi Edge and UmamusumePS's
-   `hachimi_redirect.dll` plugin, then set the redirect server to
+2. **Point the game at it**: install Hachimi Edge, UmamusumePS's
+   `hachimi_redirect.dll` plugin **and `umapd_archipelago.dll` from the
+   [releases](../../releases/latest) (required)**, then set the redirect server to
    `https://127.0.0.1:8443` in the Hachimi menu
    ([steps](server/README.md#plugin-install)). Start the game and create an account.
 3. **Install the world** (whoever generates the seed): download
@@ -42,15 +43,11 @@ panel's **Download logs** button).
    `output/` (Launcher > *Host*, or upload it to archipelago.gg > Host Game).
 6. **Connect the server**: in the web panel's **Archipelago** window, fill in the
    room address, your slot name and the password.
-7. *(Optional)* **Live sync plugin**: `umapd_archipelago.dll` from the release, for
-   Hachimi Edge. Without it, log in again (back to the title screen) after a seed
-   switch.
 
 Full walkthrough: [docs/setup.md](docs/setup.md).
 
 ## Docs
 
-- [Showcase](docs/showcase.md): screenshots of the game.
 - [How it works](docs/how-it-works.md): what an apworld is and how the pieces talk.
 - [Setup](docs/setup.md): from nothing to playing.
 - [Options](docs/options.md): every yaml option, and how to exclude checks.
@@ -68,10 +65,10 @@ python apworld/build.py 0.5.0    # same, stamped with a release version
 
 The DLL is cross-compiled with zig through `uvx`; without it, only the apworld is built.
 
-## Optional: live sync plugin
+## The game plugin (required)
 
-[source_code_dll](source_code_dll/README.md) holds an optional Hachimi Edge plugin.
-Everything works without it. With it the running game picks up what the server
+[source_code_dll](source_code_dll/README.md) holds `umapd_archipelago.dll`, a
+Hachimi Edge plugin the game needs next to `hachimi_redirect.dll`. With it the running game picks up what the server
 changes (the Legend Race ladder, items from the multiworld, a seed switch)
 without going back to the title screen: it reloads the game's data on the home
 screen. Download `umapd_archipelago.dll` from the [latest release](../../releases/latest),

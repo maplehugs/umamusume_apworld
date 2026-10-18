@@ -6,12 +6,13 @@
   newer, only on the PC that **generates** the seed.
 - On the PC that **plays**: Umamusume: Pretty Derby (Global, Steam), started
   once so its `master.mdb` exists, [Hachimi Edge](https://github.com/kairusds/Hachimi-Edge),
-  Python 3.11 or newer, and this repo's `server/` folder (a release package, or a
-  clone).
+  Python 3.11 or newer, and the server: the `umaps-archipelago-server-*` package
+  for your OS from the [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest),
+  or this repo's `server/` folder.
 
 ## 1. Start the server
 
-In `server/`:
+In the server package (or `server/`):
 
 - Linux/macOS: `./start-global.sh`
 - Windows: right-click `start-global.ps1` > *Run with PowerShell*
@@ -26,11 +27,16 @@ When it's up, the web panel opens at <http://localhost:8189>.
 1. Install Hachimi Edge and start the game once, so `<game>/hachimi/` exists.
 2. Download `hachimi_redirect.dll` from [UmamusumePS's plugin release](https://github.com/systemless10/UmamusumePS/releases/tag/plugin)
    (or build it from `server/plugin/hachimi_redirect`) and copy it into `<game>/hachimi/`.
-3. Add it to `<game>/hachimi/config.json`:
-   `"load_libraries": ["hachimi\\hachimi_redirect.dll"]`.
-4. Start the game, open the Hachimi menu (right arrow key) and set the redirect
+3. **Required:** download `umapd_archipelago.dll` and `SHA256SUMS` from the
+   [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest), check them
+   (`sha256sum -c --ignore-missing SHA256SUMS`; Windows: `Get-FileHash umapd_archipelago.dll`
+   and compare) and copy the DLL into `<game>/hachimi/` too. It makes the game pick up
+   seed switches, items and the Legend Race ladder ([details](../source_code_dll/README.md)).
+4. Add both to `<game>/hachimi/config.json`:
+   `"load_libraries": ["hachimi\\hachimi_redirect.dll", "hachimi\\umapd_archipelago.dll"]`.
+5. Start the game, open the Hachimi menu (right arrow key) and set the redirect
    server to `https://127.0.0.1:8443`.
-5. Create an account in the game. Any new account gets in.
+6. Create an account in the game. Any new account gets in.
 
 To play on the official servers again, turn the redirect off in the Hachimi menu.
 
@@ -70,22 +76,6 @@ for the account that logged in last, so log in once before connecting.
 The first connection to a seed starts that account over for it (see
 [saves.md](saves.md)). Go back to the title screen and log in again to see the
 new save.
-
-## 7. Optional: live sync plugin
-
-Optional, everything works without it: you just log in again after a seed
-switch or new items. With it, the running game picks those up on the home
-screen by itself, and the Legend Race ladder shows without restarting the game.
-
-1. Download `umapd_archipelago.dll` and `SHA256SUMS` from the
-   [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest) and check them:
-   `sha256sum -c --ignore-missing SHA256SUMS` (Windows: `Get-FileHash umapd_archipelago.dll`
-   and compare with the file).
-2. Copy the DLL into `<game>/hachimi/` and add it next to the redirect plugin in
-   `<game>/hachimi/config.json`:
-   `"load_libraries": ["hachimi\\hachimi_redirect.dll", "hachimi\\umapd_archipelago.dll"]`.
-
-Full steps, log lines and the source: [source_code_dll](../source_code_dll/README.md).
 
 ## Playing
 

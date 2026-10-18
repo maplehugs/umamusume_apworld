@@ -1,6 +1,6 @@
 # UmaPS
 
-UmaPS with Archipelago support. Based on [UmamusumePS](https://github.com/systemless10/UmamusumePS) by systemless10, licensed AGPL-3.0 like the original; see [Archipelago](#archipelago) below. The apworld, setup guide and the optional live sync plugin live in [maplehugs/umamusume_apworld](https://github.com/maplehugs/umamusume_apworld).
+UmaPS with Archipelago support. Based on [UmamusumePS](https://github.com/systemless10/UmamusumePS) by systemless10, licensed AGPL-3.0 like the original; see [Archipelago](#archipelago) below. The apworld, setup guide and the required `umapd_archipelago.dll` game plugin live in [maplehugs/umamusume_apworld](https://github.com/maplehugs/umamusume_apworld).
 
 A working, feature rich private server implementation for the Global and JP version of Umamusume: Pretty Derby. 
 
@@ -90,7 +90,7 @@ The connection plays for the account that logged in last. When it connects to a 
 
 Items arrive as mail (trainees, SSR support cards, Rainbow Uncap Crystals), permanent buffs, or boons and traps on your next career. Checks are G1 wins, scenario finishes and rank tiers, the rank ladder, different races won, fans, Team Trials race wins and a finished career per trainee.
 
-The Legend Race rival ladder (`legend_ladder`, goal `legend_race`) runs each rung as its own legend race event. Global's legend races have all ended, so at start the server sets the ladder's ten `legend_race` rows running in the game's `master.mdb` (backed up once to `server/data/master_before_archipelago.sqlite3.bak`, each row's own dates kept in `server/data/archipelago_legend_dates.json`) and touches `hachimi/umapd_master.version` so the optional umapd_archipelago plugin rereads it; without that plugin, restart the game. To put the dates back: `cd server && .venv/bin/python -c "from app import archipelago; print(archipelago.restore_legend_events())"` with the server stopped.
+The Legend Race rival ladder (`legend_ladder`, goal `legend_race`) runs each rung as its own legend race event. Global's legend races have all ended, so at start the server sets the ladder's ten `legend_race` rows running in the game's `master.mdb` (backed up once to `server/data/master_before_archipelago.sqlite3.bak`, each row's own dates kept in `server/data/archipelago_legend_dates.json`) and touches `hachimi/umapd_master.version` so the umapd_archipelago plugin (required) rereads it. To put the dates back: `cd server && .venv/bin/python -c "from app import archipelago; print(archipelago.restore_legend_events())"` with the server stopped.
 
 `python test_archipelago.py` (from `server/`) checks seeds, items and checks without a live room.
 

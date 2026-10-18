@@ -5,8 +5,7 @@ private server in [`server/`](../server/README.md): when the server changes the
 game's `master.mdb` (the Archipelago Legend ladder), the running game rereads its master data, so the change shows
 up **without restarting the game**. And when the account changes behind the
 game's back (Archipelago seed switch, items from the multiworld), the game logs in again by itself once you are on the home
-screen, the way it does at the daily 5:00 reset. Optional: without it, restart
-the game (or go back to the title screen) after such a change.
+screen, the way it does at the daily 5:00 reset. Required for Archipelago play.
 
 Modding the game client is against the game's Terms of Service. Use it with
 the private server only; it does nothing on its own, but remove it before

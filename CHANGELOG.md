@@ -6,8 +6,10 @@
 - Every account on the server plays Archipelago; a new seed starts the save over.
 - Legend Race ladder works on the new server (C..SS+, `legend_race` goal too).
 - Web panel is Archipelago only, with a Download logs button for bug reports.
-- Linux server package with the race engines prebuilt (no Rust needed, Python
-  3.11+). Windows: run `server/start-global.ps1` from the repo for now.
+- Server packages for Linux and Windows with the race engines prebuilt (no Rust
+  needed, Python 3.11+).
+- `umapd_archipelago.dll` is required now: put it in `<game>/hachimi/` next to
+  `hachimi_redirect.dll` ([setup](docs/setup.md#2-point-the-game-at-the-server)).
 - `apworld/umamusume/tables.py` is the source of truth for ids; the server
   mirrors it.
 
