@@ -14,8 +14,7 @@ Logic changes for new seeds: regenerate to get them. Needs the matching server.
   Live: Suzuka, Bourbon, Tachyon, Falcon) count 20% more in that scenario.
 - Web panel tracker: rates the cards too (seeds before 0.15.0 keep every card
   average).
-- Fix: Team Trials failed on Windows ("no time zone found"). Team Trials is also
-  always open now: no more weekly break or ranking-calc window.
+- Fix: Team Trials works every time.
 - Scout lists a single banner (the newest paid-carat daily single) instead of
   every banner; pulls stay off on the Archipelago save.
 
