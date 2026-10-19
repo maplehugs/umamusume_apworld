@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.0
+Logic changes for new seeds: regenerate to get them. Needs the matching server.
+- Support cards aren't all worth the same anymore: each SSR is rated per
+  scenario (60-130% of an average SSR, loose on purpose) with Tachyon's Lab's
+  tier list model (every stat weighted alike, as rank score counts them), and
+  logic counts your best 6 (an average card is still 1200). With up to 6 cards
+  logic is about where it was; with more, your best ones carry it, up to 1560 a
+  card. Light Hello is set by hand: strong in Grand Live only.
+- Scenario rank checks use that scenario's ratings (Tazuna only helps in URA, Riko
+  only in Unity); other checks use your best scenario.
+- Web panel tracker: rates the cards too (seeds before 0.15.0 keep every card
+  average).
+
 ## 0.14.2
 - Web panel, Archipelago page: new **Game setup** section. It checks `hachimi/`,
   both plugins, `config.json` and `master.mdb`. **Fix** installs this release's

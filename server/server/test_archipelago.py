@@ -68,6 +68,11 @@ ap.apply_item(s, ID["Progressive Training Guard"])
 ap.apply_item(s, ID["Bad Mood Trap"])
 mail = [(p["reward_type"], p["reward_id"]) for p in s[presents.PRESENT_BOX_KEY]["presents"]]
 assert (50, trainee) in mail and (51, support) in mail
+# the tracker rates each card in its scenario (seeds before 0.15.0: all average)
+st["slot_data"]["logic_support"] = 1200
+average = ap.logic_estimate(st, 1)
+st["slot_data"]["support_values"] = True
+assert ap.logic_estimate(st, 1) - average == 12 * (tables.SUPPORT_VALUE[support][0] - 100)
 state.save_state(V, s)
 assert ap.start_refusal(V, 3) and ap.start_refusal(V, 2) is None
 assert ap.gacha_refused(V)

@@ -88,7 +88,7 @@ see [options](options.md#excluding-checks).
 | Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy (the 5-RP bar: 30 min, then 15, 7.5, ~4). |
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Rainbow Uncap Crystal | uncap_crystals (+ up to half more) | One limit break for any SSR support card (Enhance > Support Cards > Limit Break); 4 max a card. Not with maxed_supports. |
-| Support: ... | support_count | The SSR support card, by mail, at limit break 0 (maxed when claimed with maxed_supports). Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: up to 6 count toward the logic estimate. |
+| Support: ... | support_count | The SSR support card, by mail, at limit break 0 (maxed when claimed with maxed_supports). Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: your best 6, rated per scenario, count toward the logic estimate. |
 | Trainee Awakening | trainee_awakenings (one per trainee) | A random trainee you own, not yet maxed, goes to 5 stars and potential level 5 (log in again to see it). With all of them maxed it waits for the next trainee you claim. |
 
 ## Filler

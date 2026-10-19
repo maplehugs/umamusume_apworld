@@ -179,6 +179,7 @@ def apply_item(full_state: dict, item_id: int, sender: str = "") -> None:
         if _maxed_supports(st):
             st.setdefault("max_supports", []).append(item_id - tables.SUPPORT_ITEM_BASE)
         st["supports_received"] = st.get("supports_received", 0) + 1
+        st.setdefault("support_ids", []).append(item_id - tables.SUPPORT_ITEM_BASE)  # the tracker
     elif item_id in _MAIL_BY_ID:
         _id, rtype, rid, num = _MAIL_BY_ID[item_id]
         presents.send(full_state, rtype, rid, num, note)
@@ -598,15 +599,16 @@ def logic_estimate(st: dict, scenario: int | None = None) -> int:
     support = int(sd.get("logic_support") or _SUPPORT_BONUS)
     est += int(sd.get("logic_training") or 450) * sum(have(f"Progressive {s} Training") for s in tables.STATS)
     est += 400 * have("Progressive Starting Stats") + 300 * have("Progressive Stat Cap")
-    supports = st.get("supports_received", 0) + len(st.get("slot_data", {}).get("starting_supports") or [])
-    if _maxed_supports(st):
-        est += support * min(_SUPPORT_MAX, supports)
-    else:  # half for the card, half once 4 crystals can max it
-        est += support // 2 * (min(_SUPPORT_MAX, supports) + min(_SUPPORT_MAX, _count(st, _CRYSTAL_ID) // 4))
-    owned = starting_scenario(st) != 1 or any(_count(st, sid) for sid in tables.SCENARIO_ITEM if sid != 1)
-    if (owned if scenario is None else scenario != 1):
-        est += _SCENARIO_BONUS
-    return est
+    # Cards received before the server kept their ids, and seeds before 0.15.0,
+    # count as average cards.
+    ids = list(sd.get("starting_supports") or []) + st.get("support_ids", [])
+    unknown = len(sd.get("starting_supports") or []) + st.get("supports_received", 0) - len(ids)
+    cards = (ids if sd.get("support_values") else [None] * len(ids)) + [None] * unknown
+    crystals = None if _maxed_supports(st) else _count(st, _CRYSTAL_ID)
+    owned = [scenario] if scenario else [sid for sid in tables.SCENARIOS
+                                         if sid == starting_scenario(st) or _count(st, sid)]
+    return est + max(tables.support_score(cards, sid, crystals, support, _SUPPORT_MAX)
+                     + (_SCENARIO_BONUS if sid != 1 else 0) for sid in owned)
 
 
 def tracker(full_state: dict) -> list:

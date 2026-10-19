@@ -92,6 +92,7 @@ class UmamusumeWorld(World):
         # support_count is the floor; create_items deals more from the deck with room.
         self.start_supports, self.deck = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
         self.supports = self.deck[:o.support_count.value]
+        self.card_items = [(c, f"Support: {tables.SSR_SUPPORTS[c]}") for c in self.supports]  # estimate
         if o.goal == o.goal.option_legend_race and not o.legend_ladder:
             raise Exception(f"{self.player_name}: the legend_race goal needs legend_ladder on")
         self.caps = 2 if self.options.goal_rank_score.value >= 21000 else 0
@@ -103,37 +104,33 @@ class UmamusumeWorld(World):
         est += TRAINING_BONUS * sum(state.count(n, p) for n in TRAINING)
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
-        cards = min(SUPPORT_MAX, len(self.start_supports) + state.count_group("Supports", p))
-        if self.options.maxed_supports:
-            est += SUPPORT_BONUS * cards
-        else:  # half for the card, half once 4 crystals can max it
-            est += SUPPORT_BONUS // 2 * (cards + min(SUPPORT_MAX, state.count(CRYSTAL, p) // 4))
+        cards = self.start_supports + [c for c, n in self.card_items if state.has(n, p)]
+        crystals = None if self.options.maxed_supports else state.count(CRYSTAL, p)
         if scenario is None:  # any scenario: the best one owned
-            owned = self.start_scenario != 1 or any(
-                state.has(n, p) for sid, n in tables.SCENARIO_ITEM.items() if sid != 1)
+            owned = [sid for sid, n in tables.SCENARIO_ITEM.items() if sid == self.start_scenario or state.has(n, p)]
         else:
-            owned = scenario != 1
-        return est + (SCENARIO_BONUS if owned else 0)
+            owned = [scenario]
+        return est + max(self.scenario_bonus(sid, cards, crystals) for sid in owned)
+
+    def scenario_bonus(self, sid: int, cards, crystals: int | None) -> int:
+        """Supports as they rate in that scenario, plus a non-URA scenario's own gains."""
+        return (tables.support_score(cards, sid, crystals, SUPPORT_BONUS, SUPPORT_MAX)
+                + (SCENARIO_BONUS if sid != 1 else 0))
 
     def reaches(self, state, score: int) -> bool:
         """estimate >= score; a score past every buff only asks for every buff."""
         return self.estimate(state) >= min(score, self.best)
 
     def max_estimate(self, scenario: int | None = None) -> int:
+        cards = self.start_supports + self.supports
+        crystals = None if self.options.maxed_supports else self.crystals()
         return (
             BASE_SCORE[self.options.logic_difficulty.value]
             + TRAINING_BONUS * 3 * len(TRAINING)
             + 400 * 5
             + 300 * self.caps
-            + self.max_support_bonus()
-            + (0 if scenario == 1 else SCENARIO_BONUS)
+            + max(self.scenario_bonus(sid, cards, crystals) for sid in ([scenario] if scenario else tables.SCENARIOS))
         )
-
-    def max_support_bonus(self) -> int:
-        cards = min(SUPPORT_MAX, len(self.start_supports) + len(self.supports))
-        if self.options.maxed_supports:
-            return SUPPORT_BONUS * cards
-        return SUPPORT_BONUS // 2 * (cards + min(SUPPORT_MAX, self.crystals() // 4))
 
     def crystals(self) -> int:
         return 0 if self.options.maxed_supports else self.options.uncap_crystals.value
@@ -289,6 +286,7 @@ class UmamusumeWorld(World):
         room -= more
         extra = self.deck[len(self.supports):][:room // 2]
         names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in extra]
+        self.card_items += [(c, f"Support: {tables.SSR_SUPPORTS[c]}") for c in extra]
         names += [self.get_filler_item_name() for _ in range(room - len(extra))]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
@@ -306,6 +304,7 @@ class UmamusumeWorld(World):
             "logic_base": BASE_SCORE[o.logic_difficulty.value],  # the server's tracker
             "logic_training": TRAINING_BONUS,
             "logic_support": SUPPORT_BONUS,
+            "support_values": True,  # the tracker rates cards by tables.SUPPORT_VALUE
             "team_trials_checks": o.team_trials_checks.value,
             "trainees": self.trainees,
             "starting_trainees": self.starters,

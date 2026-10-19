@@ -52,11 +52,18 @@ count items: it estimates the best rank score you can reach with what you have:
 
 ```
 estimate = base + 300 per training item + 400 per starting-stats item
-         + 300 per stat-cap item + 1200 per maxed SSR support card (up to 6)
+         + 300 per stat-cap item + your best 6 maxed SSRs (1200 for an average card)
          + 1500 with a non-URA scenario
 ```
 
-An SSR not yet maxed counts half; the other half once 4 crystals can max it.
+Each SSR is rated per scenario: 60% to 130% of an average SSR, from
+[Tachyon's Lab](https://jechto.github.io/Tachyons-lab/)'s tier list model with
+every stat weighted alike (rank score counts them alike; the site weighs them for
+racing), averaged over every distance and running style. A top card counts up to
+1560 and a weak one 720: loose on purpose, since a card's worth also hangs on the
+trainee and the race. A scenario check uses that scenario's ratings; other checks
+use your best scenario. An SSR not yet maxed counts half; the other half once 4
+crystals can max it (your best cards first).
 `base` is 7500 / 8500 / 9500 for relaxed / normal / expert
 (`logic_difficulty`). A rank check (or the goal) is "in logic" once the estimate
 reaches it. A goal above what every buff could reach only asks for every buff.
