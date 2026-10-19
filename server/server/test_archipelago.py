@@ -76,6 +76,8 @@ assert ap.logic_estimate(st, 1) - average == 12 * (tables.SUPPORT_VALUE[support]
 state.save_state(V, s)
 assert ap.start_refusal(V, 3) and ap.start_refusal(V, 2) is None
 assert ap.gacha_refused(V)
+banners = dispatch.handle_decoded("gacha/index", {"viewer_id": V}, None)["data"]["gacha_info_list"]
+assert len(banners) == 1, "one paid-carat banner on the Archipelago save"
 
 # claiming the mail: the support card arrives maxed, the trainee joins
 presents.handle_receive_all({"viewer_id": V})

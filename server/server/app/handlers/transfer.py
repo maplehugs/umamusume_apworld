@@ -8,7 +8,7 @@ transfer_event_data's own start_date/end_date windows, not a rotation.
 
 Mechanic (inferred, no real capture confirms sequencing or exact formulas):
   - transfer_event_data: which transfer_event_id is "live" right now (a
-    servertime window, same pattern as team_stadium.py's _current_term_state).
+    servertime window).
   - transfer_event_detail: multiple time-boxed "requests" within that event,
     each themed around a trainer_type (which in-game NPC is asking -- pure
     flavor, not a stat gate) and scored against up to 5 condition{type,

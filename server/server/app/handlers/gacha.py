@@ -620,6 +620,11 @@ def handle_index(payload: dict) -> dict:
     # the listing can't replay the pull.
     once_ids = _once_only_banners()
     ids = [gid for gid in ids if gid not in once_ids or not (pity.get(str(gid)) or 0)]
+    if archipelago.gacha_refused(viewer_id):
+        # The Archipelago save lists one banner, the newest paid-carat daily
+        # single, so the screen isn't 132 banners that all refuse (handle_exec).
+        ids = [r["id"] for r in master_data.query(
+            "SELECT id FROM gacha_data WHERE daily_pay_cost > 0 ORDER BY id DESC LIMIT 1")]
     # prize_selected_* used to be hardcoded 0 because nothing set them; they
     # are now whatever gacha/select_prize stored for that banner.
     picks = full_state.get(PRIZE_PICK_KEY) or {}

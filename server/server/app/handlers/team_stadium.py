@@ -13,7 +13,7 @@ import secrets
 import functools
 import logging
 import random
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from datetime import time as _dt_time
 
 log = logging.getLogger("uma-server")
@@ -229,33 +229,20 @@ def _parse_hms(value: str) -> _dt_time:
 
 
 def _schedule_now():
-    from zoneinfo import ZoneInfo
-    # Global schedule values align with UTC capture terms; JP values are JST.
-    name = config.get("team_trials_timezone", "Asia/Tokyo" if region.PROCESS_REGION == "jp" else "UTC")
-    return datetime.fromtimestamp(patch._servertime(), ZoneInfo(name))
-
-
-def _week_second(day, value):
-    t = _parse_hms(value)
-    return ((int(day) + 5) % 7) * 86400 + t.hour * 3600 + t.minute * 60 + t.second
+    # Fixed offsets, not ZoneInfo: Windows Python has no time zone database
+    # without the tzdata package. Global schedule values are UTC, JP values JST.
+    tz = timezone(timedelta(hours=9)) if region.PROCESS_REGION == "jp" else timezone.utc
+    return datetime.fromtimestamp(patch._servertime(), tz)
 
 
 def _current_term_state() -> int:
-    row = master_data.query_one("SELECT * FROM team_stadium LIMIT 1")
-    if not row:
-        return 1
-    now = _schedule_now()
-    current = now.weekday() * 86400 + now.hour * 3600 + now.minute * 60 + now.second
-    for prefix, status in (("interval", 2), ("calc", 3)):
-        lo = _week_second(row[f"{prefix}_start_date"], row[f"{prefix}_start_time"])
-        hi = _week_second(row[f"{prefix}_end_date"], row[f"{prefix}_end_time"])
-        if (lo <= current <= hi) if lo <= hi else (current >= lo or current <= hi):
-            return status
+    """Always open (1): Archipelago saves race any time, so the weekly interval
+    and ranking-calc windows (2, 3) never lock Team Trials. Weeks still roll over
+    by _term_id."""
     return 1
 
 
 def _term_id() -> int:
-    from datetime import timedelta
     now = _schedule_now()
     row = master_data.query_one("SELECT * FROM team_stadium LIMIT 1")
     weekday = (int(row["race_start_date"]) + 5) % 7 if row else 0
