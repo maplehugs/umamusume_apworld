@@ -61,9 +61,10 @@ Each SSR is rated per scenario: 60% to 130% of an average SSR, from
 every stat weighted alike (rank score counts them alike; the site weighs them for
 racing), averaged over every distance and running style. A top card counts up to
 1560 and a weak one 720: loose on purpose, since a card's worth also hangs on the
-trainee and the race. A scenario check uses that scenario's ratings; other checks
-use your best scenario. An SSR not yet maxed counts half; the other half once 4
-crystals can max it (your best cards first).
+trainee and the race. A scenario's link cards count 20% more there. A scenario
+check uses that scenario's ratings; other checks use your best scenario. An SSR
+not yet maxed counts half; the other half once 4 crystals can max it (your best
+cards first).
 `base` is 7500 / 8500 / 9500 for relaxed / normal / expert
 (`logic_difficulty`). A rank check (or the goal) is "in logic" once the estimate
 reaches it. A goal above what every buff could reach only asks for every buff.

@@ -10,6 +10,8 @@ Logic changes for new seeds: regenerate to get them. Needs the matching server.
   card. Light Hello is set by hand: strong in Grand Live only.
 - Scenario rank checks use that scenario's ratings (Tazuna only helps in URA, Riko
   only in Unity); other checks use your best scenario.
+- A scenario's link cards (Unity: Rice Shower, Taiki, Fukukitaru, Urara...; Grand
+  Live: Suzuka, Bourbon, Tachyon, Falcon) count 20% more in that scenario.
 - Web panel tracker: rates the cards too (seeds before 0.15.0 keep every card
   average).
 
