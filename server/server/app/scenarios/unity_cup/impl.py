@@ -1733,6 +1733,24 @@ def ensure_roster(st: dict, turn: int, chara_info=None) -> None:
             log.info("unity cup: seated missing deck slot %s as chara %s",
                      position, member["chara_id"])
 
+    # -------------------------------------------------------------- top-up --
+    # TEN TEAMMATES, ALWAYS. The client refuses the first team race below that
+    # ("you need 10 team members" -- MIN_LINEUP_SEATS less the trainee), and
+    # six deck charas + four specials only make ten when nothing collides: a
+    # special who IS the trainee or is already in the deck is refused by add()
+    # above, and a pal card's slot seats nobody. Each left the run at nine and
+    # locked out the first Unity Cup (player-reported). Fill the gap from the
+    # scout pool, as rookies alongside the specials. Also heals saved careers.
+    if isinstance(chara_info, dict) and len(members) < MIN_LINEUP_SEATS - 1:
+        pool = [sid for sid in sorted(pool_rows)
+                if pool_rows[sid]["chara_id"] not in taken_charas]
+        _rng_for(st, "roster:fill").shuffle(pool)
+        for scout_id in pool:
+            if len(members) >= MIN_LINEUP_SEATS - 1:
+                break
+            if add(scout_id):
+                st["base_size"] = int(st.get("base_size") or 0) + 1
+
     # ---------------------------------------------------------- promotions --
     deck_size = int(st.get("deck_size") or 0)
     if st.get("team_support_done"):

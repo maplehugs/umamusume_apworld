@@ -1290,13 +1290,42 @@ def handle_team_edit(payload: dict) -> dict:
     return _ok({"before_rank": before_rank, "after_rank": after_rank, "reward_info_array": rewards})
 
 
+_APTITUDE_BY_DISTANCE = {1: "proper_distance_short", 2: "proper_distance_mile",
+                         3: "proper_distance_middle", 4: "proper_distance_long", 5: "proper_ground_dirt"}
+_APTITUDE_BY_STYLE = {1: "proper_running_style_nige", 2: "proper_running_style_senko",
+                      3: "proper_running_style_sashi", 4: "proper_running_style_oikomi"}
+
+
+def _auto_team(roster: dict) -> list:
+    """Each slot gets the owned uma with the best aptitude for it (rank score
+    breaks ties), each character once as team_edit requires, in her best style."""
+    team, used = [], set()
+    for dtype in _VALID_DISTANCE_TYPES:
+        for member in _VALID_MEMBER_IDS:
+            free = [c for c in roster.values()
+                    if bond.chara_id_for_card(c.get("card_id", 0)) not in used | {0}]
+            if not free:
+                return team
+            best = max(free, key=lambda c: (c.get(_APTITUDE_BY_DISTANCE[dtype]) or 0, c.get("rank_score") or 0))
+            used.add(bond.chara_id_for_card(best.get("card_id", 0)))
+            style = max(_APTITUDE_BY_STYLE, key=lambda k: best.get(_APTITUDE_BY_STYLE[k]) or 0)
+            team.append({"distance_type": dtype, "member_id": member,
+                         "trained_chara_id": best["trained_chara_id"], "running_style": style})
+    return team
+
+
 @registry.endpoint("team_stadium/opponent_list")
 def handle_opponent_list(payload: dict) -> dict:
     viewer_id = payload["viewer_id"]
     full_state = state_store.get_state(viewer_id) or {}
     st = _team_stadium_state(full_state)
     if not st.get("team_data_array"):
-        return _refuse(ResultCode.TEAM_STADIUM_NOT_FOUND_TEAM)   # nothing to matchmake with -- must team_edit first
+        # Never formed a team (a fresh Archipelago save): race with the best
+        # umas owned instead of refusing; team_edit changes it any time.
+        st["team_data_array"] = _auto_team(_roster_by_id(viewer_id))
+        if not st["team_data_array"]:
+            return _refuse(ResultCode.TEAM_STADIUM_NOT_FOUND_TEAM)   # no trained umas at all
+        st["team_evaluation_point"] = _team_evaluation_point(st["team_data_array"], _roster_by_id(viewer_id))
 
     if (st.get("current_match") or {}).get("rounds"):
         return _ok({"opponent_info_array": st["current_match"].get("offers", [])})

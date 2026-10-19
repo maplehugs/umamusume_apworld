@@ -144,6 +144,62 @@ daily_races._run_race = real_run
 assert outbox() == [LOC[tables.legend_location("C")]]
 assert ap.legend_tier(state.get_state(L)) == 1
 
+# ---- Unity Cup: a purple flame reads 0% failure on the turn after a blue burst
+# (the next turn's rates used to be built before the training fired its bursts)
+from app.handlers import single_mode_team as smt  # noqa: E402
+from app.scenarios.unity_cup import impl as uc, preview  # noqa: E402
+
+U = "777000000004"
+dispatch.handle_decoded("load/index", {"viewer_id": U}, None)
+real_refusal, ap.start_refusal = ap.start_refusal, lambda *a, **k: None
+dispatch.handle_decoded("single_mode_team/start", {"viewer_id": U, "start_chara": {
+    "card_id": 100402, "support_card_ids": [30028, 30015, 20015, 20012, 20002],
+    "friend_support_card_info": {"viewer_id": 0, "support_card_id": 30010}, "scenario_id": 2}}, None)
+ap.start_refusal = real_refusal
+purples = 0
+for _ in range(6):
+    s = state.get_state(U)
+    career = s[smt.STATE_KEY]["data"]
+    ci = career["chara_info"]
+    ci["vital"] = 100
+    for m in uc.active_members(uc.state(s)):  # everyone fires blue on this training
+        m["soul"] = 5
+    s.pop(preview.PREVIEW_KEY, None)
+    smt._refresh_command_info(ci, career["home_info"], turn=ci["turn"], full_state=s,
+                              facility_levels=smt._facility_levels(career))
+    preview.command_info(s, ci, career["home_info"]["command_info_array"])
+    placed = (s.get(preview.PREVIEW_KEY) or {}).get("placements") or {"101": []}
+    cmd = int(max(placed, key=lambda k: len(placed[k])))
+    ci["vital"] = 1  # the next turn's plain rates are high
+    state.save_state(U, s)
+    d = dispatch.handle_decoded("single_mode_team/exec_command", {
+        "viewer_id": U, "command_type": 1, "command_id": cmd, "current_turn": ci["turn"],
+        "current_vital": 1}, None)["data"]
+    rates = {c["command_id"]: c["failure_rate"] for c in d["home_info"]["command_info_array"]}
+    for c in (d.get("team_data_set") or {}).get("command_info_array") or ():
+        if c["sp_soul_event_partner_array"]:
+            purples += 1
+            assert rates[c["command_id"]] == 0, (ci["turn"], c["command_id"], rates)
+    while d.get("unchecked_event_array"):  # the team forms through these
+        ev = d["unchecked_event_array"][0]
+        d = dispatch.handle_decoded("single_mode_team/check_event", {
+            "viewer_id": U, "event_id": ev["event_id"], "chara_id": ev.get("chara_id"),
+            "choice_number": 1 if (ev.get("event_contents_info") or {}).get("choice_array") else 0,
+            "current_turn": ci["turn"]}, None)["data"]
+assert purples, "no purple flame came up"
+
+# ---- pal/group dates: Riko's middle choice unlocks, an "end the chain" arm keeps
+# her unlock from coming back, and an Heirs member gets one date (Rudolf then +20/+21)
+from app import event_engine  # noqa: E402
+from app.handlers import pal_cards, single_mode_team  # noqa: E402
+
+assert pal_cards.unlock_chances(30036) == {1: 0.5, 2: 1.0, 3: 0.0}
+assert [len(pal_cards.member_chain(30067, m)) for m in (1017, 1003, 1073)] == [3, 1, 1]
+assert pal_cards.finale_story(30067) is None and pal_cards.pure_passion_end_story(30067) == 800001001
+assert not single_mode_team._queue_pal_event(
+    {"data": {}}, {event_engine.CHAIN_ENDED_KEY: ["support:30036"]},
+    {"data": {"chara_info": {}}}, 30036, pal_cards.unlock_story(30036), "unlock")
+
 # ---- the panel's hint button: a line in archipelago_say.txt goes to the room as Say
 from app.archipelago import client  # noqa: E402
 client.say_path = lambda: tmp / "say.txt"
@@ -158,4 +214,15 @@ sess.slot_num = 1
 sess._handle({"cmd": "PrintJSON", "type": "CommandResult", "data": [{"text": "not enough points"}]})
 import json  # noqa: E402
 assert json.loads((tmp / "status.json").read_text())["room"]["last_reply"] == "not enough points"
+# Team Trials with no team formed yet: the best umas owned race, no refusal
+r = dispatch.handle_decoded("team_stadium/opponent_list", {"viewer_id": L}, None)
+assert r["data_headers"]["result_code"] == 1 and r["data"]["opponent_info_array"], r["data_headers"]
+
+# ---- Unity Cup: training a special (Rice Shower) still seeds ten teammates, none of them her
+from app.scenarios.unity_cup import impl as uc  # noqa: E402
+deck = [{"position": p, "support_card_id": c} for p, c in enumerate((20027, 20031, 20012, 30074, 30070, 30010), 1)]
+st = {"seed": 1}
+uc.ensure_roster(st, 1, {"card_id": 103001, "support_card_array": deck})
+charas = [m["chara_id"] for m in st["members"]]
+assert len(set(charas)) == 10 == st["base_size"] and 1030 not in charas, charas
 print("archipelago self-check: ok")

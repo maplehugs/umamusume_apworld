@@ -36,7 +36,7 @@ PAL cards key by CHARA id (809001nnn = Tazuna), GROUP cards by CARD id
         +3  repeatable training event ("We'll Get Stronger, Together")
         +5+i outing with member i (support_card_group order) -- capture:
              select_id 1017 -> +5, 1003 -> +6, 1073 -> +7
-        +20.. / +30..  the "outed with everyone" finale events
+        +20.. the card chara's after-members dates, +30/+31 the career-end sendoff
 
 Wire flow (capture, request/response de-shifted)
 -----------------------------------------------
@@ -71,7 +71,7 @@ PAL_FINALE = 11
 PAL_ENDING_COMPLETE, PAL_ENDING_INCOMPLETE = 9, 10
 GROUP_FIRST, GROUP_UNLOCK, GROUP_RANDOM = 1, 2, 3
 GROUP_CHAIN_BASE = 5              # +5 + member index
-GROUP_FINALE = range(20, 40)      # +20.. / +30.. "outed with everyone"
+GROUP_FINALE = range(20, 40)      # +20.. after-members dates / +30.. sendoff
 
 # A pal card with its OWN kit inside the chara band, +100 on from the older
 # cards' (JP SSR Tazuna 30305, 809001101..): capture-confirmed across 64
@@ -256,29 +256,31 @@ def random_passion(card_id: int) -> bool:
     """Whether training with this group card can re-grant Pure Passion."""
     return group_kit(card_id).get("random_passion", True)
 
-# ...AND HOW IT ENDS: the group's +4 story, the one suffix the chain never
-# claimed (30067 "The Bright Future Ahead", 30081 "Teamwork Makes the Dream
-# Work!"). Every other group suffix is accounted for -- +1 first meeting, +2
-# unlock, +3 repeatable, +5+i the per-member outings, +20.. the finales -- and
-# neither +4 carries a condition effect of its own, which is what an event that
-# TAKES the buff away rather than granting it looks like.
-GROUP_PASSION_END = 4
+# ...AND HOW IT ENDS: the shared 800001001 "Taking a Break" (owned by 30081 and
+# by nobody, i.e. every group), the story the JP kits below are capture-proven
+# to end it with. NOT the +4: 30067's "The Bright Future Ahead" and 30081's
+# "Teamwork Makes the Dream Work!" are two-choice RANDOM events on GameTora,
+# and serving the +4 here played "The Bright Future Ahead" whenever the buff
+# lapsed (live-reported among the Heirs recreations).
+GROUP_PASSION_END = 800001001
 
 # Per-card unlock semantics for the +4/+2 event, keyed by the card's story
 # owner (chara id for pal cards, card id for group cards):
 #   {select_index: probability the outing unlocks}
 # EXPLICIT OVERRIDES only -- capture ground truth. Everything else is derived
-# from the event data itself by unlock_chances(): a choice flagged
-# random_either is the gamble (50/50) and no other choice unlocks; an event
-# with no gamble unlocks on choice 1. That reproduces every known card --
-# Tazuna/Kiryuin (2 plain choices -> top guaranteed), Riko/Sasami (choice 1
-# random_either -> the gamble), both group cards (single ack choice).
+# from the event data itself by unlock_chances(): on GameTora every arm of
+# every pal/group unlock event carries either `ds` (unlock recreation) or `ee`
+# (end the chain), and only `ee` survives into our cached data as chain_end --
+# so an arm unlocks unless it ends the chain. Tazuna/Kiryuin/Light Hello: top
+# unlocks, bottom ends. Riko: top is the gamble, MIDDLE UNLOCKS, bottom ends
+# (the middle was read as "no unlock" and re-served the event every turn --
+# live-reported). Sasami: top (both arms) and middle unlock. An event with no
+# chain_end anywhere (both group cards, Light Hello's JP-titled cache) unlocks
+# on choice 1.
 _DEFAULT_UNLOCK = {1: 1.0}
 UNLOCK_CHANCE: dict[int, dict[int, float]] = {
     9001: {1: 1.0, 2: 0.0},       # Tazuna -- capture: display_id 11 on choice 1 only
-    9006: {1: 0.5, 2: 0.0, 3: 0.0},  # Riko -- capture: choice 1 dual-variant (gamble)
 }
-_GAMBLE_CHANCE = 0.5
 
 
 @functools.lru_cache(maxsize=64)
@@ -317,9 +319,8 @@ def pure_passion_conditions() -> frozenset:
 
 def pure_passion_end_story(card_id: int) -> int | None:
     """The story that plays when this group's Pure Passion runs out."""
-    if group_kit(card_id).get("passion_end"):
-        return int(group_kit(card_id)["passion_end"])
-    return story_id(card_id, GROUP_PASSION_END) if is_group(card_id) else None
+    return int(group_kit(card_id).get("passion_end") or GROUP_PASSION_END) \
+        if is_group(card_id) else None
 
 
 @functools.lru_cache(maxsize=512)
@@ -462,50 +463,41 @@ def random_story(card_id: int) -> int | None:
                     if is_pal(card_id) else GROUP_RANDOM)
 
 
+def after_partner(card_id: int) -> int:
+    """The group member who walks on into the after-members dates: the card's
+    own chara (Rudolf for 30067) unless its kit says otherwise."""
+    return group_kit(card_id).get("after_partner", card_row(card_id)[1])
+
+
 @functools.lru_cache(maxsize=64)
 def member_chain(card_id: int, member: int) -> tuple:
-    """A group member's own outing chain: their card-band story (+5 + index)
-    followed by their personal sub-chain, which lives in the MEMBER's own
-    80<chara>nnn band -- e.g. Tokai Teio's 801003001 'My Way, Or...' and
-    801003002 'My Weapon' under Rudolf's card.
+    """A group member's outing chain: their ONE card-band date (+5 + index;
+    support_card_group.outing_max is 1 for every member) and, for the card's
+    own chara, the after-members dates once everyone has been out (30067's
+    +20/+21, show_progress_1 1..2; 30081's +20).
 
-    Derived from THIS CARD's GameTora event list (not the whole 80<member>nnn
-    band): that band is shared with the member's own ordinary support cards, so
-    claiming all of it would drag in unrelated events."""
-    from .. import event_engine
+    Never the stories in the member's own 80<chara>nnn band: those are the
+    card's RANDOM events (GameTora files them under `random`, the dates under
+    `dates_random` with one relevant_char each). Claiming them made Tsurumaru's
+    recreation play "Preparing to the MAX!" and "Helping Out to the MAX!" as
+    dates 2 and 3 (live-reported)."""
     members = group_members(card_id)
     if member not in members:
         return ()
-    chain = []
-    suffix = (group_kit(card_id).get("member_story") or {}).get(
-        member, GROUP_CHAIN_BASE + members.index(member))
-    head = story_id(card_id, suffix)
-    if head:
-        chain.append(head)
     kit = group_kit(card_id)
-    if kit:
-        # The kit's own continuation: the card's chara walks on into the
-        # after-members stories (see GROUP_KITS).
-        if member == kit.get("after_partner"):
-            chain += [s for s in (story_id(card_id, x) for x in kit.get("after_members") or ()) if s]
+    suffix = (kit.get("member_story") or {}).get(member, GROUP_CHAIN_BASE + members.index(member))
+    chain = [s for s in (story_id(card_id, suffix),) if s]
+    if member != after_partner(card_id):
         return tuple(chain)
-    gt = event_engine.gametora.load_cached("support", card_id) or {}
-    base = 800000000 + member * 1000
-    extra = set()
-    for ev in gt.values():
-        title = ev.get("name")
-        if not title:
-            continue
-        # Only events whose own bond effect names this member -- that's how the
-        # data attributes a group card's events to one of its members.
-        owners = {e.get("char_id") for c in ev.get("choices") or []
-                  for e in c.get("effects") or [] if e.get("char_id")}
-        if owners and member not in owners:
-            continue
-        sid = event_engine._story_id_by_title(title, base)
-        if sid:
-            extra.add(sid)
-    return tuple(chain + sorted(extra))
+    if kit:
+        return tuple(chain + [s for s in (story_id(card_id, x)
+                                          for x in kit.get("after_members") or ()) if s])
+    base = story_base(card_id)
+    return tuple(chain + [int(r["story_id"]) for r in master_data.query(
+        "SELECT DISTINCT story_id, show_progress_1 FROM single_mode_story_data "
+        "WHERE support_card_id=? AND show_progress_1>0 AND story_id BETWEEN ? AND ? "
+        "ORDER BY show_progress_1", (card_id, base + GROUP_FINALE.start,
+                                     base + GROUP_FINALE.stop - 1))])
 
 
 def outing_story(card_id: int, partner_chara: int, step: int) -> int | None:
@@ -536,13 +528,14 @@ def outing_chain_len(card_id: int, partner_chara: int | None = None) -> int:
 
 
 def finale_story(card_id: int) -> int | None:
-    """The event that only unlocks once the whole chain / every member is done."""
+    """The event that only unlocks once the whole chain / every member is done.
+    None for a group card: its +20.. are the card chara's after-members DATES
+    (member_chain) and its +30/+31 the career-end sendoff. Queued here as well,
+    the +20 would play on its own the turn after the last member's date and
+    again as the card chara's next one."""
     if is_pal(card_id):
         return story_id(card_id, _pal_suffix(card_id, PAL_FINALE, LINK_FINALE))
-    if "finale" in group_kit(card_id):
-        return story_id(card_id, group_kit(card_id)["finale"]) if group_kit(card_id)["finale"] else None
-    have = sorted(s for s in _existing_suffixes(card_id) if s in GROUP_FINALE)
-    return story_base(card_id) + have[0] if have else None
+    return None
 
 
 def ending_story(card_id: int, complete: bool) -> int | None:
@@ -566,13 +559,10 @@ def new_year_story(card_id: int) -> int | None:
 
     For a PAL card this happens to sit at the same suffix (11) `finale_story`
     already returns -- capture shows that slot was never a distinct
-    "chain complete" beat, it's this. For a GROUP card it is a DIFFERENT beat
-    from `finale_story` (whose GROUP_FINALE range holds several: a per-pair
-    beat first, then the whole-team one) -- e.g. Rudolf's finale is suffix 20
-    ('I Wanna Be Just Like Prez!') while 'ny' is 32 ('Dreaming the Same
-    Dream'), so it can't be found by suffix arithmetic and is instead resolved
-    by title, same technique member_chain() already uses for GameTora ->
-    master.mdb mapping."""
+    "chain complete" beat, it's this. For a GROUP card it sits among the
+    GROUP_FINALE suffixes behind the after-members dates and the sendoff --
+    e.g. Rudolf's 'ny' is 32 ('Dreaming the Same Dream') -- so it can't be
+    found by suffix arithmetic and is instead resolved by title."""
     if group_kit(card_id).get("new_year"):
         return story_id(card_id, group_kit(card_id)["new_year"])
     offset = link_offset(card_id)
@@ -593,7 +583,8 @@ def new_year_story(card_id: int) -> int | None:
 def unlock_chances(card_id: int) -> dict:
     """{select_index: probability} for this card's outing-unlock event.
     Capture-derived overrides first; otherwise derived from the GameTora event
-    itself (random_either = the gamble choice; no gamble = choice 1 unlocks)."""
+    itself (the share of a choice's arms that don't end the chain; no chain_end
+    anywhere = choice 1 unlocks)."""
     if _link_chain(card_id):
         return {1: 1.0, 2: 1.0}   # capture: display_id 11 on both choices
     override = UNLOCK_CHANCE.get(story_owner(card_id))
@@ -603,11 +594,12 @@ def unlock_chances(card_id: int) -> dict:
     if sid:
         from .. import event_engine
         _title, ev = event_engine.event_by_story_id(card_id, sid)
-        choices = (ev or {}).get("choices") or []
-        gambles = [i + 1 for i, c in enumerate(choices) if c.get("random_either")]
-        if gambles:
-            return {i: _GAMBLE_CHANCE for i in gambles}
-        if choices:
+        ends = [[any(e.get("type") == "chain_end" for e in g)
+                 for g in event_engine._choice_effect_groups(c)]
+                for c in (ev or {}).get("choices") or []]
+        if any(any(arms) for arms in ends):
+            return {i + 1: arms.count(False) / len(arms) for i, arms in enumerate(ends)}
+        if ends:
             return {1: 1.0}
     return dict(_DEFAULT_UNLOCK)
 

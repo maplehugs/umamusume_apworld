@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.15.1
+Server fixes.
+- Team Trials: no more "team not found" when you never formed a team; your best
+  umas race until you set one.
+- Unity Cup: the team always has 10 members (training or bringing one of the
+  scenario's own characters, or a pal card, left it at 9 and locked out the
+  first Unity Cup). Careers already at 9 are filled on their next load.
+- Unity Cup: a purple flame is 0% failure again (failure rates were read from
+  before the turn's bursts, so they and the flames didn't match).
+- Pal and group cards: Riko's middle choice unlocks her dates and ending her
+  chain sticks; Heirs to the Throne / Team Sirius members get one date each
+  (no more endless recreation with random events), and running out of Pure
+  Passion no longer plays a random event.
+
 ## 0.15.0
 Logic changes for new seeds: regenerate to get them. Needs the matching server.
 - Support cards aren't all worth the same anymore: each SSR is rated per

@@ -10951,6 +10951,24 @@ def handle_exec_command(payload: dict) -> dict:
     if not (response.get("data") or {}).get("_training_failed"):
         scenarios.for_chara(chara_before).award_training_gains(
             full_state, chara_before, payload)
+        # THE NEXT TURN'S FAILURE RATES WERE BUILT BEFORE THAT AWARD, inside
+        # _simulate_exec_command -- and the award is where Unity Cup fires its
+        # bursts. A teammate who just went blue (now purple-ready) read as
+        # blue-ready, so her purple flame showed the plain rate, and one who
+        # just went purple still zeroed her facility under a blue flame
+        # (user-reported). Recompute against the post-award state.
+        career_data = career_state["data"]
+        career_home = career_data.get("home_info")
+        if isinstance(career_home, dict):
+            _refresh_failure_rates(career_data.get("chara_info") or {}, career_home,
+                                   full_state, _facility_levels(career_data))
+            rates = {c.get("command_id"): c.get("failure_rate")
+                     for c in career_home.get("command_info_array") or ()
+                     if c.get("command_type") == 1}
+            served = (response.get("data") or {}).get("home_info")
+            for c in (served or {}).get("command_info_array") or ():
+                if c.get("command_type") == 1 and c.get("command_id") in rates:
+                    c["failure_rate"] = rates[c["command_id"]]
         # ...and a beat it queued that leads the reply takes the display slot
         # now, before the legacy families below can claim it.
         if scenarios.for_chara(chara_before).award_claims_slot(full_state):
@@ -14040,6 +14058,21 @@ def _sync_pal_evaluation(full_state: dict, chara_info: dict) -> None:
             if e.get("target_id") == pos:
                 e["is_outing"] = 1 if entry.get("unlocked") else 0
                 e["story_step"] = entry.get("step", 0)
+                if pal_cards.is_group(card_id):
+                    # A GROUP row is the shape the JP kits serve off real
+                    # careers (venus/legend persist_upkeep): one entry per
+                    # member, story_step 1 once her single date is done, and
+                    # the row's own story_step counting only the card chara's
+                    # after-members dates. Sent bare ([] and every outing
+                    # summed), the client kept offering a member whose date
+                    # was spent and closed the card chara's dates early
+                    # (live-reported for Heirs to the Throne).
+                    e["group_outing_info_array"] = [
+                        {"chara_id": m, "is_outing": e["is_outing"],
+                         "story_step": min(1, _member_step(entry, m))}
+                        for m in pal_cards.group_members(card_id)]
+                    e["story_step"] = max(0, _member_step(
+                        entry, pal_cards.after_partner(card_id)) - 1)
                 break
 
 
@@ -14143,6 +14176,13 @@ def _queue_pal_event(response, full_state, career_state, card_id, sid, kind,
     `front` is for the ONE case that is a deliberate player choice rather than
     a passive coincidence roll -- see _queue_outing_event's call, the only one
     that passes True."""
+    if kind in ("unlock", "pre_unlock") and event_engine.chain_ended(
+            full_state, f"support:{int(card_id)}"):
+        # The unlock's `ee` arm ("End this Support Card's chain event") was
+        # taken: the card never offers recreation again this career. Every
+        # unlock roll routes through here; without this one the per-turn roll
+        # served the same unlock event again (live-reported for Riko).
+        return False
     chara_info = career_state["data"]["chara_info"]
     if override:
         # The scenario's own version of this story (Scenario.pal_training_roll):
@@ -14289,9 +14329,9 @@ def _outing_partners(full_state: dict, chara_info: dict) -> list:
                     else _member_step(entry, chara))
             exhausted = step >= pal_cards.outing_chain_len(
                 card_id, None if pal_cards.is_pal(card_id) else chara)
-            # A kit's after-members stories wait until every member has had
-            # her own outing (pal_cards.GROUP_KITS, 30137's 020/021).
-            if (not exhausted and step >= 1 and pal_cards.group_kit(card_id)
+            # A group's after-members dates wait until every member has had
+            # her own outing (30067's +20/+21, 30137's 020/021).
+            if (not exhausted and step >= 1 and pal_cards.is_group(card_id)
                     and any(_member_step(entry, m) < 1 for m in pal_cards.group_members(card_id))):
                 exhausted = True
             if exhausted and not _new_year_outing_ready(full_state, chara_info, card_id):
@@ -14381,16 +14421,18 @@ def _pal_unlock_hit(card_id, choice_number, event, chara_info, branch) -> bool:
     preview marks it (choice_reward_array / UNLOCK_OUTING_DISPLAY_ID).
 
     Falls back to the probability roll when there is no gamble to read: a
-    single-outcome choice (where unlock_chance is a flat 1.0 or 0.0 anyway),
-    an event we could not resolve, or a branch that doesn't fit the choice.
+    choice whose arms all unlock or all don't (unlock_chance a flat 1.0 or 0.0
+    -- Sasami's top choice unlocks on BOTH arms), an event we could not
+    resolve, or a branch that doesn't fit the choice.
     """
-    if event is not None:
+    chance = pal_cards.unlock_chance(card_id, choice_number or 1)
+    if event is not None and 0.0 < chance < 1.0:
         outcome, count = event_engine.served_outcome(
             event, choice_number, chara_info, branch)
         if count > 1 and outcome is not None:
             return outcome == event_engine.richest_outcome(
                 event, choice_number, chara_info)
-    return random.random() < pal_cards.unlock_chance(card_id, choice_number or 1)
+    return random.random() < chance
 
 
 def _commit_pal_event(full_state: dict, chara_info: dict, choice_number: int,
