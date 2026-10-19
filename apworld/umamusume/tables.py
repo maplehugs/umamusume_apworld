@@ -10,7 +10,7 @@ GAME = "Umamusume Pretty Derby"
 
 # The apworld release these tables ship with (the server's Archipelago mod and the
 # world are released together: a newer apworld needs the matching server).
-APWORLD_VERSION = "0.15.0"
+APWORLD_VERSION = "0.15.1"
 APWORLD_REPO = "maplehugs/umamusume_apworld"
 
 SCENARIOS = {1: "URA Finale", 2: "Unity Cup", 3: "Grand Live", 4: "Trackblazer"}
