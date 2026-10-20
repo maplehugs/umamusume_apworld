@@ -38,7 +38,7 @@ A working, feature rich private server implementation for the Global and JP vers
 2. Run the launcher for your version:
    | | Global | JP |
    |---|---|---|
-   | **Windows** | right-click `start-global.ps1` → **Run with PowerShell** | right-click `start-jp.ps1` → **Run with PowerShell** |
+   | **Windows** | double-click `start-global.bat` | double-click `start-jp.bat` |
    | **macOS / Linux** | `./start-global.sh` | `./start-jp.sh` |
    First run will take a while since it will setup everything
 3. Leave this window open, when the server starts successfully a admin pannel will open in your browser.

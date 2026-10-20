@@ -4,19 +4,20 @@ from Options import Choice, DefaultOnToggle, NamedRange, OptionDict, PerGameComm
 
 
 class Goal(Choice):
-    """rank_score: finish one career at or above Goal Rank Score. Rank checks within
+    """legend_race (default): beat the SS+ Legend Race rival (needs legend_ladder on;
+    the SS+ rung is the goal, not a check). Logic asks for a uma that really races:
+    a full deck, Stamina cards, skill points and awakenings, not just a score.
+    rank_score: finish one career at or above Goal Rank Score. Rank checks within
     500 of that score or above aren't generated (they'd come with the win).
     g1_collector: win Goal G1 Count different G1s (across careers).
-    all_scenarios: finish a career in each of the 4 scenarios (needs all 3 unlocks).
-    legend_race: beat the SS+ Legend Race rival (needs legend_ladder on; the SS+ rung
-    is the goal, not a check). A short game."""
+    all_scenarios: finish a career in each of the 4 scenarios (needs all 3 unlocks)."""
 
     display_name = "Goal"
     option_rank_score = 0
     option_g1_collector = 1
     option_all_scenarios = 2
     option_legend_race = 3
-    default = 0
+    default = 3
 
 
 class GoalRankScore(Range):

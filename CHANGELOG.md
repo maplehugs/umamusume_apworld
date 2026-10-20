@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.2
+- The default goal is legend_race now: beat the SS+ Legend Race rival. It asks for
+  a uma that really races (skills, stamina, the right build), so far more of your
+  cards matter than when only the rank score counts. rank_score and the others
+  are still there.
+- Windows: double-click start-global.bat (or start-jp.bat) to start the server.
+  Windows blocks running a downloaded .ps1 directly ("cannot be loaded"); the .bat
+  runs it without touching your PowerShell settings.
+
 ## 0.16.1
 - Team Trials checks never hold an item anyone needs: with rivals at your level a
   match is close to a coin flip, so they hold only filler and traps from the

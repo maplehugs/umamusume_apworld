@@ -15,7 +15,8 @@
 In the server package (or `server/`):
 
 - Linux/macOS: `./start-global.sh`
-- Windows: right-click `start-global.ps1` > *Run with PowerShell*
+- Windows: double-click `start-global.bat` (it runs `start-global.ps1`; Windows blocks
+  running a downloaded `.ps1` directly, "cannot be loaded")
 
 The first run takes a while: it makes the Python environment, a certificate,
 builds the race engines (a release package has them already built) and reads

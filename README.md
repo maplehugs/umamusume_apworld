@@ -33,7 +33,7 @@ panel's **Download logs** button).
 
 1. **Start the server**: download the server package for your OS from the
    [releases](../../releases/latest) (or use this repo's `server/`). In it, run `./start-global.sh` (Linux/macOS) or
-   right-click `start-global.ps1` > *Run with PowerShell* (Windows). It needs
+   double-click `start-global.bat` (Windows). It needs
    Python 3.11+ and sets up the rest the first time. Leave its window open; the
    web panel opens at <http://localhost:8189>.
 2. **Point the game at it**: install Hachimi Edge, UmamusumePS's

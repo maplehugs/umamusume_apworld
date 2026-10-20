@@ -2,7 +2,7 @@ name: YourName
 game: Umamusume Pretty Derby
 description: Umamusume player file
 Umamusume Pretty Derby:
-  goal: rank_score
+  goal: legend_race               # or rank_score, g1_collector, all_scenarios
   goal_rank_score: 20000
   goal_g1_count: 24
   logic_difficulty: normal
