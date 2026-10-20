@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.16.3
+- The server packages bring their own Python (3.12, portable): nothing to install
+  first. A newer system Python (3.15) failed to install the server's packages
+  ("Failed to build 'apsw-sqlite3mc' ... Checksums do not match"); this avoids it.
+  Unzip the new package to a new folder (or let it be: an old environment made by
+  another Python is made again on the next start).
+- The launcher numbers its steps ([1/5] Python environment ... [5/5] Starting the
+  server) and, when something fails, says the server did not start and where to
+  send the window's text.
+- Each seed draws its own Legend Race rivals: a random uma for every rung, of the
+  same distance and ground as before, so the ladder changes from seed to seed.
+- Fixed: adding a trained veteran from the panel broke the game's login ("could
+  not receive parameters").
+- Panel: links to the website (uma.5maple.com) and its bug report form.
+
 ## 0.16.2
 - The default goal is legend_race now: beat the SS+ Legend Race rival. It asks for
   a uma that really races (skills, stamina, the right build), so far more of your

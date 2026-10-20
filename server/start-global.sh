@@ -5,7 +5,8 @@
 #   ./start-global.sh --help       all options
 set -euo pipefail
 cd "$(dirname "$0")"
-for py in python3.14 python3.13 python3.12 python3.11 python3; do
+# The package's own portable Python first, then any installed one.
+for py in ./python/bin/python3 python3.14 python3.13 python3.12 python3.11 python3; do
     if command -v "$py" >/dev/null 2>&1 && "$py" -c 'import sys; sys.exit(sys.version_info < (3, 11))'; then
         exec "$py" server/launcher.py --region global "$@"
     fi

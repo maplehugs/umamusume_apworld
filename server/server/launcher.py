@@ -61,8 +61,13 @@ def say(msg: str = "") -> None:
     print(msg, flush=True)
 
 
+# The setup steps, numbered on screen so a stuck or failed run says where it is.
+STEPS = ["Python environment", "TLS certificate", "Race engines (Rust)", "Game install", "Starting the server"]
+
+
 def step(msg: str) -> None:
-    say(f"\n== {msg}")
+    n = next((i for i, s in enumerate(STEPS, 1) if msg.startswith(s)), None)
+    say(f"\n== [{n}/{len(STEPS)}] {msg}" if n else f"\n== {msg}")
 
 
 def ask(question: str) -> bool:
@@ -78,6 +83,8 @@ def ask(question: str) -> bool:
 
 def die(msg: str) -> "None":
     say(f"\nERROR: {msg}")
+    say("\nThe server did not start. Copy the text in this window and send it on Discord")
+    say("(https://discord.gg/vb67v9BH5X) or at https://uma.5maple.com/report")
     sys.exit(1)
 
 
@@ -92,6 +99,15 @@ def ensure_venv(reset: bool) -> None:
     step("Python environment")
     if sys.version_info < MIN_PY:
         die(f"Python {MIN_PY[0]}.{MIN_PY[1]}+ is required (this is {platform.python_version()}).")
+    if VENV.exists() and not reset:
+        # Made by another Python (say a system 3.15, before this package brought
+        # its own): its packages may not install there, so start it over.
+        cfg = VENV / "pyvenv.cfg"
+        home = next((l.split("=", 1)[1].strip() for l in cfg.read_text().splitlines() if l.startswith("home")), "") \
+            if cfg.is_file() else ""
+        if not home or Path(home).resolve() != Path(sys.executable).resolve().parent:
+            say(f"  {VENV.name} was made by another Python: making it again with {platform.python_version()}")
+            reset = True
     if reset and VENV.exists():
         shutil.rmtree(VENV)
     if not VENV_PY.exists():
@@ -429,7 +445,7 @@ def start(region: str, info: dict, key: Path, cert: Path, reload: bool, admin: b
             "--ssl-keyfile", str(key), "--ssl-certfile", str(cert)]
     if reload:
         args += ["--reload", "--reload-dir", "app"]
-    step(f"Starting the {region} server on https://{HOST}:{info['port']}  (Ctrl-C to stop)")
+    step(f"Starting the server ({region}) on https://{HOST}:{info['port']}  (Ctrl-C to stop)")
     say(f"  In the game's Hachimi menu, set the redirect server to https://{HOST}:{info['port']}")
     say("  (that address is for the game; the admin panel opens in your browser)")
     server = subprocess.Popen(args, cwd=SERVER)

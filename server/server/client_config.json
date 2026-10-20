@@ -31,5 +31,8 @@
   "specialty_priority_bonus": null,
   "hint_rate_multiplier": null,
   "bond_gain_multiplier": null,
-  "energy_cost_multiplier": null
+  "energy_cost_multiplier": null,
+  "archipelago_server": "localhost:38281",
+  "archipelago_slot": "Maple",
+  "archipelago_password": null
 }

@@ -721,7 +721,61 @@ def tracker(full_state: dict) -> list:
 
 # ------------------------------------------------------------------ legend ladder
 
-LADDER_ROWS = [row for _tier, _rank, row, _stats in tables.LEGEND_LADDER]
+LADDER_ROWS = [row for _tier, _rank, row, _stats in tables.LEGEND_LADDER]  # the default rivals
+# Each seed draws its own rival per rung: a legend_race row of the same distance
+# band and ground as the rung's default (a 3000 m rung stays a long race; logic's
+# Stamina needs follow the rung), never the same row twice. The rung still sets
+# the strength (legend_boss); the row brings the face, the course and its skills.
+_LADDER_BANDS = ((1400, "sprint"), (1800, "mile"), (2400, "middle"))
+
+
+def _ladder_band(distance: int) -> str:
+    return next((name for top, name in _LADDER_BANDS if distance <= top), "long")
+
+
+@functools.lru_cache(maxsize=1)
+def _ladder_pool() -> dict:
+    """{(band, ground): row ids} of the legend_race rows the ladder can use:
+    with a boss, on a course the race engine knows."""
+    from ..simulation import race_simulator
+
+    pool = {}
+    for r in master_data.query(
+            "SELECT l.id, l.race_instance_id, c.distance, c.ground FROM legend_race l "
+            "JOIN legend_race_boss_npc b ON b.id = l.legend_race_boss_npc_id "
+            "JOIN race_instance ri ON ri.id = l.race_instance_id JOIN race r ON r.id = ri.race_id "
+            "JOIN race_course_set c ON c.id = r.course_set ORDER BY l.id"):
+        if race_simulator.get_course_for_race_instance(r["race_instance_id"]):
+            pool.setdefault((_ladder_band(r["distance"]), r["ground"]), []).append(r["id"])
+    return pool
+
+
+def _row_key(row_id: int):
+    r = master_data.query_one(
+        "SELECT c.distance, c.ground FROM legend_race l JOIN race_instance ri ON ri.id = l.race_instance_id "
+        "JOIN race r ON r.id = ri.race_id JOIN race_course_set c ON c.id = r.course_set WHERE l.id = ?", (row_id,))
+    return (_ladder_band(r["distance"]), r["ground"]) if r else None
+
+
+@functools.lru_cache(maxsize=64)
+def _seed_ladder(seed: str) -> tuple:
+    rng, out = random.Random(f"{seed}:legend ladder"), []
+    pool = _ladder_pool()
+    for default in LADDER_ROWS:
+        choices = [r for r in pool.get(_row_key(default), ()) if r not in out]
+        out.append(rng.choice(choices) if choices else default)
+    return tuple(out)
+
+
+def ladder_rows(full_state: dict) -> tuple:
+    """This save's rival per rung: drawn from its seed (the defaults without one)."""
+    seed = (full_state.get(AP_KEY) or {}).get("seed_name")
+    return _seed_ladder(seed) if seed else tuple(LADDER_ROWS)
+
+
+def _all_ladder_rows() -> list:
+    """Every row any seed can draw: what master.mdb keeps running."""
+    return sorted({r for rows in _ladder_pool().values() for r in rows} | set(LADDER_ROWS))
 _LEGEND_EVENT_DAYS = 365
 _LEGEND_KEY = "legend_race_state"  # handlers.legend_race.LEGEND_KEY
 
@@ -822,9 +876,10 @@ def sync_legend_events() -> None:
     try:
         conn = sqlite3.connect(mdb, timeout=10)
         try:
-            marks = ",".join("?" * len(LADDER_ROWS))
+            ladder = _all_ladder_rows()
+            marks = ",".join("?" * len(ladder))
             rows = conn.execute(f"SELECT id, notice_date, start_date, end_date FROM legend_race "
-                                f"WHERE id IN ({marks})", LADDER_ROWS).fetchall()
+                                f"WHERE id IN ({marks})", ladder).fetchall()
             if all(start <= now and end > now + 30 * 86400 for _id, _n, start, end in rows):
                 return
             dates_file = _legend_dates_file()
@@ -839,11 +894,11 @@ def sync_legend_events() -> None:
             with conn:
                 conn.executemany("UPDATE legend_race SET notice_date=?, start_date=?, end_date=? WHERE id=?",
                                  [(now - 3600, now - 3600, now + _LEGEND_EVENT_DAYS * 86400, rid)
-                                  for rid in LADDER_ROWS])
+                                  for rid in ladder])
         finally:
             conn.close()
         touch_master()
-        log.info("archipelago: Legend Race ladder events running in master.mdb (rows %s)", LADDER_ROWS)
+        log.info("archipelago: Legend Race ladder events running in master.mdb (%d rows)", len(ladder))
     except Exception:
         log.warning("archipelago: could not set up the Legend Race ladder events", exc_info=True)
 

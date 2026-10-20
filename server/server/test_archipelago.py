@@ -287,4 +287,8 @@ assert dispatch.HANDLERS.get("single_mode_free/multi_item_exchange_2") is \
 from app.handlers import registry  # noqa: E402
 assert all(registry.get(p) for p in ("banner/url", "live_theater_performers_preset/index",
                                      "live_theater_performers_preset/update"))
+# Legend ladder: each seed draws its own rivals, fixed for that seed, each rung in its default's distance band
+a, b = ap._seed_ladder("seed-a"), ap._seed_ladder("seed-b")
+assert a == ap._seed_ladder("seed-a") and len(set(a)) == len(a) and a != b
+assert all(ap._row_key(r) == ap._row_key(d) for r, d in zip(a, ap.LADDER_ROWS))
 print("archipelago self-check: ok")

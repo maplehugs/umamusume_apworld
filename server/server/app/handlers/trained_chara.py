@@ -729,7 +729,10 @@ def _load_starter_trained_chara(viewer_id) -> list[dict]:
     # semantic flag that should stay 0 regardless of who owns the entry.
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
     for e in template:
-        e["viewer_id"] = viewer_id
+        # An int on the wire: the admin panel passes viewer ids as strings, and a
+        # string here fails the client's whole login ("could not receive
+        # parameters": LoginResponse deserialize error, code 172 fixstr).
+        e["viewer_id"] = int(viewer_id)
         # Must be a LITERAL 0, not left alone as this project's earlier fix
         # assumed -- found 2026-08-19 (a fresh account made after that fix
         # STILL had no veterans): the seed JSON itself stores owner_viewer_id

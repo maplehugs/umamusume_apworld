@@ -3,17 +3,21 @@
 -> dist/umaps-archipelago-server-linux-x86_64.tar.gz (or -windows-x86_64.zip)
 
 The server's tracked files plus both race engines built in release mode, so the
-launcher finds them up to date and needs no Rust. Python 3.11+ is still needed:
-the launcher makes its own environment on the first run.
+launcher finds them up to date and needs no Rust, and a portable Python
+(python-build-standalone, pinned and checked) in python/, so nothing needs to be
+installed: start-global.bat/.sh use it, or a system Python 3.11+ without it.
 
 windows cross-builds the engines with `cargo --target x86_64-pc-windows-gnu`,
 which needs that target's standard library (rustup target add
 x86_64-pc-windows-gnu) and a mingw linker (x86_64-w64-mingw32-gcc)."""
 
+import hashlib
+import io
 import os
 import subprocess
 import sys
 import tarfile
+import urllib.request
 import zipfile
 from pathlib import Path
 
@@ -21,6 +25,18 @@ ROOT = Path(__file__).resolve().parents[1]
 SERVER = ROOT / "server"
 ENGINES = ("race_exact_rs", "race_engine_rs")
 TARGETS = {"linux": None, "windows": "x86_64-pc-windows-gnu"}
+
+# Portable CPython (astral-sh/python-build-standalone, the builds uv uses). A
+# release at least two weeks old, its stripped install_only archives (no debug
+# symbols: a fifth of the size) pinned by SHA256
+# (from that release's SHA256SUMS): a changed file fails the build.
+PYTHON_RELEASE = "20261003"
+PYTHON_BUILDS = {
+    "linux": ("cpython-3.12.15+20261003-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz",
+              "731af898886c5f821890dc901eca3c651cca8e51fa7308c159d12a1194aeac91"),
+    "windows": ("cpython-3.12.15+20261003-x86_64-pc-windows-msvc-install_only_stripped.tar.gz",
+                "6fba7f2ae506facf41d457ea8293c7497910a675c69a4e954875169410a50402"),
+}
 
 os_name = sys.argv[1] if len(sys.argv) > 1 else "linux"
 if os_name not in TARGETS:
@@ -55,6 +71,20 @@ if not dll.is_file():
     sys.exit("dist/umapd_archipelago.dll is missing: run python apworld/build.py first")
 engines["server/plugin/umapd_archipelago.dll"] = dll
 
+def portable_python() -> tarfile.TarFile:
+    """The pinned build, downloaded once into dist/.cache and checked."""
+    name, sha = PYTHON_BUILDS[os_name]
+    cached = ROOT / "dist" / ".cache" / name
+    if not cached.is_file():
+        cached.parent.mkdir(parents=True, exist_ok=True)
+        url = f"https://github.com/astral-sh/python-build-standalone/releases/download/{PYTHON_RELEASE}/{name}"
+        urllib.request.urlretrieve(url, cached)
+    if hashlib.sha256(cached.read_bytes()).hexdigest() != sha:
+        cached.unlink()
+        sys.exit(f"{name}: SHA256 mismatch, not packaging it")
+    return tarfile.open(cached)
+
+
 top = f"umaps-archipelago-server-{os_name}-x86_64"
 out = ROOT / "dist" / (top + (".zip" if os_name == "windows" else ".tar.gz"))
 out.parent.mkdir(exist_ok=True)
@@ -67,12 +97,21 @@ def entries():
         yield src, f"{top}/{arc.removeprefix('server/')}"
 
 
+python = portable_python()  # its members all sit under python/
 if os_name == "windows":
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
         for src, arc in entries():
             z.write(src, arc)
+        for m in python.getmembers():
+            if m.isfile():
+                z.writestr(zipfile.ZipInfo(f"{top}/{m.name}", (1980, 1, 1, 0, 0, 0)), python.extractfile(m).read(),
+                           zipfile.ZIP_DEFLATED)
 else:
     with tarfile.open(out, "w:gz") as t:
         for src, arc in entries():
             t.add(src, arc)
+        for m in python.getmembers():  # symlinks and modes kept (bin/python3 -> python3.12)
+            data = python.extractfile(m) if m.isfile() else None
+            m.name = f"{top}/{m.name}"
+            t.addfile(m, data)
 print(out)

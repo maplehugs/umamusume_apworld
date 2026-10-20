@@ -2,7 +2,8 @@
 #   Right-click -> Run with PowerShell, or: powershell -ExecutionPolicy Bypass -File start-jp.ps1
 #   Options: --no-admin (don't open the admin panel), --help (all options)
 Set-Location $PSScriptRoot
-foreach ($c in @(@('py', '-3'), @('python'), @('python3'))) {
+# The package's own portable Python first, then any installed one.
+foreach ($c in @(@("$PSScriptRoot\python\python.exe"), @('py', '-3'), @('python'), @('python3'))) {
     $exe = $c[0]; $pre = @($c | Select-Object -Skip 1)
     if (-not (Get-Command $exe -ErrorAction SilentlyContinue)) { continue }
     & $exe @pre -c 'import sys; sys.exit(sys.version_info < (3, 11))' 2>$null

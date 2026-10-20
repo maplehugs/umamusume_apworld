@@ -35,7 +35,9 @@ function apPage(settings) {
   return `
     <div id="ap-awaken"></div>
     ${apSec("Connection", `<div class="ap-panel ap-col" id="ap-status"><span class="faint">Press "Check connection".</span></div>`,
-      `<span class="grow"></span><a class="btn sm" href="/logs.zip" download="umaps-archipelago-logs.zip"
+      `<span class="grow"></span><a class="btn sm" href="https://uma.5maple.com/report" target="_blank" rel="noopener"
+        title="Report a bug or suggest something on the website">Report a bug</a>
+      <a class="btn sm" href="/logs.zip" download="umaps-archipelago-logs.zip"
         title="server.log and the connection status, for a bug report">Download logs</a>
       <button class="btn sm" type="button" data-a="check">Check connection</button>`)}
     ${apSec("Game setup", `<div class="ap-panel ap-col" id="ap-setup"><span class="faint">Checking...</span></div>`,

@@ -156,7 +156,7 @@ def _open_races(full_state: dict) -> list:
     tier = archipelago.legend_tier(full_state)
     if tier is None:
         return active_races()
-    row = _row(archipelago.LADDER_ROWS[tier])
+    row = _row(archipelago.ladder_rows(full_state)[tier])
     return [row] if row is not None else []
 
 
