@@ -1,8 +1,12 @@
 # Umamusume: Pretty Derby for Archipelago
 
 An [Archipelago](https://archipelago.gg) world for **Umamusume: Pretty Derby**,
-played on a private server that does the game side. Everything you need is in
-this repo:
+played on a private server that does the game side.
+
+**Website: [uma.5maple.com](https://uma.5maple.com)** (download, setup guide,
+YAML builder, bug reports) · **Trailer: [YouTube](https://youtu.be/7J25sqAMSLA)**
+
+Everything you need is in this repo:
 
 - [`server/`](server/README.md): the private server, [UmamusumePS](https://github.com/systemless10/UmamusumePS)
   by systemless10 with Archipelago support added, and its web panel.
@@ -20,7 +24,7 @@ this repo:
 Every career is a run. Winning G1s and finishing careers sends items to the
 other players in your multiworld; what comes back are scenarios, trainees,
 support cards and permanent buffs that make the next career stronger. Your goal
-is one great career (default: rank score 20000, UG1).
+(default) is the Legend Race: beat the SS+ rival with a veteran.
 
 The server applies the items and reports the checks. Every account on it plays
 Archipelago; a new seed starts that account over.
