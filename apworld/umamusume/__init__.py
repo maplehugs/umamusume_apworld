@@ -106,10 +106,13 @@ class UmamusumeWorld(World):
 
     def weighted_order(self, cards) -> list:
         """A random order where useful cards tend to come first (weighted sampling
-        without replacement: sort by random() ** (1 / weight))."""
+        without replacement: sort by random() ** (1 / weight)); with
+        duplicate_supports, drawn with replacement, so a card can repeat."""
         def weight(c):
             v = tables.SUPPORT_VALUE.get(c, (100,) * 4)
             return (sum(v) / len(v) / 100) ** TICKET_BIAS
+        if self.options.duplicate_supports:
+            return self.random.choices(cards, [weight(c) for c in cards], k=len(cards))
         return sorted(cards, key=lambda c: self.random.random() ** (1 / weight(c)), reverse=True)
 
     def add_tickets(self, cards) -> None:
@@ -130,6 +133,7 @@ class UmamusumeWorld(World):
         p = self.player
         cards = self.start_supports + self.ticket_cards(state)
         seed_cards = self.start_supports + [c for order in self.ticket_order.values() for c in order]
+        cards, seed_cards = set(cards), set(seed_cards)  # a copy is a limit break, not a card
         have = (len(cards), self.deck_types(cards).count("Stamina"),
                 state.count("Progressive Starting Skill Points", p), state.count("Trainee Awakening", p))
         return tables.legend_ok(tier, have, (len(seed_cards), self.deck_types(seed_cards).count("Stamina"),
@@ -144,7 +148,7 @@ class UmamusumeWorld(World):
 
     @staticmethod
     def deck_counts(cards, trainees: int) -> tuple:
-        types = [tables.support_type(c) for c in cards]
+        types = [tables.support_type(c) for c in set(cards)]  # a copy is a limit break, not a card
         return types.count("Speed"), types.count("Wit"), trainees
 
     def ticket_cards(self, state) -> list:
@@ -374,4 +378,5 @@ class UmamusumeWorld(World):
             "support_tickets": self.ticket_order,  # Nth ticket of a type -> Nth card here
             "deck_needs": True,  # the tracker applies tables.DECK_NEEDS and LEGEND_NEEDS
             "awakenings": self.awakenings(),
+            "duplicate_supports": bool(o.duplicate_supports),
         }

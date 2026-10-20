@@ -81,6 +81,9 @@ assert tables.deck_ok(14000, (0, 0, 0), (9, 9, 20))
 assert not tables.deck_ok(14500, (1, 2, 8), (9, 9, 20))
 assert tables.deck_ok(14500, (2, 2, 8), (9, 9, 20))
 assert tables.deck_ok(19600, (1, 4, 5), (1, 9, 5))
+# duplicate_supports: a copy is a limit break on its own card, so 5 copies of a card are maxed without crystals
+assert tables.support_score([30005] * 5, 1, 0, 1200) == 1200 * tables.SUPPORT_VALUE[30005][0] // 100
+assert tables.support_score([30005], 1, 0, 1200) == 1200 * tables.SUPPORT_VALUE[30005][0] // 100 // 2
 # legend needs: the C rung asks nothing, SS+ a full deck, 3 Stamina, 3 SP items and 5 awakenings (capped)
 assert len(tables.LEGEND_NEEDS) == len(tables.LEGEND_LADDER) and tables.legend_ok(0, (0, 0, 0, 0), (9, 9, 3, 9))
 assert not tables.legend_ok(9, (6, 3, 3, 4), (40, 9, 3, 20)) and tables.legend_ok(9, (6, 3, 3, 4), (40, 9, 3, 4))
@@ -172,7 +175,7 @@ dispatch.handle_decoded("single_mode_team/start", {"viewer_id": U, "start_chara"
     "card_id": 100402, "support_card_ids": [30028, 30015, 20015, 20012, 20002],
     "friend_support_card_info": {"viewer_id": 0, "support_card_id": 30010}, "scenario_id": 2}}, None)
 ap.start_refusal = real_refusal
-purples = 0
+purples = burst_tips = 0
 for _ in range(6):
     s = state.get_state(U)
     career = s[smt.STATE_KEY]["data"]
@@ -196,6 +199,12 @@ for _ in range(6):
         if c["sp_soul_event_partner_array"]:
             purples += 1
             assert rates[c["command_id"]] == 0, (ci["turn"], c["command_id"], rates)
+    # a burst's hint (Ignited Spirit on a purple) lands in the skill list too
+    cr = (d.get("team_data_set") or {}).get("command_result") or {}
+    held = {(t["group_id"], t["rarity"]) for t in d["chara_info"]["skill_tips_array"]}
+    for p in (cr.get("soul_skill_tips_array") or []) + (cr.get("sp_soul_skill_tips_array") or []):
+        burst_tips += 1
+        assert {(t["group_id"], t["rarity"]) for t in p["skill_tips_array"]} <= held, (p, held)
     while d.get("unchecked_event_array"):  # the team forms through these
         ev = d["unchecked_event_array"][0]
         d = dispatch.handle_decoded("single_mode_team/check_event", {
@@ -203,6 +212,7 @@ for _ in range(6):
             "choice_number": 1 if (ev.get("event_contents_info") or {}).get("choice_array") else 0,
             "current_turn": ci["turn"]}, None)["data"]
 assert purples, "no purple flame came up"
+assert burst_tips, "no burst handed out a hint"
 
 # ---- pal/group dates: Riko's middle choice unlocks, an "end the chain" arm keeps
 # her unlock from coming back, and an Heirs member gets one date (Rudolf then +20/+21)
@@ -263,4 +273,18 @@ low, top = ap.legend_boss(weak, 0), ap.legend_boss(weak, 9)
 assert low["speed"] == tables.LEGEND_LADDER[0][3][0] and low["skill_array"][0]["skill_id"] == 200492
 assert top["motivation"] == 5 and top["skill_array"][0]["skill_id"] == 200491 and top["speed"] <= ap.LEGEND_STAT_CAP
 assert ap.legend_field({"speed": 1}, top, 9)["speed"] > 900
+
+# ---- Rest: Sleep Deprived (+30) may give Night Owl (1), never Slow Metabolism (4, a food condition)
+from app.handlers import single_mode_team as smt  # noqa: E402
+for _ in range(2000):
+    ci = {"vital": 0, "max_vital": 100, "chara_effect_id_array": []}
+    smt._apply_rest_outcome(ci, smt._roll_rest_outcome())
+    assert 4 not in ci["chara_effect_id_array"], ci
+# ---- Trackblazer shop: the client buys on multi_item_exchange_2, which used to hit the no-op success
+assert dispatch.HANDLERS.get("single_mode_free/multi_item_exchange_2") is \
+    dispatch.HANDLERS["single_mode_free/multi_item_exchange2"]
+# the client's own spellings reach the handlers (global-metadata.dat endpoint list)
+from app.handlers import registry  # noqa: E402
+assert all(registry.get(p) for p in ("banner/url", "live_theater_performers_preset/index",
+                                     "live_theater_performers_preset/update"))
 print("archipelago self-check: ok")

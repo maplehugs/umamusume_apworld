@@ -13,6 +13,7 @@ Umamusume Pretty Derby:
   trainee_count: 15
   support_count: 30
   maxed_supports: false            # true: cards arrive maxed, no crystals
+  duplicate_supports: false        # true: a ticket can repeat a card (the copy is a limit break)
   uncap_crystals: 24               # at least; up to half as many more with spare checks
   trainee_awakenings: one_per_trainee  # or a number (capped at your trainees)
   g1_checks: true

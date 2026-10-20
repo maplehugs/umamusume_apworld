@@ -182,7 +182,14 @@ class UnityCup(Scenario):
         return preview.training_award_bonus(full_state, chara_info, command_id)
 
     def award_training_gains(self, full_state, chara_info, payload) -> None:
-        preview.award_training_gains(full_state, chara_info, payload)
+        # chara_info is the PRE-training snapshot: exec_command has already
+        # swapped the career's chara_info for the trained copy, so the burst
+        # hints (Ignited Spirit included) granted onto the snapshot were thrown
+        # away and never reached the skill list. Grant onto the saved one.
+        from ...handlers import single_mode_team as smt
+        career = full_state.get(smt.STATE_KEY) or {}
+        live = (career.get("data") or {}).get("chara_info")
+        preview.award_training_gains(full_state, live or chara_info, payload)
 
     # ------------------------------------------------------------------ flow --
     def interstitial_pending(self, full_state, chara_info, turn) -> bool:

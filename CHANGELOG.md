@@ -9,6 +9,9 @@ Item changes for new seeds: regenerate to get them. Needs the matching server.
   your cards and you always get the same ones (reconnect, async, reinstall).
 - Rainbow Uncap Crystals stay their own items: limit break whichever card you
   want.
+- New option `duplicate_supports` (off by default): a ticket can give a card you
+  already have, and the copy limit-breaks it like in the game, so you weigh a
+  weaker card with more limit breaks against a better one at limit break 0.
 - High ranks also need the right deck in logic: rank S and up asks for Speed and
   Wit cards and enough trainees (S: 2 Speed, 2 Wit, 8 trainees; SS: 3, 3, 12;
   UG: 4, 4, 16; never more than the seed has). The tracker follows it.
@@ -31,6 +34,15 @@ Server fixes (these work with older seeds too):
   with every stat at 1, so they came last every time and every match ended the
   same. Now each runs where she has B or better, in her best style, with stats
   that match your team's strength.
+- Unity Cup: Spirit Burst skill hints (Ignited Spirit and the rest) show up in
+  the skill list. They were granted onto a copy of the trainee the server threw
+  away after training, so only the result card showed them.
+- Trackblazer (MANT): buying in the shop works. The game calls
+  single_mode_free/multi_item_exchange_2 and the server only knew another
+  spelling, so the purchase got an empty "OK" and nothing happened. The banner
+  link and Live Theater performer presets had the same misspelling, fixed too.
+- Resting: "Sleep Deprived" (the +30 energy rest) no longer gives Slow
+  Metabolism; like the real game, it can only give Night Owl.
 - Unity Cup: the finals no longer black-screen when Team Zenith powers up. The
   cutscene needs Bitter Glasse and Little Cocon on the team, and the server had
   swapped them for mob runners. Careers waiting at the finals get the fixed

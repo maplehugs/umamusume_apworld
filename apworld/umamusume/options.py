@@ -159,6 +159,15 @@ class MaxedSupports(Toggle):
     display_name = "Maxed Support Cards"
 
 
+class DuplicateSupports(Toggle):
+    """SSR Tickets can give a card you already have (good cards are still more
+    likely). The copy limit-breaks it like in the game (Enhance > Support Cards >
+    Limit Break), so you choose between a weaker card with more limit breaks and
+    a better one at limit break 0. Off (default): every ticket is a new card."""
+
+    display_name = "Duplicate Support Cards"
+
+
 class UncapCrystals(Range):
     """Rainbow Uncap Crystals in the pool at least (4 max one SSR: 24 = a deck of
     6). Spare checks add up to half as many more, at random. Ignored with
@@ -286,6 +295,7 @@ class UmaOptions(PerGameCommonOptions):
     trainee_count: TraineeCount
     support_count: SupportCount
     maxed_supports: MaxedSupports
+    duplicate_supports: DuplicateSupports
     uncap_crystals: UncapCrystals
     trainee_awakenings: TraineeAwakenings
     g1_checks: G1Checks

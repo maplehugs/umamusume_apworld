@@ -143,6 +143,7 @@ def handle_update_force_display_status(payload: dict) -> dict:
     return _ok({})
 
 
+@registry.endpoint("banner/url")  # the client's spelling (global-metadata.dat endpoint list)
 @registry.endpoint("banner_url")
 def handle_banner_url(payload: dict) -> dict:
     """{banner_id} -> {url}. Where a home-screen banner should send the player.

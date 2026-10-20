@@ -650,7 +650,7 @@ def deck_ok(st: dict, score: int) -> bool:
     in_seed = start + [c for order in (sd.get("support_tickets") or {}).values() for c in order]
 
     def counts(cards, trainees):
-        types = [tables.support_type(c) for c in cards]
+        types = [tables.support_type(c) for c in set(cards)]  # a copy is a limit break, not a card
         return types.count("Speed"), types.count("Wit"), trainees
 
     return tables.deck_ok(score, counts(start + st.get("support_ids", []), len(set(starters(st)) | set(st["trainees"]))),
@@ -663,8 +663,8 @@ def legend_ok(st: dict, tier: int) -> bool:
     if not sd.get("deck_needs"):
         return True
     start = list(sd.get("starting_supports") or [])
-    cards = start + st.get("support_ids", [])
-    in_seed = start + [c for order in (sd.get("support_tickets") or {}).values() for c in order]
+    cards = set(start + st.get("support_ids", []))  # a copy is a limit break, not a card
+    in_seed = set(start + [c for order in (sd.get("support_tickets") or {}).values() for c in order])
     stamina = lambda cs: [tables.support_type(c) for c in cs].count("Stamina")  # noqa: E731
     have = (len(cards), stamina(cards), _count(st, tables.PROGRESSIVE["Progressive Starting Skill Points"]),
             _count(st, tables.PROGRESSIVE["Trainee Awakening"]))
@@ -776,9 +776,10 @@ def legend_boss(boss: dict, tier: int) -> dict:
         skills.append(skill)
     if "skill_array" in boss:
         boss["skill_array"] = skills
-    boss["rank"] = rank_id  # a race entrant's grade
     if "final_grade" in boss:  # a profile card (legend_race/index boss_data)
         boss["final_grade"] = rank_id
+    else:
+        boss["rank"] = rank_id  # a race entrant's grade
     return boss
 
 
@@ -1020,8 +1021,9 @@ _ITEM_INFO = {
     "Scenario: ": "Unlocks this scenario on the career screen.",
     "Trainee: ": "Mail: this trainee joins your roster.",
     "Support: ": "Mail: this SSR support card (maxed when you claim it, if the seed has maxed_supports).",
-    "SSR Ticket ": "Mail: an SSR support card of this type you don't have yet, picked by the seed "
-    "(the cards that are good in your scenarios tend to come first).",
+    "SSR Ticket ": "Mail: an SSR support card of this type, picked by the seed (the cards that are good "
+    "in your scenarios tend to come first). A new card, or with duplicate_supports maybe a copy of one you "
+    "have: limit break it with the copy (Enhance > Support Cards > Limit Break).",
     "Rainbow Uncap Crystal": "Mail: one limit break for any SSR support card (Enhance > Support Cards > Limit Break). "
     "4 max a card.",
 }

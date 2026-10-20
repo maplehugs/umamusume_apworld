@@ -19,6 +19,7 @@ brackets.
 | `starting_scenario` | **ura**, unity_cup, grand_live, trackblazer, shuffled | The scenario you start with; the other 3 are items. `shuffled` (or `random`) picks one at random. |
 | `starting_trainees` | **shuffled**, default | Your Archipelago save starts with random trainees, or a new account's usual five. (Don't write `random` here: in a yaml that picks one of the options at random.) |
 | `starting_trainee_count` | 1-10 [**5**] | How many random trainees you start with (shuffled). |
+| `duplicate_supports` | true/false [**false**] | SSR Tickets can give a card you already have (good cards still more likely); the copy limit-breaks it like in the game. Logic counts a copy as a limit break. |
 | `starting_supports` | 0-10 [**0**] | Random SSR support cards in your present box from the start, maxed. |
 | `trainee_awakenings` | 0-108 [**one_per_trainee**] | Trainee Awakening items: each takes a random trainee you own (not yet maxed) to 5 stars and potential 5; with all of them maxed it waits for your next trainee. At most one per trainee the seed gives you (starting + `trainee_count`), which `one_per_trainee` is. |
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |

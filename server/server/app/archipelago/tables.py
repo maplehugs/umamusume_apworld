@@ -426,10 +426,25 @@ SUPPORT_VALUE = {
 
 def support_score(cards, scenario: int, crystals: int | None, per_card: int, deck: int = 6) -> int:
     """Logic's support bonus: the best `deck` cards in that scenario (an unknown
-    id is an average card). crystals None: cards arrive maxed; otherwise a card
-    is worth half until 4 crystals max it, best cards first."""
-    v = sorted((per_card * SUPPORT_VALUE.get(c, (100,) * 4)[scenario - 1] // 100 for c in cards), reverse=True)[:deck]
-    return sum(v) if crystals is None else (sum(v) + sum(v[:crystals // 4])) // 2
+    id, None, is an average card). crystals None: cards arrive maxed; otherwise a
+    card is worth half until maxed: 4 limit breaks, from its own copies
+    (duplicate_supports) and then crystals, best cards first."""
+    def value(c):
+        return per_card * SUPPORT_VALUE.get(c, (100,) * 4)[scenario - 1] // 100
+    copies = {}
+    for c in cards:
+        if c is not None:
+            copies[c] = copies.get(c, 0) + 1
+    v = sorted([(value(c), n - 1) for c, n in copies.items()] + [(value(None), 0)] * cards.count(None),
+               reverse=True)[:deck]
+    if crystals is None:
+        return sum(value for value, _lb in v)
+    total = 0
+    for value, lb in v:
+        use = min(max(0, 4 - lb), crystals)
+        crystals -= use
+        total += value if lb + use >= 4 else value // 2
+    return total
 
 # G1 name -> career race ids (a race run at another venue keeps its name).
 G1_RACES = {

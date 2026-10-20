@@ -13928,18 +13928,19 @@ def _resolve_infirmary(full_state, chara_info, event, choice_number, career=None
 
 def _roll_rest_outcome() -> dict:
     """Roll a rest's outcome WITHOUT applying it. Energy: +70 (24.7%) / +50
-    (60.5%) / +30 (12.3%) / +30 & Night Owl (2.5%); the +30 outcome carries a 10%
-    Slow Metabolism. The flavor event is chosen to MATCH the energy. Applied later
-    by _apply_rest_outcome when the event resolves.
+    (60.5%) / +30 (12.3%) / +30 & Night Owl (2.5%). No Slow Metabolism: that is
+    a food-event condition, and rest never gives it. The flavor event is chosen
+    to MATCH the energy. Applied later by _apply_rest_outcome when the event
+    resolves.
 
     The energy tiers are MEASURED: 17,005 real Rest commands across all 1,974
     captures/bot_logs careers, tallied by flavor event (7011/7010/7009) ->
     +70 24.66% [24.02,25.31] / +50 60.55% [59.81,61.28] / +30 14.80%
     [14.27,15.34], flat across all four scenarios, turn phase and pre-rest
     energy. The old community split (25/62.5/12.5) is outside those intervals.
-    The Night Owl (2.5%) and Slow Metabolism (10%) shares inside the +30 tier
-    are NOT measured -- the flavor event doesn't carry the condition, and
-    condition snapshots are too sparse -- so they keep the old values."""
+    The Night Owl (2.5%) share inside the +30 tier is NOT measured -- the
+    flavor event doesn't carry the condition, and condition snapshots are too
+    sparse -- so it keeps the old value."""
     r = random.random()
     night_owl = False
     if r < 0.247:
@@ -13951,9 +13952,8 @@ def _roll_rest_outcome() -> dict:
     else:
         energy = 30
         night_owl = True
-    slow_metab = (energy == 30 and random.random() < 0.10)
     return {"event_id": _REST_EVENT_BY_ENERGY[energy], "energy": energy,
-            "night_owl": night_owl, "slow_metab": slow_metab}
+            "night_owl": night_owl}
 
 
 def _apply_rest_outcome(chara_info: dict, outcome: dict) -> None:
@@ -13962,8 +13962,6 @@ def _apply_rest_outcome(chara_info: dict, outcome: dict) -> None:
     chara_info["vital"] = max(0, min(mv, chara_info.get("vital", 0) + outcome.get("energy", 0)))
     if outcome.get("night_owl"):
         single_mode_events.add_condition(chara_info, _COND_NIGHT_OWL)
-    if outcome.get("slow_metab"):
-        single_mode_events.add_condition(chara_info, _COND_SLOW_METABOLISM)
 
 
 def _rest_event_entry(event_id: int, chara_id: int) -> dict:
@@ -13984,7 +13982,6 @@ def _rest_event_entry(event_id: int, chara_id: int) -> dict:
 _RECREATION_GROUPS = {301, 390, 304}  # ãŠã§ã‹ã‘ Recreation command_group_id (mood + energy)
 _MOTIVATION_MAX = 5
 _COND_NIGHT_OWL = 1
-_COND_SLOW_METABOLISM = 4
 
 
 # Recreation outing types (command_group_id, cat 55): the server picks one and

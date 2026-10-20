@@ -179,6 +179,9 @@ class Trackblazer(Scenario):
     def extra_endpoints(self) -> dict:
         return {"multi_item_exchange": endpoints.handle_multi_item_exchange,
                 "multi_item_exchange2": endpoints.handle_multi_item_exchange2,
+                # The client's own path (its endpoint list in global-metadata.dat).
+                # Unrouted, it fell to the no-op success: nothing was ever bought.
+                "multi_item_exchange_2": endpoints.handle_multi_item_exchange2,
                 "multi_item_use": endpoints.handle_multi_item_use}
 
     # -------------------------------------------------------------- response --

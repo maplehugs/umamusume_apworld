@@ -162,6 +162,7 @@ def handle_multi_item_exchange2(payload: dict) -> dict:
     the same call made when buying could move the training screen -- a stat
     charm shifts the caps, a megaphone shifts every gain -- so this one refreshes
     the previews before answering, exactly as multi_item_use does. Never seen in
-    a capture; the client we serve posts the original. Sharing the buy loop
-    means whichever one it posts behaves identically."""
+    a capture, but the client posts it as multi_item_exchange_2 whenever its
+    shop takes the "new API" path (isUsedNewApi). Sharing the buy loop means
+    whichever one it posts behaves identically."""
     return _exchange(payload, ("chara_info", "home_info"), refresh=True)

@@ -225,6 +225,7 @@ def handle_use_gallery_key(payload: dict) -> dict:
 
 # ========================================================== live theater ====
 
+@registry.endpoint("live_theater_performers_preset/index")  # the client's spelling
 @registry.endpoint("live_theater/performers_preset_index")
 def handle_performers_preset_index(payload: dict) -> dict:
     """-> {preset_array:[{preset_id, preset_name, member_info_array}]}. The
@@ -234,6 +235,7 @@ def handle_performers_preset_index(payload: dict) -> dict:
     return _ok({"preset_array": copy.deepcopy(full_state.get(THEATER_PRESET_KEY) or [])})
 
 
+@registry.endpoint("live_theater_performers_preset/update")  # the client's spelling
 @registry.endpoint("live_theater/performers_preset_update")
 def handle_performers_preset_update(payload: dict) -> dict:
     """{preset:{preset_id, preset_name, member_info_array}} -> {}.
