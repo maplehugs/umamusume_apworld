@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.4
+- Panel: until the game has logged in once, the Archipelago window says the game
+  server is running and what to do next (open the game with the redirect set to
+  https://127.0.0.1:8443 and log in; that one account plays the seed). It goes
+  away by itself once the game logs in.
+- Panel: the Report a bug and Download logs buttons look like the other buttons.
+
 ## 0.16.3
 - The server packages bring their own Python (3.12, portable): nothing to install
   first. A newer system Python (3.15) failed to install the server's packages

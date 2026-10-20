@@ -33,6 +33,7 @@ export function apSec(title, body, extra = "") {
 
 function apPage(settings) {
   return `
+    <div id="ap-first"></div>
     <div id="ap-awaken"></div>
     ${apSec("Connection", `<div class="ap-panel ap-col" id="ap-status"><span class="faint">Press "Check connection".</span></div>`,
       `<span class="grow"></span><a class="btn sm" href="https://uma.5maple.com/report" target="_blank" rel="noopener"
@@ -136,12 +137,23 @@ export const archipelagoWin = {
       if (quiet && sig === last) return;
       last = sig;
       keepScroll(body.querySelector(".pane-scroll"), () => {
+        renderFirstRun(r);
         renderStatus(r);
         renderApTracker(r);
         renderApEffects(r);
         renderApReceived(r);
         renderPermanent(r);
       });
+    }
+
+    // Until the game has logged in once there's nothing to play: say what to do.
+    function renderFirstRun(r) {
+      $("#ap-first").innerHTML = r.account ? "" : `<div class="ap-first">
+        <div class="ap-state ap-connected">The game server is running</div>
+        <div><b>Next: open Umamusume and log in.</b> In the game's Hachimi menu the redirect server must be
+          <code>${esc(r.game_address)}</code>. A new install makes its account on the first start; that one account plays the
+          whole seed.</div>
+        <div class="faint">Waiting for the game... this box goes away once it logs in.</div></div>`;
     }
 
     function renderStatus(r) {
