@@ -367,26 +367,26 @@ def _opponent_lineup(set_id: int, st: dict, rng: random.Random,
     # seats. The generic leaders-first fill below scatters them instead, and
     # ours landed 3006101 sixth.
     #
-    # That crashes the S+ upgrade cutscene. SingleModeScenarioTeamRaceOpponent-
-    # SelectViewController.LoadBossPlusCutt3DCharacter builds its models by
-    # mapping each of BOSS_TEAM_MEMBER_COUNT = 6 boss members through
-    # single_mode_npc -> MOB DATA; a named runner has no mob row, so it drops
-    # out of the list and the timeline asks for a sixth model that is not
-    # there:
+    # That crashes the S+ upgrade cutscene, and so does anything else that is
+    # not the capture's own ids. Disassembled (Global build 2026-10-06,
+    # SingleModeScenarioTeamRaceOpponentSelectViewController.
+    # LoadBossPlusCutt3DCharacter): the cutscene builds exactly six models from
+    # the boss team's LEADERS (member_id 1):
+    #     [chara 9006,  the leaders' mob ids...,  then 2002, 2003 looked up as
+    #      the leader whose single_mode_npc chara_id matches]
+    # and the timeline indexes all six. The capture's leaders are three mobs
+    # plus Bitter Glasse (2002) and Little Cocon (2003), which fills it exactly.
+    # Swapping those two for mobs (the old portrait workaround) left slots 4-5
+    # holding mob ids that match no chara, four models instead of six:
     #     ArgumentOutOfRangeException
     #       at SingleModeRushInCutInHelper.GetPreInstantiatedUserModelController
     #       at SingleModeScenarioTeamFirstPlusCutInController.Show
     #       at ...OpponentSelectViewController+<PlayChangeBossPlus>.MoveNext
-    # (the player's own Player.log, 2026-09-06: the blue-flame animation
-    # stopped partway through).
+    # (player Player.logs 2026-09-06 and 2026-10-19). So the fifteen go out
+    # verbatim; the race body still anonymises the two (_opponent_horse).
     if rank >= unity_cup.BOSS_RANK and len(picks) == 15:
-        # The seat keeps its POSITION and its running style; only the id it is
-        # drawn by changes, and only for the two the client cannot draw. See
-        # impl.boss_art_substitute -- the panel resolves the portrait from this
-        # id itself, so anonymising the race body alone left it blank.
         out = [{"distance_type": g + 1, "member_id": m + 1,
-                "base_npc_id": unity_cup.boss_art_substitute(npc),
-                "npc_id": unity_cup.boss_art_substitute(npc),
+                "base_npc_id": npc, "npc_id": npc,
                 "running_style": unity_cup.npc_running_style(npc)}
                for g in range(5)
                for m, npc in enumerate((picks[2 * g], picks[2 * g + 1],
@@ -408,11 +408,8 @@ def _opponent_lineup(set_id: int, st: dict, rng: random.Random,
                 continue
             npc_id = picks[i]
             i += 1
-            # Identity only (a no-op for every id outside the boss fifteen);
-            # the running style still comes from the row actually being fielded.
             out.append({"distance_type": group + 1, "member_id": member_id,
-                        "base_npc_id": unity_cup.boss_art_substitute(npc_id),
-                        "npc_id": unity_cup.boss_art_substitute(npc_id),
+                        "base_npc_id": npc_id, "npc_id": npc_id,
                         "running_style": unity_cup.npc_running_style(npc_id)})
     out.sort(key=lambda t: (t["distance_type"], t["member_id"]))
     return out
@@ -975,13 +972,6 @@ def _opponent_horse(entry: dict, per_stat: float, team_name: str,
     npc_id = int(entry.get("npc_id") or 0)
     row = unity_cup.npc_row(npc_id) or {}
     mob_id = int(row.get("mob_id") or 0)
-    # A SUBSTITUTED BOSS SEAT KEEPS THE ORIGINAL'S STRENGTH. The two undrawable
-    # boss rows are their team's best runners, so fielding the mob that stands
-    # in for them at the mob's own ~255 speed would quietly gut the final; the
-    # substitution is meant to change the face and nothing else. Identity
-    # (chara/mob/dress) still comes from the row actually being fielded.
-    stat_row = unity_cup.npc_row(
-        unity_cup.boss_stat_source(npc_id, set_rank)) or row
     # A NAMED RUNNER THIS BUILD CANNOT DRAW RUNS AS A MOB. Only the Boss team's
     # two story girls reach this now (Bitter Glasse 2002 and Little Cocon 2003
     # -- the ordinary teams are drawn from a pool that is already filtered, see
@@ -1025,23 +1015,20 @@ def _opponent_horse(entry: dict, per_stat: float, team_name: str,
         # skilled runners on the track, and a round is a DRAW when a mob
         # finishes first. Real is the other way round: 2.12 for mobs against
         # 4-5 for the two teams.
-        #
-        # Read off stat_row, not row, for the same reason the stats are: a
-        # substituted boss seat keeps the original runner's strength.
-        "skill_array": _smt()._npc_skills(stat_row),
+        "skill_array": _smt()._npc_skills(row),
         "motivation": _entrant_motivation(seed, turn, npc_id, opposing=True),
         "rarity": 1 if mob_id else 3, "talent_level": 1,
     }
     for stat, column in (("speed", "speed"), ("stamina", "stamina"),
                          ("pow", "pow"), ("guts", "guts"), ("wiz", "wiz")):
-        horse[stat] = max(80, int((stat_row.get(column) or 120) + per_stat))
+        horse[stat] = max(80, int((row.get(column) or 120) + per_stat))
     horse["power"] = horse["pow"]
     for key in ("proper_distance_short", "proper_distance_mile",
                 "proper_distance_middle", "proper_distance_long",
                 "proper_running_style_nige", "proper_running_style_senko",
                 "proper_running_style_sashi", "proper_running_style_oikomi",
                 "proper_ground_turf", "proper_ground_dirt"):
-        horse[key] = stat_row.get(key, 4)
+        horse[key] = row.get(key, 4)
     return horse
 
 

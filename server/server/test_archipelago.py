@@ -68,6 +68,22 @@ ap.apply_item(s, ID["Progressive Training Guard"])
 ap.apply_item(s, ID["Bad Mood Trap"])
 mail = [(p["reward_type"], p["reward_id"]) for p in s[presents.PRESENT_BOX_KEY]["presents"]]
 assert (50, trainee) in mail and (51, support) in mail
+# tickets (0.16.0): the Nth ticket of a type mails the Nth card of that type in slot_data
+st["slot_data"]["support_tickets"] = {"Wit": [30010, 30013]}
+for _ in range(3):
+    ap.apply_item(s, ID["SSR Ticket (Wit)"])
+mail = [p["reward_id"] for p in s[presents.PRESENT_BOX_KEY]["presents"] if p["reward_type"] == 51]
+assert mail[-3:] == [30010, 30013, 30031], mail  # past the list: first Wit card not owned
+del st["slot_data"]["support_tickets"], st["support_ids"][-3:], st["tickets"]
+st["supports_received"] -= 3
+# deck needs (0.16.0): S asks 2 Speed + 2 Wit cards and 8 trainees, capped by what the seed has
+assert tables.deck_ok(14000, (0, 0, 0), (9, 9, 20))
+assert not tables.deck_ok(14500, (1, 2, 8), (9, 9, 20))
+assert tables.deck_ok(14500, (2, 2, 8), (9, 9, 20))
+assert tables.deck_ok(19600, (1, 4, 5), (1, 9, 5))
+# legend needs: the C rung asks nothing, SS+ a full deck, 3 Stamina, 3 SP items and 5 awakenings (capped)
+assert len(tables.LEGEND_NEEDS) == len(tables.LEGEND_LADDER) and tables.legend_ok(0, (0, 0, 0, 0), (9, 9, 3, 9))
+assert not tables.legend_ok(9, (6, 3, 3, 4), (40, 9, 3, 20)) and tables.legend_ok(9, (6, 3, 3, 4), (40, 9, 3, 4))
 # the tracker rates each card in its scenario (seeds before 0.15.0: all average)
 st["slot_data"]["logic_support"] = 1200
 average = ap.logic_estimate(st, 1)
@@ -217,6 +233,9 @@ assert json.loads((tmp / "status.json").read_text())["room"]["last_reply"] == "n
 # Team Trials with no team formed yet: the best umas owned race, no refusal
 r = dispatch.handle_decoded("team_stadium/opponent_list", {"viewer_id": L}, None)
 assert r["data_headers"]["result_code"] == 1 and r["data"]["opponent_info_array"], r["data_headers"]
+from app.handlers import team_stadium as ts  # noqa: E402
+team = state.get_state(L)["team_stadium_state"]["team_data_array"]
+assert ts._covers_every_distance(team), team  # a distance without our runner hangs the race list
 
 # ---- Unity Cup: training a special (Rice Shower) still seeds ten teammates, none of them her
 from app.scenarios.unity_cup import impl as uc  # noqa: E402
@@ -225,4 +244,23 @@ st = {"seed": 1}
 uc.ensure_roster(st, 1, {"card_id": 103001, "support_card_array": deck})
 charas = [m["chara_id"] for m in st["members"]]
 assert len(set(charas)) == 10 == st["base_size"] and 1030 not in charas, charas
+
+# ---- Unity Cup S+ cutscene: models = [9006] + the leaders' mob ids + the leaders
+# whose chara is 2002/2003 (LoadBossPlusCutt3DCharacter); it indexes six of them
+import random  # noqa: E402
+from app.scenarios.unity_cup import endpoints as uce  # noqa: E402
+for boss_set in (902, 1000):
+    leaders = [uc.npc_row(t["npc_id"]) for t in uce._opponent_lineup(boss_set, {}, random.Random(1))
+               if t["member_id"] == 1]
+    ids = [9006] + [n["mob_id"] for n in leaders if n["mob_id"]] + [2002, 2003]
+    models = 1 + sum(1 for i in ids[1:4] if master_data.query_one("SELECT 1 FROM mob_data WHERE mob_id=?", (i,)))
+    models += sum(1 for c in ids[4:6] if any(n["chara_id"] == c for n in leaders))
+    assert models == 6, (boss_set, ids)
+
+# ---- Legend ladder rival: the top rung races in Great mood with gold skills, the low rung as before
+weak = {"speed": 1, "stamina": 1, "pow": 1, "guts": 1, "wiz": 1, "skill_array": [{"skill_id": 200492, "level": 1}]}
+low, top = ap.legend_boss(weak, 0), ap.legend_boss(weak, 9)
+assert low["speed"] == tables.LEGEND_LADDER[0][3][0] and low["skill_array"][0]["skill_id"] == 200492
+assert top["motivation"] == 5 and top["skill_array"][0]["skill_id"] == 200491 and top["speed"] <= ap.LEGEND_STAT_CAP
+assert ap.legend_field({"speed": 1}, top, 9)["speed"] > 900
 print("archipelago self-check: ok")

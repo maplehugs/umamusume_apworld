@@ -25,6 +25,7 @@ State lives in full_state[AP_KEY].
 
 from __future__ import annotations
 
+import functools
 import logging
 import math
 import json
@@ -175,11 +176,10 @@ def apply_item(full_state: dict, item_id: int, sender: str = "") -> None:
     name = item_name(item_id)
     note = f"Archipelago: {name}" + (f" from {sender}" if sender else "")
     if item_id >= tables.SUPPORT_ITEM_BASE:
-        presents.send(full_state, 51, item_id - tables.SUPPORT_ITEM_BASE, 1, note)
-        if _maxed_supports(st):
-            st.setdefault("max_supports", []).append(item_id - tables.SUPPORT_ITEM_BASE)
-        st["supports_received"] = st.get("supports_received", 0) + 1
-        st.setdefault("support_ids", []).append(item_id - tables.SUPPORT_ITEM_BASE)  # the tracker
+        _give_support(full_state, st, item_id - tables.SUPPORT_ITEM_BASE, note)
+    elif item_id in _TICKET_TYPE:
+        card = _ticket_card(st, _TICKET_TYPE[item_id])
+        _give_support(full_state, st, card, f"{note}: {tables.SSR_SUPPORTS[card]}")
     elif item_id in _MAIL_BY_ID:
         _id, rtype, rid, num = _MAIL_BY_ID[item_id]
         presents.send(full_state, rtype, rid, num, note)
@@ -190,6 +190,7 @@ def apply_item(full_state: dict, item_id: int, sender: str = "") -> None:
     elif item_id in tables.TRAPS.values() or item_id in tables.BOONS.values():
         st["traps"].append(item_id)
     elif item_id == tables.PROGRESSIVE["Trainee Awakening"]:
+        st["have"][str(item_id)] = _count(st, item_id) + 1  # legend rungs (tables.LEGEND_NEEDS)
         _awaken(full_state, st)
     elif item_id == tables.MINOR["RP Refill"]:
         from ..handlers import stamina
@@ -202,6 +203,34 @@ def apply_item(full_state: dict, item_id: int, sender: str = "") -> None:
         st["have"][str(item_id)] = _count(st, item_id) + 1
         _raise_running_caps(full_state, name)
     log.info("archipelago: received %s", note)
+
+
+_TICKET_TYPE = {item_id: name[len("SSR Ticket ("):-1] for name, item_id in tables.SUPPORT_TICKETS.items()}
+
+
+def _ticket_card(st: dict, kind: str) -> int:
+    """The Nth ticket of a type is the Nth card of that type the seed listed
+    (slot_data support_tickets), so the card is the same on every replay and
+    is the one logic counted. Past the list (should not happen), the first card
+    of that type not owned yet, so a ticket is never lost."""
+    got = st.setdefault("tickets", {}).get(kind, 0)
+    st["tickets"][kind] = got + 1
+    order = (st.get("slot_data", {}).get("support_tickets") or {}).get(kind) or []
+    if got < len(order):
+        return int(order[got])
+    log.warning("archipelago: ticket %s #%s is past the seed's list", kind, got + 1)
+    owned = set(st.get("support_ids", [])) | set(st.get("slot_data", {}).get("starting_supports") or [])
+    return next((c for c in tables.SUPPORT_TYPES[kind] if c not in owned), tables.SUPPORT_TYPES[kind][0])
+
+
+def _give_support(full_state: dict, st: dict, card: int, note: str) -> None:
+    from ..handlers import presents
+
+    presents.send(full_state, 51, card, 1, note)
+    if _maxed_supports(st):
+        st.setdefault("max_supports", []).append(card)
+    st["supports_received"] = st.get("supports_received", 0) + 1
+    st.setdefault("support_ids", []).append(card)  # the tracker
 
 
 def _maxed_supports(st: dict) -> bool:
@@ -611,6 +640,37 @@ def logic_estimate(st: dict, scenario: int | None = None) -> int:
                      + (_SCENARIO_BONUS if sid != 1 else 0) for sid in owned)
 
 
+def deck_ok(st: dict, score: int) -> bool:
+    """The apworld's UmamusumeWorld.deck_ok (tables.DECK_NEEDS); seeds before
+    0.16.0 have no such rule."""
+    sd = st.get("slot_data", {})
+    if not sd.get("deck_needs"):
+        return True
+    start = list(sd.get("starting_supports") or [])
+    in_seed = start + [c for order in (sd.get("support_tickets") or {}).values() for c in order]
+
+    def counts(cards, trainees):
+        types = [tables.support_type(c) for c in cards]
+        return types.count("Speed"), types.count("Wit"), trainees
+
+    return tables.deck_ok(score, counts(start + st.get("support_ids", []), len(set(starters(st)) | set(st["trainees"]))),
+                          counts(in_seed, len(starters(st)) + len(sd.get("trainees") or [])))
+
+
+def legend_ok(st: dict, tier: int) -> bool:
+    """The apworld's UmamusumeWorld.legend_ok (tables.LEGEND_NEEDS)."""
+    sd = st.get("slot_data", {})
+    if not sd.get("deck_needs"):
+        return True
+    start = list(sd.get("starting_supports") or [])
+    cards = start + st.get("support_ids", [])
+    in_seed = start + [c for order in (sd.get("support_tickets") or {}).values() for c in order]
+    stamina = lambda cs: [tables.support_type(c) for c in cs].count("Stamina")  # noqa: E731
+    have = (len(cards), stamina(cards), _count(st, tables.PROGRESSIVE["Progressive Starting Skill Points"]),
+            _count(st, tables.PROGRESSIVE["Trainee Awakening"]))
+    return tables.legend_ok(tier, have, (len(in_seed), stamina(in_seed), 3, int(sd.get("awakenings") or 0)))
+
+
 def tracker(full_state: dict) -> list:
     """This seed's checks in groups: [{group, checks: [{name, done, in_logic, locked}]}].
     locked: it needs an item first (a scenario, a trainee); out of logic but not
@@ -622,6 +682,9 @@ def tracker(full_state: dict) -> list:
     scenarios = unlocked_scenarios(full_state)
     est = logic_estimate(st)
     groups = []
+
+    def reaches(score, e=est):
+        return e >= score and deck_ok(st, score)
 
     def group(title, rows):
         checks = [
@@ -641,16 +704,16 @@ def tracker(full_state: dict) -> list:
     for sid in tables.SCENARIOS:
         rows.append((tables.finish_location(sid), sid in scenarios, sid not in scenarios))
         e = logic_estimate(st, sid)
-        rows += [(tables.rank_location(sid, tier), sid in scenarios and e >= score, sid not in scenarios)
+        rows += [(tables.rank_location(sid, tier), sid in scenarios and reaches(score, e), sid not in scenarios)
                  for tier, score in tables.RANK_TIERS]
     group("Scenarios", rows)
-    group("Rank ladder", [(tables.global_rank_location(t), est >= sc) for t, sc in tables.GLOBAL_RANKS])
+    group("Rank ladder", [(tables.global_rank_location(t), reaches(sc)) for t, sc in tables.GLOBAL_RANKS])
     group("Different races",
-          [(tables.unique_races_location(n), est >= 9000 + 100 * n) for n in tables.UNIQUE_RACE_MILESTONES])
-    group("Fans", [(tables.fans_location(n), est >= tables.fans_logic(n)) for n in tables.FAN_MILESTONES])
-    group("Team Trials", [(tables.team_trials_location(n), est >= 11000 + 300 * min(n // 3, 10)) for n in range(1, tables.TEAM_TRIALS_CHECKS + 1)])
-    group("Legend Race", [(tables.legend_location(t), est >= tables.LEGEND_RANK_SCORE[rank])
-                          for t, rank, _row, _stats in tables.LEGEND_LADDER])
+          [(tables.unique_races_location(n), reaches(9000 + 100 * n)) for n in tables.UNIQUE_RACE_MILESTONES])
+    group("Fans", [(tables.fans_location(n), reaches(tables.fans_logic(n))) for n in tables.FAN_MILESTONES])
+    group("Team Trials", [(tables.team_trials_location(n), reaches(11000 + 300 * min(n // 3, 10))) for n in range(1, tables.TEAM_TRIALS_CHECKS + 1)])
+    group("Legend Race", [(tables.legend_location(t), reaches(tables.LEGEND_RANK_SCORE[rank]) and legend_ok(st, i))
+                          for i, (t, rank, _row, _stats) in enumerate(tables.LEGEND_LADDER)])
     have = set(starters(st)) | set(st["trainees"])
     group("Trainees", [(tables.trainee_location(c), c in have, c not in have) for c in tables.TRAINEES])
     return groups
@@ -671,16 +734,62 @@ def legend_tier(full_state: dict) -> int | None:
     return min(full_state[AP_KEY].get("legend_rung", 0), len(LADDER_ROWS) - 1)
 
 
+# How the ladder rival scales with the rung (tier 0 = C ... 9 = SS+). Low rungs
+# stay at LEGEND_LADDER's stats, since logic sends you there early; the top ones are
+# where a strong career should have to race well, not just show up.
+LEGEND_STAT_GROWTH = 0.02  # stats x (1 + this x tier), never past the stat cap
+LEGEND_STAT_CAP = 1200
+LEGEND_GOLD_FROM = 4  # from rung A: one more white skill turns gold per rung
+LEGEND_FIELD_SHARE = (0.5, 0.04)  # field stats >= the rival's x (a + b x tier)
+
+
+@functools.lru_cache(maxsize=None)
+def _gold_of(skill_id: int) -> int | None:
+    group, rarity = master_data.skill_tip_key(skill_id)
+    if rarity != 1:
+        return None
+    row = master_data.query_one("SELECT id FROM skill_data WHERE group_id=? AND rarity=2", (group,))
+    return row["id"] if row else None
+
+
 def legend_boss(boss: dict, tier: int) -> dict:
-    """The rung's rival at this rung's strength (name, look and skills stay its own)."""
+    """The rung's rival at this rung's strength: LEGEND_LADDER's stats grown by
+    the rung, Great mood (players can race in it too), and from rung A its white
+    skills turn gold and its unique skill levels up. Name, look and aptitudes
+    stay its own."""
     _name, rank_id, _row, stats = tables.LEGEND_LADDER[tier]
     boss = dict(boss)
     for key, value in zip(("speed", "stamina", "pow", "guts", "wiz"), stats):
-        boss[key] = value
+        boss[key] = min(LEGEND_STAT_CAP, int(value * (1 + LEGEND_STAT_GROWTH * tier)))
+    if "final_grade" not in boss:  # a race entrant, not the index's profile card
+        boss["motivation"] = 5
+    golds = max(0, tier - LEGEND_GOLD_FROM + 1)
+    skills = []
+    owned = {s["skill_id"] for s in boss.get("skill_array") or ()}
+    for skill in boss.get("skill_array") or ():
+        skill = dict(skill)
+        gold = _gold_of(skill["skill_id"]) if golds else None
+        if gold and gold not in owned:
+            skill["skill_id"], golds = gold, golds - 1
+        elif master_data.skill_tip_key(skill["skill_id"])[1] >= 3:  # her unique skill
+            skill["level"] = max(skill.get("level") or 1, min(5, 1 + tier // 2))
+        skills.append(skill)
+    if "skill_array" in boss:
+        boss["skill_array"] = skills
     boss["rank"] = rank_id  # a race entrant's grade
     if "final_grade" in boss:  # a profile card (legend_race/index boss_data)
         boss["final_grade"] = rank_id
     return boss
+
+
+def legend_field(npc: dict, boss: dict, tier: int) -> dict:
+    """A field runner on a ladder rung: at least LEGEND_FIELD_SHARE of the
+    rival's stats, so the top rungs are a race and not a rival plus filler."""
+    a, b = LEGEND_FIELD_SHARE
+    npc = dict(npc)
+    for key in ("speed", "stamina", "pow", "guts", "wiz"):
+        npc[key] = max(int(npc.get(key) or 0), int(boss[key] * (a + b * tier)))
+    return npc
 
 
 def on_legend_result(full_state: dict, tier, rank: int) -> None:
@@ -768,7 +877,7 @@ def goal_progress(full_state: dict) -> dict:
     if kind == "g1_collector":
         target = int(sd.get("goal_g1_count") or len(tables.G1_RACES))
         current = sum(_LOCATION_IDS[tables.g1_location(n)] in done_locs for n in tables.G1_RACES)
-        label, unit, logic = f"Win {target} different G1s", "G1s", est >= 11000 + 150 * target
+        label, unit, logic = f"Win {target} different G1s", "G1s", est >= 11000 + 150 * target and deck_ok(st, 11000 + 150 * target)
     elif kind == "all_scenarios":
         target = len(tables.SCENARIOS)
         current = sum(_LOCATION_IDS[tables.finish_location(s)] in done_locs for s in tables.SCENARIOS)
@@ -777,7 +886,8 @@ def goal_progress(full_state: dict) -> dict:
     elif kind == "legend_race":
         target = len(tables.LEGEND_LADDER)
         current = sum(_LOCATION_IDS[tables.legend_location(t[0])] in done_locs for t in tables.LEGEND_LADDER)
-        label, unit, logic = "Beat the SS+ Legend Race rival", "rivals beaten", est >= 19200
+        label, unit, logic = "Beat the SS+ Legend Race rival", "rivals beaten", est >= 19200 and deck_ok(st, 19200) \
+            and legend_ok(st, len(tables.LEGEND_LADDER) - 1)
     else:
         target = int(sd.get("goal_rank_score") or 20000)
         # Saves from before best_score was kept: the highest rank check already done.
@@ -785,7 +895,7 @@ def goal_progress(full_state: dict) -> dict:
         ranks += [sc for sid in tables.SCENARIOS for t, sc in tables.RANK_TIERS
                   if _LOCATION_IDS[tables.rank_location(sid, t)] in done_locs]
         current = max([st.get("best_score", 0), *ranks])
-        label, unit, logic = f"One career at rank score {target}", "best career", est >= target
+        label, unit, logic = f"One career at rank score {target}", "best career", est >= target and deck_ok(st, target)
     done = bool(st["goal_done"])
     pct = 100 if done else min(99, current * 100 // target) if target else 0
     return {"kind": kind, "label": label, "unit": unit, "current": current, "target": target,
@@ -910,6 +1020,8 @@ _ITEM_INFO = {
     "Scenario: ": "Unlocks this scenario on the career screen.",
     "Trainee: ": "Mail: this trainee joins your roster.",
     "Support: ": "Mail: this SSR support card (maxed when you claim it, if the seed has maxed_supports).",
+    "SSR Ticket ": "Mail: an SSR support card of this type you don't have yet, picked by the seed "
+    "(the cards that are good in your scenarios tend to come first).",
     "Rainbow Uncap Crystal": "Mail: one limit break for any SSR support card (Enhance > Support Cards > Limit Break). "
     "4 max a card.",
 }

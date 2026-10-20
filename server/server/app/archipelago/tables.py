@@ -11,7 +11,7 @@ GAME = "Umamusume Pretty Derby"
 
 # The apworld release these tables ship with (the server's Archipelago mod and the
 # world are released together: a newer apworld needs the matching server).
-APWORLD_VERSION = "0.15.1"
+APWORLD_VERSION = "0.16.0"
 APWORLD_REPO = "maplehugs/umamusume_apworld"
 
 SCENARIOS = {1: "URA Finale", 2: "Unity Cup", 3: "Grand Live", 4: "Trackblazer"}
@@ -541,7 +541,55 @@ TRAPS = {
     "Amnesia Trap": 45,  # no starting stats / SP buffs this career
 }
 TRAINEE_ITEM_BASE = 1_000_000  # + card_id
-SUPPORT_ITEM_BASE = 2_000_000  # + support_card_id
+SUPPORT_ITEM_BASE = 2_000_000  # + support_card_id (seeds before 0.16.0)
+# From 0.16.0 the pool holds tickets instead: the Nth ticket of a type is the
+# Nth card of that type in slot_data["support_tickets"], so logic and server agree.
+SUPPORT_TICKETS = {f"SSR Ticket ({t})": 70 + i for i, t in enumerate(SUPPORT_TYPES)}
+
+
+def support_ticket(support_type: str) -> str:
+    return f"SSR Ticket ({support_type})"
+
+
+def support_type(card: int) -> str:
+    return next(t for t, cards in SUPPORT_TYPES.items() if card in cards)
+
+
+# High scores need more than a strong deck on paper: cards that stack the stats
+# rating runs on (Speed, Wit) and trainees to pick one whose growth fits them.
+# Score floor -> (Speed cards, Wit cards, trainees) owned, each capped by what the
+# seed has, so every requirement can always be met.
+DECK_NEEDS = ((19600, 4, 4, 16), (17500, 3, 3, 12), (14500, 2, 2, 8))
+
+
+def deck_ok(score: int, have: tuple, seed_has: tuple) -> bool:
+    """have / seed_has: (Speed cards, Wit cards, trainees) owned / in the whole seed."""
+    need = next((n for floor, *n in DECK_NEEDS if score >= floor), (0, 0, 0))
+    return _met(need, have, seed_has)
+
+
+# A Legend Race rival is a real race, not a score: from rung A it also asks for
+# what builds a usable uma. Per LEGEND_LADDER rung: (SSR cards: each brings its
+# gold skill and hints; Stamina cards, for the 2400 m+ rungs; Progressive Starting
+# Skill Points; Trainee Awakenings: unique skill levels), capped like DECK_NEEDS.
+LEGEND_NEEDS = (
+    (0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0),  # C-B+
+    (4, 0, 1, 0),  # A
+    (5, 0, 1, 1),  # A+
+    (6, 1, 2, 2),  # S
+    (6, 2, 2, 3),  # S+ 2500 m
+    (6, 2, 3, 4),  # SS 2400 m
+    (6, 3, 3, 5),  # SS+ 3000 m
+)
+
+
+def legend_ok(tier: int, have: tuple, seed_has: tuple) -> bool:
+    """have / seed_has: (SSR cards, Stamina cards, skill point items, awakenings)."""
+    return _met(LEGEND_NEEDS[tier], have, seed_has)
+
+
+def _met(need, have, seed_has) -> bool:
+    return all(h >= min(n, total) for h, n, total in zip(have, need, seed_has))
 
 
 def item_name_to_id() -> dict:
@@ -553,6 +601,7 @@ def item_name_to_id() -> dict:
     table.update(TRAPS)
     table.update({f"Trainee: {n}": TRAINEE_ITEM_BASE + c for c, n in TRAINEES.items()})
     table.update({f"Support: {n}": SUPPORT_ITEM_BASE + s for s, n in SSR_SUPPORTS.items()})
+    table.update(SUPPORT_TICKETS)
     return table
 
 

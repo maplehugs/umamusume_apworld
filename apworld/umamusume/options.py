@@ -140,8 +140,10 @@ class TraineeCount(Range):
 
 
 class SupportCount(Range):
-    """SSR support cards in the pool at least (dealt evenly by stat: 30 = 6 of each).
-    A seed with more checks than items deals 1 more card per 2 spare checks."""
+    """SSR Tickets in the pool at least (dealt evenly by stat: 30 = 6 of each).
+    Each ticket mails a card of its type, picked by the seed: the cards that are
+    good in the scenarios tend to come first. A seed with more checks than items
+    deals 1 more ticket per 2 spare checks."""
 
     display_name = "Support Card Count"
     range_start = 0

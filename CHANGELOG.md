@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.16.0
+Item changes for new seeds: regenerate to get them. Needs the matching server.
+- Support cards are SSR Tickets now: "SSR Ticket (Speed)", "(Wit)", etc. instead
+  of one item per card. Each ticket gives a card of its type that you don't have
+  yet, and the cards that are good in the scenarios are more likely, so less
+  trash. The seed decides which card each ticket gives, so logic still knows
+  your cards and you always get the same ones (reconnect, async, reinstall).
+- Rainbow Uncap Crystals stay their own items: limit break whichever card you
+  want.
+- High ranks also need the right deck in logic: rank S and up asks for Speed and
+  Wit cards and enough trainees (S: 2 Speed, 2 Wit, 8 trainees; SS: 3, 3, 12;
+  UG: 4, 4, 16; never more than the seed has). The tracker follows it.
+- Legend Race ladder rivals are tougher from rung A up: stronger stats (up to the
+  1200 cap), Great mood like you, white skills turned gold and a stronger unique
+  skill, and a field that keeps up instead of filler. The C-B+ rungs are as before.
+- Legend Race rivals ask for a usable uma in logic, not just a score: from rung A,
+  SSR cards (each brings a gold skill), Progressive Starting Skill Points and
+  Trainee Awakenings, plus Stamina cards for the long ones (A: 4 cards, 1 SP item;
+  S: 6 cards, 1 Stamina, 2 SP, 2 awakenings; SS+ 3000 m: 6, 3, 3, 5). Starting
+  Skill Points and Trainee Awakening are progression items now.
+
+Server fixes (these work with older seeds too):
+- Team Trials: the race no longer hangs after Race. The automatic team put
+  every uma in sprint and mile, leaving the other distances empty; it now fills
+  one runner per distance first, by distance and ground aptitude. A match stuck
+  that way is dropped on the next visit (needs 5 umas).
+- Team Trials: generated rival teams race for real. They were fielded at random
+  distances and styles (G aptitude in sprint or dirt) and, against a young team,
+  with every stat at 1, so they came last every time and every match ended the
+  same. Now each runs where she has B or better, in her best style, with stats
+  that match your team's strength.
+- Unity Cup: the finals no longer black-screen when Team Zenith powers up. The
+  cutscene needs Bitter Glasse and Little Cocon on the team, and the server had
+  swapped them for mob runners. Careers waiting at the finals get the fixed
+  team on their next load.
+
 ## 0.15.1
 Server fixes.
 - Team Trials: no more "team not found" when you never formed a team; your best

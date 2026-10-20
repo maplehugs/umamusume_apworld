@@ -81,7 +81,8 @@ TUTORIAL_GUILD_OPEN_TURN = 4
 # the cache was keyed on the turn alone -- so a bad roll survived the fix that
 # corrected it and kept crashing the client. Any cached roll whose stamp is not
 # this one is discarded and re-rolled.
-OPPONENT_ROLL_VERSION = 5      # 5: boss seats this build can actually draw
+OPPONENT_ROLL_VERSION = 6      # 6: boss fifteen verbatim again (the S+ cutscene needs 2002/2003)
+                               # 5: boss seats this build can actually draw
                                # 4: named opponents this build can actually draw
                                # 3: boss teams seated the way the capture seats them
 
@@ -620,71 +621,6 @@ def boss_npc_ids(rank: int) -> tuple:
     have = {r["id"] for r in master_data.query(
         "SELECT id FROM single_mode_npc WHERE id >= 3000000 AND id < 3100000")}
     return tuple(i for i in ids if i in have)
-
-
-# TWO OF THE BOSS FIFTEEN ARE UNDRAWABLE, and unlike the ordinary teams they
-# cannot simply be dropped from a pool: the fifteen are fixed, and rows *04 and
-# *06 (Bitter Glasse 2002 and Little Cocon 2003) are the team's two STRONGEST
-# runners -- at rank 101, speed 862 and 972 against a mob wall of 985/694.
-#
-# Filtering the named POOL (named_npc_pool) fixed the ordinary teams on
-# 2026-09-07 but never touched these, because the boss fifteen bypass the pool
-# entirely. _opponent_horse's own guard anonymises the RACE BODY, which is why
-# the race itself looked right -- but the opponent-select panel and the race
-# list resolve the portrait from the npc_id on the wire themselves
-# (PartsSingleModeScenarioTeamRaceOpponent.SetupCharaImage -> single_mode_npc
-# -> chara_id -> card art), so those two seats still drew blank white planes.
-# There is no mob_id or chara_id field on a team_data_array seat to override
-# it with; the id IS the identity. So the id itself has to become a drawable
-# one, and the stats have to be carried across separately.
-#
-# The substitute is a real mob npc row (always renderable, and the boss cutscene
-# maps its first six seats through mob data anyway), chosen by a stable index so
-# a given boss row always yields the same face across restarts and re-rolls.
-# boss_stat_source inverts it: _opponent_horse reads the ORIGINAL row for stats,
-# aptitudes and running style, so the final is exactly as hard as before and
-# only the two faces are anonymous. If the art ever ships, has_portrait_art goes
-# true on its own and both maps empty out.
-@functools.lru_cache(maxsize=1)
-def _boss_art_substitutes() -> dict:
-    pool = mob_npc_pool()
-    out, used = {}, set()
-    for rank in (BOSS_RANK, BOSS_PLUS_RANK):
-        for npc in boss_npc_ids(rank):
-            row = npc_row(npc) or {}
-            if int(row.get("mob_id") or 0):
-                continue
-            if master_data.has_portrait_art(row.get("chara_id")):
-                continue
-            if not pool:
-                continue
-            i = npc % len(pool)
-            while pool[i] in used:          # keep the fifteen distinct
-                i = (i + 1) % len(pool)
-            used.add(pool[i])
-            out[npc] = pool[i]
-    return out
-
-
-def boss_art_substitute(npc_id: int) -> int:
-    """The drawable mob npc row to field in place of an undrawable boss seat,
-    or the id unchanged when the client can already draw it."""
-    return _boss_art_substitutes().get(int(npc_id), int(npc_id))
-
-
-def boss_stat_source(npc_id: int, rank: int) -> int:
-    """Inverse of boss_art_substitute: the row a substituted seat takes its
-    stats and aptitudes from. Identity for every seat that was not substituted.
-
-    RANK-GATED, and it has to be: the substitutes come from the same
-    mob_npc_pool the ordinary teams field, so inverting by value alone would
-    hand boss stats to whichever rank-3 mob happened to share the id."""
-    if int(rank) < BOSS_RANK:
-        return int(npc_id)
-    for original, substitute in _boss_art_substitutes().items():
-        if substitute == int(npc_id):
-            return original
-    return int(npc_id)
 
 
 # The opposing team's trainer. The capture gives them a real-looking viewer_id

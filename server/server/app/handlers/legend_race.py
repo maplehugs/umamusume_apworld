@@ -165,6 +165,7 @@ def _opponents(row, viewer_id, tier) -> list:
     opponents = daily_races._legend_opponents(row, viewer_id)
     if tier is not None and opponents:
         opponents[0] = archipelago.legend_boss(opponents[0], tier)
+        opponents[1:] = [archipelago.legend_field(o, opponents[0], tier) for o in opponents[1:]]
     return opponents
 
 

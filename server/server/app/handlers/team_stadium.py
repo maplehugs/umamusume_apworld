@@ -705,7 +705,14 @@ def _mob_opponent_team(chara_info_like: dict, evaluation_point: int,
     next_id = _MOB_CHARA_ID_BASE + offer_index * _MOB_CHARA_ID_STRIDE
     for distance_type in _VALID_DISTANCE_TYPES:
         for member_id in range(1, members + 1):
-            row = dict(rng.choice([r for r in rows if r["chara_id"] not in used_charas] or rows))
+            # Fielded where she can run (B or better at the distance and on the
+            # ground) and in her best style. A random pick put G-aptitude runners
+            # in sprint/dirt slots: they lost by ~10 s every time, so every match
+            # ended the same way whatever the seed (player-reported 2026-10-19).
+            free = [r for r in rows if r["chara_id"] not in used_charas] or rows
+            fit = [r for r in free if (r[_DISTANCE_TYPE_COLUMN[distance_type]] or 0) >= _FIT_APTITUDE
+                   and (r[_GROUND_COLUMN[distance_type]] or 0) >= _FIT_APTITUDE]
+            row = dict(rng.choice(fit or free))
             used_charas.add(row["chara_id"])
             total = row["speed"] + row["stamina"] + row["pow"] + row["guts"] + row["wiz"]
             # Target: this slot alone should roughly reproduce evaluation_point
@@ -721,6 +728,13 @@ def _mob_opponent_team(chara_info_like: dict, evaluation_point: int,
             rank_score = rating_formula.get_rating(
                 [stats["speed"], stats["stamina"], stats["power"],
                  stats["guts"], stats["wiz"]])
+            # Skills take at most half the slot's share of evaluation_point. A
+            # mob's 4-7 skills alone can outscore a young team, and the fit below
+            # then pressed every stat to 1: a rival that always came last
+            # (player-reported 2026-10-19, a fresh save's ~90-stat umas).
+            skills = single_mode_team._npc_skills(row)
+            while skills and rating_formula.get_skill_score(skills) > target / 2:
+                skills.pop()
             fans = rng.randint(10_000, 300_000)
             card_id = row["card_id"]
             chara = {
@@ -731,7 +745,7 @@ def _mob_opponent_team(chara_info_like: dict, evaluation_point: int,
                 "card_id": card_id,
                 "mob_id": row["mob_id"],
                 "trainer_name": "Trainer",
-                "running_style": rng.randint(1, 4),
+                "running_style": max(_APTITUDE_BY_STYLE, key=lambda k: row[_APTITUDE_BY_STYLE[k]] or 0),
                 "speed": stats["speed"], "stamina": stats["stamina"],
                 "power": stats["power"], "guts": stats["guts"], "wiz": stats["wiz"],
                 "proper_distance_short": row["proper_distance_short"],
@@ -744,7 +758,7 @@ def _mob_opponent_team(chara_info_like: dict, evaluation_point: int,
                 "proper_running_style_oikomi": row["proper_running_style_oikomi"],
                 "proper_ground_turf": row["proper_ground_turf"],
                 "proper_ground_dirt": row["proper_ground_dirt"],
-                "skill_array": single_mode_team._npc_skills(row),
+                "skill_array": skills,
                 # --- everything below is what the CARD itself is drawn from ---
                 "rarity": row["rarity"],
                 "talent_level": _MOB_TALENT_LEVEL,
@@ -793,6 +807,8 @@ def _mob_opponent_team(chara_info_like: dict, evaluation_point: int,
         c["rank"] = trained_chara._rank_for_score(c["rank_score"])
     return team_data_array, roster
 
+
+_FIT_APTITUDE = 6  # B: a generated opponent's floor at her slot's distance and ground
 
 _MOB_OPPONENT_VIEWER_BASE = 900_000_600_000  # sentinel range, mirrors
                                               # single_mode_team's own
@@ -1205,6 +1221,12 @@ def handle_index(payload: dict) -> dict:
     rewards = st.pop("pending_weekly_rewards", []) + _grant_rank_rewards(full_state, st)
     state_store.save_state(viewer_id, full_state)
     match = st.get("current_match")
+    if match and match.get("user_team") and not _covers_every_distance(match["user_team"]):
+        # A match raced with a gap in our team can never be shown (see
+        # _covers_every_distance); resuming it hung the client on every load.
+        st.pop("current_match")
+        state_store.save_state(viewer_id, full_state)
+        match = None
     # RaceStatusType (dump.cs TeamStadiumDefine): 0=None, 1=Decide, 2=Race.
     race_status = 0
     if match:
@@ -1296,22 +1318,33 @@ _APTITUDE_BY_STYLE = {1: "proper_running_style_nige", 2: "proper_running_style_s
                       3: "proper_running_style_sashi", 4: "proper_running_style_oikomi"}
 
 
+def _covers_every_distance(team_data_array) -> bool:
+    """The client keys the race list on the user team's distances: a distance
+    with no runner of ours throws KeyNotFoundException in
+    PartsTeamStadiumRaceListItem.ShowRaceResult and the race screen hangs."""
+    return {e["distance_type"] for e in team_data_array or () if e.get("trained_chara_id")} \
+        >= set(_VALID_DISTANCE_TYPES)
+
+
 def _auto_team(roster: dict) -> list:
     """Each slot gets the owned uma with the best aptitude for it (rank score
-    breaks ties), each character once as team_edit requires, in her best style."""
+    breaks ties), each character once as team_edit requires, in her best style.
+    Leaders first, so five umas already cover every distance."""
     team, used = [], set()
-    for dtype in _VALID_DISTANCE_TYPES:
-        for member in _VALID_MEMBER_IDS:
+    for member in _VALID_MEMBER_IDS:
+        for dtype in _VALID_DISTANCE_TYPES:
             free = [c for c in roster.values()
                     if bond.chara_id_for_card(c.get("card_id", 0)) not in used | {0}]
             if not free:
-                return team
-            best = max(free, key=lambda c: (c.get(_APTITUDE_BY_DISTANCE[dtype]) or 0, c.get("rank_score") or 0))
+                return sorted(team, key=lambda e: (e["distance_type"], e["member_id"]))
+            # Distance AND ground: a turf-G dirt runner in the sprint slot lost every race.
+            best = max(free, key=lambda c: (min(c.get(_DISTANCE_TYPE_COLUMN[dtype]) or 0, c.get(_GROUND_COLUMN[dtype]) or 0),
+                                            c.get(_APTITUDE_BY_DISTANCE[dtype]) or 0, c.get("rank_score") or 0))
             used.add(bond.chara_id_for_card(best.get("card_id", 0)))
             style = max(_APTITUDE_BY_STYLE, key=lambda k: best.get(_APTITUDE_BY_STYLE[k]) or 0)
             team.append({"distance_type": dtype, "member_id": member,
                          "trained_chara_id": best["trained_chara_id"], "running_style": style})
-    return team
+    return sorted(team, key=lambda e: (e["distance_type"], e["member_id"]))
 
 
 @registry.endpoint("team_stadium/opponent_list")
@@ -1319,12 +1352,13 @@ def handle_opponent_list(payload: dict) -> dict:
     viewer_id = payload["viewer_id"]
     full_state = state_store.get_state(viewer_id) or {}
     st = _team_stadium_state(full_state)
-    if not st.get("team_data_array"):
-        # Never formed a team (a fresh Archipelago save): race with the best
-        # umas owned instead of refusing; team_edit changes it any time.
+    if not _covers_every_distance(st.get("team_data_array")):
+        # Never formed a full team (a fresh Archipelago save, or 0.15.1's auto
+        # team that stacked sprint/mile): race with the best umas owned instead
+        # of refusing; team_edit changes it any time.
         st["team_data_array"] = _auto_team(_roster_by_id(viewer_id))
-        if not st["team_data_array"]:
-            return _refuse(ResultCode.TEAM_STADIUM_NOT_FOUND_TEAM)   # no trained umas at all
+        if not _covers_every_distance(st["team_data_array"]):
+            return _refuse(ResultCode.TEAM_STADIUM_NOT_FOUND_TEAM)   # fewer than five umas
         st["team_evaluation_point"] = _team_evaluation_point(st["team_data_array"], _roster_by_id(viewer_id))
 
     if (st.get("current_match") or {}).get("rounds"):

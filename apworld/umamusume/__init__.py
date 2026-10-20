@@ -31,6 +31,10 @@ BASE_SCORE = {0: 7500, 1: 8500, 2: 9500}  # logic_difficulty -> unbuffed career
 TRAINING_BONUS = 300  # each training item
 SCENARIO_BONUS = 1500  # a non-URA scenario's own caps and gains
 SUPPORT_BONUS, SUPPORT_MAX = 1200, 6  # each maxed SSR (a deck holds 6)
+# How hard a ticket leans toward good cards: a card's draw weight is its value
+# (60-130, averaged over the scenarios) to this power, so a 130 card comes about
+# 20x as early as a 60 one. 0 = plain shuffle.
+TICKET_BIAS = 4
 CRYSTAL = "Rainbow Uncap Crystal"  # one SSR limit break: 4 max a card
 # Filler is small permanent buffs and next-career boons: support cards already
 # arrive maxed, and mail items (Monies, clocks...) did nothing for a run.
@@ -66,7 +70,7 @@ class UmamusumeWorld(World):
     options_dataclass = UmaOptions
     options: UmaOptions
     item_name_to_id = ITEMS
-    item_name_groups = {"Supports": {n for n in ITEMS if n.startswith("Support: ")}}
+    item_name_groups = {"Supports": {n for n in ITEMS if n.startswith(("Support: ", "SSR Ticket ("))}}
     location_name_to_id = LOCATIONS
     location_name_groups = LOCATION_GROUPS
     topology_present = False
@@ -83,7 +87,9 @@ class UmamusumeWorld(World):
         self.trainees = self.random.sample(extra, min(o.trainee_count.value, len(extra)))
         # Dealt round by round, one of each stat per round in a random order, so any
         # count is even (30 = 6 Speed, 6 Stamina...); Friend/Group only past 100.
-        pools = {k: self.random.sample(v, len(v)) for k, v in tables.SUPPORT_TYPES.items()}
+        # Each type's own order leans toward the useful cards: it is also the order
+        # that type's tickets hand them out in.
+        pools = {k: self.weighted_order(v) for k, v in tables.SUPPORT_TYPES.items()}
         stats = [pools[s] for s in tables.STATS]
         cards = []
         for i in range(max(map(len, stats))):
@@ -92,10 +98,59 @@ class UmamusumeWorld(World):
         # support_count is the floor; create_items deals more from the deck with room.
         self.start_supports, self.deck = cards[:o.starting_supports.value], cards[o.starting_supports.value:]
         self.supports = self.deck[:o.support_count.value]
-        self.card_items = [(c, f"Support: {tables.SSR_SUPPORTS[c]}") for c in self.supports]  # estimate
+        self.ticket_order = {}  # type -> its ticketed cards, deck order (create_items adds more)
+        self.add_tickets(self.supports)
         if o.goal == o.goal.option_legend_race and not o.legend_ladder:
             raise Exception(f"{self.player_name}: the legend_race goal needs legend_ladder on")
         self.caps = 2 if self.options.goal_rank_score.value >= 21000 else 0
+
+    def weighted_order(self, cards) -> list:
+        """A random order where useful cards tend to come first (weighted sampling
+        without replacement: sort by random() ** (1 / weight))."""
+        def weight(c):
+            v = tables.SUPPORT_VALUE.get(c, (100,) * 4)
+            return (sum(v) / len(v) / 100) ** TICKET_BIAS
+        return sorted(cards, key=lambda c: self.random.random() ** (1 / weight(c)), reverse=True)
+
+    def add_tickets(self, cards) -> None:
+        for c in cards:
+            self.ticket_order.setdefault(tables.support_type(c), []).append(c)
+
+    def deck_ok(self, state, score: int) -> bool:
+        """tables.DECK_NEEDS: enough Speed and Wit cards and trainees for `score`."""
+        cards = self.start_supports + self.ticket_cards(state)
+        trainees = len(self.starters) + sum(state.has(f"Trainee: {tables.TRAINEES[c]}", self.player)
+                                            for c in self.trainees)
+        return tables.deck_ok(score, self.deck_counts(cards, trainees), self.deck_counts(
+            self.start_supports + [c for order in self.ticket_order.values() for c in order],
+            len(self.starters) + len(self.trainees)))
+
+    def legend_ok(self, state, tier: int) -> bool:
+        """tables.LEGEND_NEEDS: the cards, skill points and awakenings for rung `tier`."""
+        p = self.player
+        cards = self.start_supports + self.ticket_cards(state)
+        seed_cards = self.start_supports + [c for order in self.ticket_order.values() for c in order]
+        have = (len(cards), self.deck_types(cards).count("Stamina"),
+                state.count("Progressive Starting Skill Points", p), state.count("Trainee Awakening", p))
+        return tables.legend_ok(tier, have, (len(seed_cards), self.deck_types(seed_cards).count("Stamina"),
+                                             3, self.awakenings()))
+
+    def awakenings(self) -> int:
+        return min(self.options.trainee_awakenings.value, len(self.starters) + len(self.trainees))
+
+    @staticmethod
+    def deck_types(cards) -> list:
+        return [tables.support_type(c) for c in cards]
+
+    @staticmethod
+    def deck_counts(cards, trainees: int) -> tuple:
+        types = [tables.support_type(c) for c in cards]
+        return types.count("Speed"), types.count("Wit"), trainees
+
+    def ticket_cards(self, state) -> list:
+        """The cards the tickets owned in `state` hand out: the first N of each type."""
+        return [c for t, order in self.ticket_order.items()
+                for c in order[:state.count(tables.support_ticket(t), self.player)]]
 
     # ---- logic: an estimated best rank score, like Yacht Dice's score estimate
     def estimate(self, state, scenario: int | None = None) -> int:
@@ -104,7 +159,7 @@ class UmamusumeWorld(World):
         est += TRAINING_BONUS * sum(state.count(n, p) for n in TRAINING)
         est += 400 * state.count("Progressive Starting Stats", p)
         est += 300 * state.count("Progressive Stat Cap", p)
-        cards = self.start_supports + [c for c, n in self.card_items if state.has(n, p)]
+        cards = self.start_supports + self.ticket_cards(state)
         crystals = None if self.options.maxed_supports else state.count(CRYSTAL, p)
         if scenario is None:  # any scenario: the best one owned
             owned = [sid for sid, n in tables.SCENARIO_ITEM.items() if sid == self.start_scenario or state.has(n, p)]
@@ -118,8 +173,9 @@ class UmamusumeWorld(World):
                 + (SCENARIO_BONUS if sid != 1 else 0))
 
     def reaches(self, state, score: int) -> bool:
-        """estimate >= score; a score past every buff only asks for every buff."""
-        return self.estimate(state) >= min(score, self.best)
+        """estimate >= score and the deck for it (deck_ok); a score past every
+        buff only asks for every buff."""
+        return self.estimate(state) >= min(score, self.best) and self.deck_ok(state, score)
 
     def max_estimate(self, scenario: int | None = None) -> int:
         cards = self.start_supports + self.supports
@@ -168,7 +224,8 @@ class UmamusumeWorld(World):
                     if score > cap or score > self.max_estimate(sid):  # e.g. URA UG on relaxed
                         continue
                     add(tables.rank_location(sid, tier),
-                        lambda s, has=has, sid=sid, score=score: has(s) and self.estimate(s, sid) >= score)
+                        lambda s, has=has, sid=sid, score=score: has(s) and self.estimate(s, sid) >= score
+                        and self.deck_ok(s, score))
         if o.global_rank_ladder:
             for tier, score in tables.GLOBAL_RANKS:
                 if score > cap:
@@ -180,11 +237,12 @@ class UmamusumeWorld(World):
         if o.legend_ladder:
             # The rival is raced with one of your trained umas: in logic once your
             # careers are expected to reach that rival's rank.
-            for tier, rank_id, _row, _stats in tables.LEGEND_LADDER:
+            for i, (tier, rank_id, _row, _stats) in enumerate(tables.LEGEND_LADDER):
                 if o.goal == o.goal.option_legend_race and rank_id == tables.LEGEND_LADDER[-1][1]:
                     continue  # beating SS+ is the goal itself
                 need = tables.LEGEND_RANK_SCORE[rank_id]
-                add(tables.legend_location(tier), lambda s, need=need: self.reaches(s, need))
+                add(tables.legend_location(tier),
+                    lambda s, need=need, i=i: self.reaches(s, need) and self.legend_ok(s, i))
         if o.fan_checks:  # ~250k fans per career
             for n in tables.FAN_MILESTONES:
                 add(tables.fans_location(n), lambda s, n=n: self.reaches(s, tables.fans_logic(n)))
@@ -212,7 +270,8 @@ class UmamusumeWorld(World):
             scenarios = [n for sid, n in tables.SCENARIO_ITEM.items() if sid != self.start_scenario]
             goal = add("Goal", lambda s: s.has_all(scenarios, p))
         elif o.goal == o.goal.option_legend_race:
-            goal = add("Goal", lambda s: self.reaches(s, 19200))  # the SS+ rival's rank
+            goal = add("Goal", lambda s: self.reaches(s, 19200)  # the SS+ rival's rank
+                       and self.legend_ok(s, len(tables.LEGEND_LADDER) - 1))
         elif o.goal == o.goal.option_g1_collector:
             if not o.g1_checks:
                 raise Exception(f"{self.player_name}: g1_collector needs g1_checks on")
@@ -226,10 +285,12 @@ class UmamusumeWorld(World):
 
     def create_item(self, name: str) -> UmaItem:
         # Support cards count in logic (a maxed SSR deck is most of a good career).
-        if name in TRAINING or name.startswith(("Scenario:", "Trainee:", "Support:")) or name in (
+        if name in TRAINING or name.startswith(("Scenario:", "Trainee:", "Support:", "SSR Ticket (")) or name in (
             CRYSTAL,
             "Progressive Starting Stats",
             "Progressive Stat Cap",
+            "Progressive Starting Skill Points",  # legend rungs (tables.LEGEND_NEEDS)
+            "Trainee Awakening",
         ):
             cls = IC.progression
         elif name in tables.PROGRESSIVE:  # Trainee Awakening too
@@ -269,9 +330,9 @@ class UmamusumeWorld(World):
         names += TRAINING * 3  # stat by stat, so a cut hits them evenly
         names += ["Progressive Starting Stats"] * 5 + ["Progressive Stat Cap"] * self.caps
         names += [f"Trainee: {tables.TRAINEES[c]}" for c in self.trainees]
-        names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in self.supports]
+        names += [tables.support_ticket(tables.support_type(s)) for s in self.supports]
         names += [CRYSTAL] * self.crystals()
-        names += ["Trainee Awakening"] * min(o.trainee_awakenings.value, len(self.starters) + len(self.trainees))
+        names += ["Trainee Awakening"] * self.awakenings()
         names += ["Progressive RP Recovery"] * min(3, o.team_trials_checks.value)
         names += ["Progressive Starting Skill Points"] * 3 + ["Progressive Training Guard"] * 2
         slots = len(self.multiworld.get_unfilled_locations(self.player))
@@ -285,8 +346,8 @@ class UmamusumeWorld(World):
         names += [CRYSTAL] * more
         room -= more
         extra = self.deck[len(self.supports):][:room // 2]
-        names += [f"Support: {tables.SSR_SUPPORTS[s]}" for s in extra]
-        self.card_items += [(c, f"Support: {tables.SSR_SUPPORTS[c]}") for c in extra]
+        names += [tables.support_ticket(tables.support_type(s)) for s in extra]
+        self.add_tickets(extra)
         names += [self.get_filler_item_name() for _ in range(room - len(extra))]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
@@ -310,4 +371,7 @@ class UmamusumeWorld(World):
             "starting_trainees": self.starters,
             "starting_scenario": self.start_scenario,
             "starting_supports": self.start_supports,
+            "support_tickets": self.ticket_order,  # Nth ticket of a type -> Nth card here
+            "deck_needs": True,  # the tracker applies tables.DECK_NEEDS and LEGEND_NEEDS
+            "awakenings": self.awakenings(),
         }

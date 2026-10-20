@@ -22,7 +22,7 @@ YAML's defaults that is **170 checks out, 170 items in**:
 
 | Items you get, most first | Count | What it does |
 |---|---|---|
-| Support: SSR cards | 51 (even by stat) | Mailed at limit break 0 (maxed with `maxed_supports`). Your career deck. |
+| SSR Ticket (Speed, Wit...) | 51 (even by stat) | An SSR support card of that type, mailed at limit break 0 (maxed with `maxed_supports`). Your career deck. |
 | Rainbow Uncap Crystal | 24 + up to 12 (~31) | One limit break for any SSR you pick; 4 max a card. |
 | Trainee Awakening | 20 (one per trainee) | A trainee to 5 stars, potential 5. |
 | Trainee: ... | 15 | New trainees, each with its own "finish a career" check. |
@@ -88,7 +88,7 @@ see [options](options.md#excluding-checks).
 | Progressive RP Recovery | up to 3 (with team_trials_checks) | Team Trials RP refills twice as fast per copy (the 5-RP bar: 30 min, then 15, 7.5, ~4). |
 | Trainee: ... | trainee_count | The trainee, by mail. |
 | Rainbow Uncap Crystal | uncap_crystals (+ up to half more) | One limit break for any SSR support card (Enhance > Support Cards > Limit Break); 4 max a card. Not with maxed_supports. |
-| Support: ... | support_count | The SSR support card, by mail, at limit break 0 (maxed when claimed with maxed_supports). Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group cards only past 100). Progression: your best 6, rated per scenario, count toward the logic estimate. |
+| SSR Ticket (type) | support_count | An SSR support card of that type you don't have yet, by mail, at limit break 0 (maxed when claimed with maxed_supports). The seed lists which card each ticket gives, weighted so the cards that are good in the scenarios tend to come first (and the weakest rarely make the pool); the Nth ticket of a type always gives the same card. Dealt evenly by stat (30 = 6 each of Speed, Stamina, Power, Guts, Wit; Friend/Group only past 100). Progression: the cards your tickets give, your best 6 rated per scenario, count toward the logic estimate. Seeds before 0.16.0 have `Support: ...` items instead. |
 | Trainee Awakening | trainee_awakenings (one per trainee) | A random trainee you own, not yet maxed, goes to 5 stars and potential level 5 (log in again to see it). With all of them maxed it waits for the next trainee you claim. |
 
 ## Filler
