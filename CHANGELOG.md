@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.1
+- Team Trials checks never hold an item anyone needs: with rivals at your level a
+  match is close to a coin flip, so they hold only filler and traps from the
+  multiworld (new option team_trials_filler_only, on by default; off: anything,
+  like before). Important items that no longer fit go to your starting inventory.
+
 ## 0.16.0
 Item changes for new seeds: regenerate to get them. Needs the matching server.
 - Support cards are SSR Tickets now: "SSR Ticket (Speed)", "(Wit)", etc. instead

@@ -42,6 +42,7 @@ Turn whole groups off to make a shorter seed:
 | `legend_ladder` | on | 10: beat the C, C+, B, B+, A, A+, S, S+, SS and SS+ rivals in Legend Race, in turn (free entries on the Archipelago save) |
 | `fan_checks` | on | 12: reach 250k, 500k, 750k ... 3M fans over all your careers (~250k per career) |
 | `team_trials_checks` | 50 (0-100) | win your 1st, 2nd... Team Trials race (each match has 5; a lost match's wins count too); 0 turns Team Trials checks off. They hold multiworld items like any other check (or your own filler with `team_trials_roulette`). Adds up to 3 Progressive RP Recovery items. |
+| `team_trials_filler_only` | **true** | Team Trials checks hold only filler and traps from the multiworld, never an item anyone needs (a match against an even team is close to a coin flip). false: they can hold anything. |
 | `team_trials_roulette` | **false** | true: Team Trials checks hold your own good filler and traps instead of multiworld items (never progression). |
 | `team_trials_trap_percentage` | 25 (0-100) | With `team_trials_roulette`: percent of the Team Trials checks that hold a trap (25 with 50 checks = 12 traps, 38 good). |
 

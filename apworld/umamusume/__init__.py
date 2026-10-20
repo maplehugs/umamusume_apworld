@@ -2,7 +2,7 @@
 which applies the items and reports the checks. tables.py holds
 every id; the server mirrors it, so both sides agree on every id."""
 
-from BaseClasses import Item, ItemClassification as IC, Location, Region
+from BaseClasses import Item, ItemClassification as IC, Location, LocationProgressType, Region
 from worlds.AutoWorld import World
 
 from . import tables
@@ -264,6 +264,8 @@ class UmamusumeWorld(World):
                       lambda s, n=n: self.reaches(s, 11000 + 300 * min(n // 3, 10)))
             if roulette:
                 loc.place_locked_item(self.create_item(roulette[n - 1]))
+            elif o.team_trials_filler_only:
+                loc.progress_type = LocationProgressType.EXCLUDED
         for card in self.starters:
             add(tables.trainee_location(card))
         for card in self.trainees:
@@ -339,12 +341,15 @@ class UmamusumeWorld(World):
         names += ["Trainee Awakening"] * self.awakenings()
         names += ["Progressive RP Recovery"] * min(3, o.team_trials_checks.value)
         names += ["Progressive Starting Skill Points"] * 3 + ["Progressive Training Guard"] * 2
-        slots = len(self.multiworld.get_unfilled_locations(self.player))
+        unfilled = self.multiworld.get_unfilled_locations(self.player)
+        # Excluded checks (team_trials_filler_only) only ever take filler.
+        filler_only = sum(loc.progress_type == LocationProgressType.EXCLUDED for loc in unfilled)
+        slots = len(unfilled) - filler_only
         names, self.start_items = names[:slots], names[slots:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
         # Room left: up to half as many more crystals (random), then half more SSR
-        # cards (still even by stat), half filler.
+        # cards (still even by stat), half filler; the excluded checks get filler.
         room = slots - len(names)
         more = min(room, self.random.randint(0, self.crystals() // 2))
         names += [CRYSTAL] * more
@@ -352,7 +357,7 @@ class UmamusumeWorld(World):
         extra = self.deck[len(self.supports):][:room // 2]
         names += [tables.support_ticket(tables.support_type(s)) for s in extra]
         self.add_tickets(extra)
-        names += [self.get_filler_item_name() for _ in range(room - len(extra))]
+        names += [self.get_filler_item_name() for _ in range(room - len(extra) + filler_only)]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
     def fill_slot_data(self) -> dict:

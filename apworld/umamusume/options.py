@@ -221,6 +221,14 @@ class TeamTrialsChecks(Range):
     default = 50
 
 
+class TeamTrialsFillerOnly(DefaultOnToggle):
+    """Team Trials checks hold only filler and traps from the multiworld, never an
+    item anyone needs: a match is close to a coin flip against an even team, so
+    nobody should wait on one. Off: they can hold anything."""
+
+    display_name = "Team Trials Filler Only"
+
+
 class TeamTrialsRoulette(Toggle):
     """Team Trials checks hold your own good filler and traps instead of multiworld
     items: never progression, nobody waits on your RP."""
@@ -306,6 +314,7 @@ class UmaOptions(PerGameCommonOptions):
     unique_race_checks: UniqueRaceChecks
     legend_ladder: LegendLadder
     team_trials_checks: TeamTrialsChecks
+    team_trials_filler_only: TeamTrialsFillerOnly
     team_trials_roulette: TeamTrialsRoulette
     team_trials_trap_percentage: TeamTrialsTrapPercentage
     fan_checks: FanChecks

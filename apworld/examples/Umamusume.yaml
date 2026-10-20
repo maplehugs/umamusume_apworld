@@ -24,6 +24,7 @@ Umamusume Pretty Derby:
   unique_race_checks: true
   legend_ladder: true
   team_trials_checks: 50           # races won that are checks; 0 = Team Trials off
+  team_trials_filler_only: true   # never an item anyone needs (a match is close to a coin flip)
   team_trials_roulette: false      # true: they hold your own filler/traps, not multiworld items
   team_trials_trap_percentage: 25  # with the roulette, % that are traps (the rest good filler)
   fan_checks: true
