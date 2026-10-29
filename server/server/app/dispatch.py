@@ -24,6 +24,7 @@ import time
 from . import accounts
 from . import archipelago
 from . import concerts
+from . import problems
 from . import config
 from . import event_gallery
 from . import master_data
@@ -631,7 +632,11 @@ def handle_decoded(endpoint_path: str, payload: dict, presented_sid: bytes | Non
             # the scenario off.
             single_mode_team.CURRENT_ENDPOINT.set(endpoint)
             conditions.begin_request()
-            response = handler(payload) if handler is not None else _fallback_response(endpoint)
+            try:
+                response = handler(payload) if handler is not None else _fallback_response(endpoint)
+            except Exception as ex:
+                problems.record(endpoint, "crash", f"{type(ex).__name__}: {ex}")
+                raise
             custom_support.pin_career(endpoint, payload, response)
             # A one-shot condition guard (JP ポジティブ思考 / 幸運体質) spent
             # during this request is reported here, whichever handler spent it.
@@ -677,6 +682,8 @@ def handle_decoded(endpoint_path: str, payload: dict, presented_sid: bytes | Non
     result_code = ((response or {}).get("data_headers") or {}).get("result_code")
     if result_code not in (None, ResultCode.RESULT_CODE_OK):
         log.info("RESULT %s -> %s %s", endpoint, result_code, describe(result_code))
+        if problems.watched(endpoint):
+            problems.record(endpoint, "refused", f"result_code {result_code} {describe(result_code)}")
 
     # TEMP DEBUG: dump single_mode training-screen responses so we can diff the
     # exact response that crashes the client against a known-good capture.

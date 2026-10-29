@@ -1075,6 +1075,11 @@ def handle_start(payload: dict) -> dict:
     if start_chara and start_chara.get("card_id"):
         if reason := archipelago.start_refusal(viewer_id, start_chara.get("scenario_id")):
             log.warning("single_mode/start refused: viewer %s: %s", viewer_id, reason)
+            from .. import problems
+            name = archipelago.tables.SCENARIOS.get(int(start_chara.get("scenario_id") or 1), "this scenario")
+            problems.record("single_mode/start", "locked",
+                            f"{name} isn't unlocked in this seed yet: not a bug, start a career in an unlocked scenario "
+                            f"(the Tracker shows which) or wait for its Scenario item")
             return refuse()
         from . import training_challenge
         event_error = training_challenge.validate_start(full_state, start_chara)
@@ -8107,6 +8112,10 @@ def handle_ura_race_end(payload: dict) -> dict:
     data["race_add_reward_info"] = []
     # Never the seed's: null unless this race unlocked a song (see above).
     data["add_music"] = race_ctx.get("add_music")
+    # A race_end cached before the Climax song went quiet (concerts.on_race_end)
+    # would keep re-serving it on every retry, and the career stays stuck.
+    if (data["add_music"] or {}).get("music_id") in concerts.climax_song_ids():
+        data["add_music"] = None
     # The drops are banked into the account here (once per race, see
     # _credit_race_reward) and the summary reports what was applied.
     credited = {"add_item_list": [], "add_fcoin": 0}

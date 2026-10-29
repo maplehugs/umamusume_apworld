@@ -256,6 +256,8 @@ table.grid tbody tr:hover td { background: rgba(255, 255, 255, 0.025); }
 .ap-sec-title { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px 0; font-size: 12px;
   font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .ap-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.ap-problem { display: grid; gap: 6px; margin-bottom: 12px; padding: 12px 14px; border-radius: 12px;
+  background: color-mix(in srgb, var(--error) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--error) 45%, var(--border)); }
 .ap-first { display: grid; gap: 6px; margin-bottom: 12px; padding: 12px 14px; border-radius: 12px;
   background: color-mix(in srgb, var(--ok) 10%, var(--surface)); border: 1px solid color-mix(in srgb, var(--ok) 45%, var(--border)); }
 .ap-col { display: flex; flex-direction: column; gap: 8px; }

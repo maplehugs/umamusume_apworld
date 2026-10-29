@@ -11,7 +11,7 @@ import shutil
 import time
 from pathlib import Path
 
-from app import archipelago, master_data
+from app import archipelago, master_data, problems
 from app import state as state_store
 from app.archipelago import client, tables
 from app.handlers import single_mode_team
@@ -47,6 +47,7 @@ def get(viewer, args):
     vid = archipelago.target_viewer()
     # No account until the game logs in once: the panel asks for that first.
     out["account"] = bool(vid)
+    out["problems"] = problems.recent()
     out["game_address"] = "https://127.0.0.1:" + ("8444" if os.environ.get("UMA_REGION") == "jp" else "8443")
     full_state = state_store.get_state(vid) if vid else None
     if not full_state or archipelago.AP_KEY not in full_state:

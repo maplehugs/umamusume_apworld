@@ -34,6 +34,7 @@ export function apSec(title, body, extra = "") {
 function apPage(settings) {
   return `
     <div id="ap-first"></div>
+    <div id="ap-problems"></div>
     <div id="ap-awaken"></div>
     ${apSec("Connection", `<div class="ap-panel ap-col" id="ap-status"><span class="faint">Press "Check connection".</span></div>`,
       `<span class="grow"></span><a class="btn sm" href="https://uma.5maple.com/report" target="_blank" rel="noopener"
@@ -138,6 +139,7 @@ export const archipelagoWin = {
       last = sig;
       keepScroll(body.querySelector(".pane-scroll"), () => {
         renderFirstRun(r);
+        renderProblems(r);
         renderStatus(r);
         renderApTracker(r);
         renderApEffects(r);
@@ -154,6 +156,28 @@ export const archipelagoWin = {
           <code>${esc(r.game_address)}</code>. A new install makes its account on the first start; that one account plays the
           whole seed.</div>
         <div class="faint">Waiting for the game... this box goes away once it logs in.</div></div>`;
+    }
+
+    // The server hit a crash or refused a career request: say so and point at a report.
+    // The X hides what's shown until a newer problem comes.
+    function renderProblems(r) {
+      let seen = 0;
+      try { seen = Number(localStorage.getItem("apProblemsSeen") || 0); } catch (e) { /* storage blocked */ }
+      const list = (r.problems || []).filter((p) => p.time > seen);
+      const box = $("#ap-problems");
+      box.innerHTML = !list.length ? "" : `<div class="ap-problem">
+        <div class="row"><b>The server ran into a problem</b><span class="grow"></span>
+          <button class="wbtn ap-problem-x" title="Hide">${icon("close")}</button></div>
+        ${list.map((p) => `<div class="faint ap-small">${esc(new Date(p.time * 1000).toLocaleTimeString())} ·
+          ${esc(p.endpoint)}: ${esc(p.detail)}</div>`).join("")}
+        <div>If the game froze or showed an error, please report it with the logs, so it can be fixed:</div>
+        <div class="row"><a class="btn sm primary" href="https://uma.5maple.com/report" target="_blank" rel="noopener">Report a bug</a>
+          <a class="btn sm" href="/logs.zip" download="umaps-archipelago-logs.zip">Download logs</a></div></div>`;
+      const x = box.querySelector(".ap-problem-x");
+      if (x) x.onclick = () => {
+        try { localStorage.setItem("apProblemsSeen", String(Math.max(...list.map((p) => p.time)))); } catch (e) { /* storage blocked */ }
+        box.innerHTML = "";
+      };
     }
 
     function renderStatus(r) {

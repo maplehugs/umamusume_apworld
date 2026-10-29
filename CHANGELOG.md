@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.16.5
+- Fixed: Trackblazer froze on a white screen after the last Climax race (after
+  the concert prompt). The reply announced the Climax song, which the game
+  doesn't take there. A career already stuck there goes on after updating.
+- Every Concert Theater song is unlocked from the first login, so no career
+  reply ever announces one again (the same announcement also went out on the
+  URA, Unity Cup and Grand Live finals).
+- Panel: when the server crashes on a request or refuses a career or race
+  request, the Archipelago window shows it with Report a bug and Download logs.
+- Panel: starting a career in a scenario the seed hasn't unlocked yet says so
+  (the game only shows a generic error).
+
 ## 0.16.4
 - Panel: until the game has logged in once, the Archipelago window says the game
   server is running and what to do next (open the game with the redirect set to

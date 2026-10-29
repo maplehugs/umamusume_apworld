@@ -154,8 +154,17 @@ def on_race_end(full_state: dict, chara_info: dict, race_ctx: dict,
     end_committed guard) and cache the result for retries."""
     ids = race_won_songs(chara_info, race_ctx.get("program_id"), result_rank)
     if int((chara_info or {}).get("scenario_id") or 0) == 4 and _won_climax(full_state):
-        ids += [s["music_id"] for s in _songs("ts_climax")]
+        # Granted but NOT announced: add_music on the final Climax leg's race_end
+        # leaves the client on a white screen after the concert prompt (report #1,
+        # never sends race_out). No capture shows where the real server announces
+        # it; the song still lands in the theater.
+        for s in _songs("ts_climax"):
+            grant(full_state, s["music_id"])
     return _grant_first(full_state, ids)
+
+
+def climax_song_ids() -> set:
+    return {s["music_id"] for s in _songs("ts_climax")}
 
 
 def _won_climax(full_state: dict) -> bool:
@@ -238,6 +247,12 @@ def on_login(full_state: dict) -> bool:
        unlock model existed) are granted silently, so nobody has to re-read a
        story to get a song they are owed."""
     changed = False
+    # Archipelago: every song is owned from the first login. Songs aren't items
+    # here, and an owned song is never announced (add_music stays null), which
+    # is the reply shape that hung Trackblazer's last Climax leg.
+    for song in table():
+        if grant(full_state, song["music_id"]):
+            changed = True
     mailed = full_state.setdefault(DEFAULTS_MAILED_KEY, [])
     have = owned(full_state)
     from .handlers import presents
