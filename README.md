@@ -4,7 +4,7 @@ An [Archipelago](https://archipelago.gg) world for **Umamusume: Pretty Derby**,
 played on a private server that does the game side.
 
 **Website: [uma.5maple.com](https://uma.5maple.com)** (download, setup guide,
-YAML builder, bug reports) · **Trailer: [YouTube](https://youtu.be/7J25sqAMSLA)**
+YAML builder, bug reports) · **Trailer: [YouTube](https://youtu.be/2LHajuQtX-Y)**
 
 Everything you need is in this repo:
 
