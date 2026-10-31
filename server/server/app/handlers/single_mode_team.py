@@ -2277,6 +2277,23 @@ def _remember_display(full_state: dict, response: dict) -> None:
 # structural skeletons minus the team-only team_data_set. Untested end-to-end
 # against the live client -- flagged for validation.
 RACE_CTX_KEY = "active_race_ctx"
+# The last race_out served, for a retried one: the ctx is gone by then, and
+# running it again advanced the turn a second time.
+LAST_RACE_OUT_KEY = "last_race_out"
+
+
+def _remember_race_out(full_state: dict, response: dict, chara_info: dict) -> None:
+    full_state.pop(RACE_CTX_KEY, None)
+    full_state[LAST_RACE_OUT_KEY] = {"turn": chara_info.get("turn"),
+                                     "response": copy.deepcopy(response)}
+
+
+def _race_already_out(full_state: dict, career: dict, race_ctx: dict) -> bool:
+    """No race ctx, and the last race_out left the career on this very turn:
+    the request is a retry of a race that is over."""
+    last = full_state.get(LAST_RACE_OUT_KEY) or {}
+    return (not race_ctx and bool(last)
+            and last.get("turn") == ((career.get("data") or {}).get("chara_info") or {}).get("turn"))
 STYLE_CHOICE_KEY = "career_style_choice"  # the strategy the PLAYER picked on the
                                           # race screen (single_mode/change_running_style)
                                           # -- per-career, cleared on career start
@@ -8025,6 +8042,10 @@ def handle_ura_race_end(payload: dict) -> dict:
 
     if not career:
         return _no_career_refusal(viewer_id, "single_mode/race_end", full_state)
+    if _race_already_out(full_state, career, race_ctx):
+        log.warning("race_end after race_out on turn %s: refusing the retry rather "
+                    "than crediting a race that never ran", career["data"]["chara_info"].get("turn"))
+        return refuse()
 
     response = _load_ura_race_seed("race_end")
     data = response["data"]
@@ -8182,6 +8203,10 @@ def handle_ura_race_out(payload: dict) -> dict:
 
     if not career:
         return _no_career_refusal(viewer_id, "single_mode/race_out", full_state)
+    if _race_already_out(full_state, career, race_ctx):
+        log.info("race_out retried on turn %s: re-serving the last reply",
+                 career["data"]["chara_info"].get("turn"))
+        return copy.deepcopy(full_state[LAST_RACE_OUT_KEY]["response"])
 
     response = _load_ura_race_seed("race_out")
     data = response["data"]
@@ -8230,7 +8255,7 @@ def handle_ura_race_out(payload: dict) -> dict:
             career["data"]["chara_info"] = chara_info
             # Dropped like the normal race_out's: left behind, its
             # race_start_info made the next check_event a race hand-off.
-            full_state.pop(RACE_CTX_KEY, None)
+            _remember_race_out(full_state, response, chara_info)
             _remember_display(full_state, response)
             state_store.save_state(viewer_id, full_state)
             return response
@@ -8641,7 +8666,7 @@ def handle_ura_race_out(payload: dict) -> dict:
             data["home_info"] = copy.deepcopy(career_home)
         data["chara_info"] = chara_info
         career["data"]["chara_info"] = chara_info
-        full_state.pop(RACE_CTX_KEY, None)
+        _remember_race_out(full_state, response, chara_info)
 
     _remember_display(full_state, response)
     state_store.save_state(viewer_id, full_state)

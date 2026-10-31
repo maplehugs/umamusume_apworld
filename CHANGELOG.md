@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.7
+- Fixed: when the game resent the end of a race (a slow or lost reply), the
+  server advanced the turn a second time and you lost a turn. It now re-serves
+  the same reply. A resent race result after that no longer credits a second,
+  made-up win (1000 fans and an extra race in the history).
+
 ## 0.16.6
 - Fixed: a borrowed (friend) support card played at your own copy's level
   (limit break 0, level 1 when you don't own it) instead of the lender's MLB
