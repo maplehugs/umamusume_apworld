@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.6
+- Fixed: a borrowed (friend) support card played at your own copy's level
+  (limit break 0, level 1 when you don't own it) instead of the lender's MLB
+  copy. It now keeps the lender's level, at career start and in training: its
+  unique effect counted as zero before.
+
 ## 0.16.5
 - Fixed: Trackblazer froze on a white screen after the last Climax race (after
   the concert prompt). The reply announced the Climax song, which the game

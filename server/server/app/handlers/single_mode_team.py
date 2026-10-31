@@ -130,7 +130,10 @@ def _career_support_array(viewer_id, start_chara: dict) -> list[dict]:
             "owner_viewer_id": 0,
         })
     if friend:
-        o = owned.get(friend, {})
+        # The lender's copy, not the viewer's: a borrowed MLB SSR played at the
+        # viewer's own level (LB0 lv1 when unowned) was the "friend cards lose
+        # their level" report.
+        o = _lent_card(viewer_id, start_chara["friend_support_card_info"], friend)
         out.append({
             "position": len(out) + 1,
             "support_card_id": friend,
@@ -1152,6 +1155,22 @@ def handle_start(payload: dict) -> dict:
         state_store.save_state(viewer_id, full_state)
         return response
     return _seed_fresh_career(viewer_id, start_chara)
+
+
+def _lent_card(viewer_id, info: dict, support_card_id) -> dict:
+    """The borrowed card's {exp, limit_break_count}: the lender offering it on
+    this viewer's Borrow screen, else that card maxed (every lender lends MLB)."""
+    lenders = (state_store.get_state(viewer_id) or {}).get(FRIEND_SUPPORT_INJECT_KEY) or []
+    cards = [e.get("user_support_card") or {} for e in lenders]
+    for c in cards:
+        if str(c.get("viewer_id")) == str(info.get("viewer_id")) and c.get("support_card_id") == support_card_id:
+            return c
+    for c in cards:
+        if c.get("support_card_id") == support_card_id:
+            return c
+    from . import cards as card_handlers
+    cap = card_handlers._support_level_cap(support_card_id, 4)
+    return {"limit_break_count": 4, "exp": cap[1]} if cap else {}
 
 
 def _banned_deck_cards(start_chara: dict) -> set:
@@ -12163,11 +12182,16 @@ def _support_card_levels(full_state: dict) -> dict:
 
     JP has no support-card leveling: a card's level IS its limit break's cap
     (SSR 30/35/40/45/50), so it comes from limit_break_count there -- exp is
-    not a JP concept and a stored 0 must not read as level 1."""
+    not a JP concept and a stored 0 must not read as level 1.
+
+    The running career's deck goes last and wins: its borrowed card is the
+    lender's copy, which the viewer may own lower or not at all."""
+    deck = (((full_state.get(STATE_KEY) or {}).get("data") or {}).get("chara_info") or {}) \
+        .get("support_card_array") or []
     return {
         c["support_card_id"]: training_formula.card_level(
             c["support_card_id"], c.get("exp") or 0, c.get("limit_break_count"))
-        for c in full_state.get(collection.SUPPORT_CARD_KEY) or []
+        for c in [*(full_state.get(collection.SUPPORT_CARD_KEY) or []), *deck]
         if isinstance(c, dict) and c.get("support_card_id")
     }
 
