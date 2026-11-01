@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.16.8
+- Updating no longer loses your save: when you unzip a new release next to the
+  old one, the launcher offers to copy the save (and the Archipelago room
+  settings) from the older server folder.
+- Fixed: a game that already had an account (from an older server folder)
+  started the real tutorial on a new server folder and hung on an endless
+  loading screen at its race. That account is now made with the tutorial
+  skipped.
+
 ## 0.16.7
 - Fixed: when the game resent the end of a race (a slow or lost reply), the
   server advanced the turn a second time and you lost a turn. It now re-serves

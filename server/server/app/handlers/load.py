@@ -254,9 +254,16 @@ def apply_derived_user_info(full_state: dict, user_info: dict) -> dict:
 
 def handle_load_index(payload: dict) -> dict:
     viewer_id = payload["viewer_id"]
-    full_state = state_store.get_state(viewer_id) or {}
+    stored = state_store.get_state(viewer_id)
+    full_state = stored or {}
 
     blob = get_or_seed_blob(full_state, viewer_id)
+    if stored is None:
+        # A client that signed up on another server folder (a new release
+        # unzipped next to the old one): it never sends tutorial/skip, and the
+        # seed's tutorial_step 0 put it in the real tutorial, whose race hangs.
+        blob.setdefault("data", {}).setdefault("user_info", {})["tutorial_step"] = 1000
+        log.info("load/index: unknown account %s, made here with the tutorial skipped", viewer_id)
     # An independent copy of the blob, re-parsed from its stored JSON text
     # rather than copy.deepcopy'd off the live object. deepcopy has to walk
     # every one of the ~422,000 Python objects in this 3.1 MB structure (137 ms

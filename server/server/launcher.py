@@ -132,6 +132,42 @@ def in_venv() -> bool:
 
 # --- 2. certificates -----------------------------------------------------------
 
+def carry_save() -> None:
+    """A new release unzipped next to the old one starts with no save: offer the
+    newest sibling folder's. Copies what the old data/ has and the new one lacks
+    (the saves; shipped files are already here) and the Archipelago connection."""
+    data = SERVER / "data"
+    if (data / "state.sqlite3").exists():
+        return
+    olds = []
+    for d in ROOT.parent.iterdir():
+        try:
+            if d != ROOT and (d / "server" / "data" / "state.sqlite3").is_file():
+                olds.append(d / "server")
+        except OSError:  # a folder we may not read
+            pass
+    if not olds:
+        return
+    old = max(olds, key=lambda s: (s / "data" / "state.sqlite3").stat().st_mtime)
+    if not ask(f"Copy your save from {old.parent} (the older server folder)?"):
+        return
+    for src in (old / "data").rglob("*"):
+        dst = data / src.relative_to(old / "data")
+        if src.is_file() and not dst.exists():
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+    try:
+        old_cfg = json.loads((old / "client_config.json").read_text(encoding="utf-8"))
+        cfg_path = SERVER / "client_config.json"
+        cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+        ap = {k: v for k, v in old_cfg.items() if k.startswith("archipelago_") and k not in cfg}
+        if ap:
+            cfg_path.write_text(json.dumps({**cfg, **ap}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    except (OSError, ValueError):
+        say("  (could not read the old client_config.json: enter the Archipelago room again in the panel)")
+    say(f"  copied the save from {old.parent.name}")
+
+
 def ensure_cert(name: str) -> tuple[Path, Path]:
     step("TLS certificate")
     certs = SERVER / "certs"
@@ -486,6 +522,7 @@ def main() -> None:
         rest = [a for a in sys.argv[1:] if a != "--reset-venv"]
         sys.exit(subprocess.call([str(VENV_PY), __file__, *rest], env=env))
 
+    carry_save()
     key, cert = ensure_cert(info["cert"])
     ensure_engines()
     setup_game(args.region, info)
