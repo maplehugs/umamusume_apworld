@@ -678,13 +678,12 @@ def _overlay_live_data(response: dict, viewer_id, full_state: dict | None = None
     if isinstance(legend, dict):
         legend["state"] = 0
         legend["trained_chara_id"] = 0
-        _today = drs.get("legend") or {}
-        _ever = {int(x) for x in drs["legend_cleared_ever"]}
-        legend["daily_legend_race_record"] = [
-            {"daily_legend_race_id": rid,
-             "is_played": 1 if _today.get(str(rid), {}).get("is_played") else 0,
-             "is_cleared": 1 if (_today.get(str(rid), {}).get("is_cleared") or rid in _ever) else 0}
-            for rid in sorted({int(k) for k in _today} | _ever)]
+        # daily_legend_race_record is a MAP on the wire (no _array suffix): the
+        # real server sends an empty PHP map as [] and the client only tolerates
+        # that. A populated LIST here breaks LoginResponse deserialization
+        # ("code:145 format:fixarray") and bricks every login after the first
+        # daily legend race. The per-race records live in daily_legend_race/index.
+        legend["daily_legend_race_record"] = []
         # new_flag is "there is something new here", not a constant. This
         # server runs no daily-legend rotation, so there is never anything new
         # to advertise -- 0, not the fixture's permanent 1. (Flipping it to

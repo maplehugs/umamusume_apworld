@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.9
+- Fixed: after playing a daily Legend Race, every login failed with
+  "Could not receive parameters from server" until the server was fixed.
+  (`daily_legend_race_record` is a map on the wire; serving it as a populated
+  list broke the client's login response parsing.)
+
 ## 0.16.8
 - Updating no longer loses your save: when you unzip a new release next to the
   old one, the launcher offers to copy the save (and the Archipelago room
