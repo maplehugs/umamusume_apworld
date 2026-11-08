@@ -571,6 +571,13 @@ def _overlay_live_data(response: dict, viewer_id, full_state: dict | None = None
     for data_key, value in collection.get_or_seed_many(viewer_id, _seeds).items():
         data[data_key] = copy.deepcopy(value)
 
+    # Every trophy, so the race skip button is there from the first career
+    # (see user_profile.login_trophy_info_array). Lazy import: user_profile
+    # imports this module.
+    from . import user_profile
+    data["login_trophy_info_array"] = user_profile.login_trophy_info_array(
+        data.get("chara_list"))
+
     # TP/RP regenerate against the wall clock, so the pair seeded above is a
     # snapshot of whenever it was last written -- possibly days ago, and (on a
     # brand-new account) a real player's frozen mid-refill values straight out

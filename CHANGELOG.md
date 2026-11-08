@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.10
+- Every trophy is now granted on login, on new accounts and existing saves, so
+  the race skip button is there in career from the start (the client only
+  offers it for races whose trophy you hold). The trophy room shows them too.
+
 ## 0.16.9
 - Fixed: after playing a daily Legend Race, every login failed with
   "Could not receive parameters from server" until the server was fixed.

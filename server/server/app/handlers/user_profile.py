@@ -63,6 +63,9 @@ LIVE from the veteran roster's race_result_list (result_rank 1 ->
 single_mode_program.race_instance_id -> race_trophy) + anything other
 systems add via grant_trophy(). Roster-derived wins are recomputed per call,
 never persisted, so they can't double-count.
+On top of that every trophy is granted to every owned chara (login and room
+alike, see login_trophy_info_array): the client gates the career race skip
+button on holding the race's trophy.
 
 Honors [mdb]: master.mdb honor_data (533 rows; names = text_data category 65,
 descriptions = 66). Earned set lives in "honor_state", seeded from the load
@@ -258,19 +261,57 @@ def _roster_wins(roster: list) -> dict:
     return wins
 
 
-@registry.endpoint("user/get_trophy_info")
-def handle_get_trophy_info(payload: dict) -> dict:
-    viewer_id = payload["viewer_id"]
-    roster = trained_chara._get_or_seed_roster(viewer_id)
-    full_state = state_store.get_state(viewer_id) or {}
-    st = _trophy_state(full_state, viewer_id)
+_all_trophy_ids_cache: list = []
 
+
+def all_trophy_ids() -> list:
+    """Every trophy_id in master race_trophy (memoized)."""
+    if not _all_trophy_ids_cache:
+        _all_trophy_ids_cache.extend(r["trophy_id"] for r in master_data.query(
+            "SELECT DISTINCT trophy_id FROM race_trophy ORDER BY trophy_id"))
+    return _all_trophy_ids_cache
+
+
+def owned_chara_ids(chara_list) -> list:
+    return sorted({int(c["chara_id"]) for c in chara_list or [] if c.get("chara_id")})
+
+
+def login_trophy_info_array(chara_list) -> list:
+    """load/index's login_trophy_info_array: EVERY trophy, held by every owned
+    chara. The client only offers the race skip button for races it sees a
+    trophy for, and this login list is where it learns them (requested by
+    players: skip shouldn't need a first win on a fresh private-server save)."""
+    charas = owned_chara_ids(chara_list)
+    return [{"trophy_id": t, "chara_id_array": charas} for t in all_trophy_ids()]
+
+
+def _merged_trophies(full_state: dict, viewer_id, st: dict, roster: list) -> dict:
+    """Trophy room contents: stored wins + wins recomputed off the live roster
+    + every other trophy granted to every owned chara at 1 win (see
+    login_trophy_info_array), so the shelf agrees with what login told the client."""
     merged = copy.deepcopy(st["trophies"])
     for tid, win in _roster_wins(roster).items():
         entry = merged.setdefault(
             tid, {"create_time": win["create_time"], "charas": {}})
         for cid, n in win["charas"].items():
             entry["charas"][cid] = (entry["charas"].get(cid) or 0) + n
+    chara_list = (full_state.get(collection.DYNAMIC_CONTAINERS["chara_list"])
+                  or _load_data(full_state, viewer_id).get("chara_list"))
+    charas = owned_chara_ids(chara_list)
+    for tid in all_trophy_ids():
+        entry = merged.setdefault(str(tid), {"create_time": _now(), "charas": {}})
+        for c in charas:
+            entry["charas"].setdefault(str(c), 1)
+    return merged
+
+
+@registry.endpoint("user/get_trophy_info")
+def handle_get_trophy_info(payload: dict) -> dict:
+    viewer_id = payload["viewer_id"]
+    roster = trained_chara._get_or_seed_roster(viewer_id)
+    full_state = state_store.get_state(viewer_id) or {}
+    st = _trophy_state(full_state, viewer_id)
+    merged = _merged_trophies(full_state, viewer_id, st, roster)
 
     array = []
     for tid in sorted(merged, key=int):
@@ -1401,12 +1442,7 @@ def handle_get_trophy_detail(payload: dict) -> dict:
     roster = trained_chara._get_or_seed_roster(viewer_id)
     full_state = state_store.get_state(viewer_id) or {}
     st = _trophy_state(full_state, viewer_id)
-    merged = copy.deepcopy(st["trophies"])
-    for tid, win in _roster_wins(roster).items():
-        entry = merged.setdefault(tid, {"create_time": win["create_time"],
-                                        "charas": {}})
-        for cid, n in win["charas"].items():
-            entry["charas"][cid] = (entry["charas"].get(cid) or 0) + n
+    merged = _merged_trophies(full_state, viewer_id, st, roster)
 
     entry = merged.get(str(trophy_id))
     if entry is None:
