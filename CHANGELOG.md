@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- The panel's Archipelago > Game setup **Fix** now installs Hachimi Edge (pinned
+  v0.33.1, checked against its SHA-256; your game's `cri_mana_vpx.dll` is kept as
+  `cri_mana_vpx.dll.orig`) and downloads `hachimi_redirect.dll` (also checked against a pinned SHA-256) itself, instead of
+  only saying "install Hachimi". An existing Hachimi is never overwritten. When the
+  game folder can't be found it says to start the launcher with `--game-dir`.
+
 ## 0.16.10
 - Every trophy is now granted on login, on new accounts and existing saves, so
   the race skip button is there in career from the start (the client only

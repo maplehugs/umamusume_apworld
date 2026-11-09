@@ -411,6 +411,8 @@ def setup_game(region: str, info: dict) -> None:
     if game:
         say(f"  found {game}")
         os.environ["UMA_HACHIMI_DIR"] = str(game / "hachimi")  # for the server, wherever master.mdb is
+        if not (game / "hachimi").is_dir():
+            say("  Hachimi isn't installed yet: when the panel opens, go to Archipelago > Game setup and press Fix.")
     else:
         say(f"  {info['install']} not found in any Steam library (--game-dir sets the folder with the .exe).")
     mdb = choose_mdb(region, game and game / info["data"] / "Persistent" / "master" / "master.mdb")

@@ -40,7 +40,8 @@ panel's **Download logs** button).
    double-click `start-global.bat` (Windows). It needs
    Python 3.11+ and sets up the rest the first time. Leave its window open; the
    web panel opens at <http://localhost:8189>.
-2. **Point the game at it**: install Hachimi Edge, UmamusumePS's
+2. **Point the game at it**: easiest is the panel's Archipelago > Game setup > **Fix** button, which installs everything
+   ([docs/setup.md](docs/setup.md#2-point-the-game-at-the-server)); by hand: install Hachimi Edge, UmamusumePS's
    `hachimi_redirect.dll` plugin **and `umapd_archipelago.dll` from the
    [releases](../../releases/latest) (required)**, then set the redirect server to
    `https://127.0.0.1:8443` in the Hachimi menu

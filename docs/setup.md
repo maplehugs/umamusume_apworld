@@ -6,7 +6,7 @@
   newer, only on the PC that **generates** the seed.
 - On the PC that **plays**: Umamusume: Pretty Derby (Global, Steam), started
   once so its `master.mdb` exists, [Hachimi Edge](https://github.com/kairusds/Hachimi-Edge),
-  Python 3.11 or newer, and the server: the `umaps-archipelago-server-*` package
+  Python 3.11 or newer (from python.org: tick **Add python.exe to PATH** on the first installer screen), and the server: the `umaps-archipelago-server-*` package
   for your OS from the [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest),
   or this repo's `server/` folder.
 
@@ -24,6 +24,12 @@ the race courses from your game install. Keep the window open while you play.
 When it's up, the web panel opens at <http://localhost:8189>.
 
 ## 2. Point the game at the server
+
+**Easiest:** once the server is running, open the panel's Archipelago page > **Game setup** and press
+**Fix** (close the game first). It installs Hachimi Edge, `hachimi_redirect.dll` and `umapd_archipelago.dll`
+for you. Then start the game once (wait for the title screen, close it), press **Check files** and **Fix** again so
+`config.json` lists the plugins, and go on to step 5 below (the in-game Hachimi menu). Windows Defender may delete
+these mod DLLs: if a row stays red, add the game folder to its exclusions and press Fix again. The manual steps:
 
 1. Install Hachimi Edge and start the game once, so `<game>/hachimi/` exists.
 2. Download `hachimi_redirect.dll` from [UmamusumePS's plugin release](https://github.com/systemless10/UmamusumePS/releases/tag/plugin)
