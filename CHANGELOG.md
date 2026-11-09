@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.16.11
 - The panel's Archipelago > Game setup **Fix** now installs Hachimi Edge (pinned
   v0.33.1, checked against its SHA-256; your game's `cri_mana_vpx.dll` is kept as
   `cri_mana_vpx.dll.orig`) and downloads `hachimi_redirect.dll` (also checked against a pinned SHA-256) itself, instead of
