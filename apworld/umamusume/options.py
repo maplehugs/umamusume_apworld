@@ -160,6 +160,15 @@ class MaxedSupports(Toggle):
     display_name = "Maxed Support Cards"
 
 
+class OverflowToPool(Toggle):
+    """What to do with items that do not fit in this slot's checks. Off (default):
+    they become start inventory, so any YAML generates alone. On: they all go in
+    the item pool and land in other players' checks; generation fails if the rest
+    of the multiworld has no free checks for them."""
+
+    display_name = "Overflow Items To Multiworld"
+
+
 class DuplicateSupports(Toggle):
     """SSR Tickets can give a card you already have (good cards are still more
     likely). The copy limit-breaks it like in the game (Enhance > Support Cards >
@@ -304,6 +313,7 @@ class UmaOptions(PerGameCommonOptions):
     trainee_count: TraineeCount
     support_count: SupportCount
     maxed_supports: MaxedSupports
+    overflow_to_pool: OverflowToPool
     duplicate_supports: DuplicateSupports
     uncap_crystals: UncapCrystals
     trainee_awakenings: TraineeAwakenings

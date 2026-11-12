@@ -345,12 +345,13 @@ class UmamusumeWorld(World):
         # Excluded checks (team_trials_filler_only) only ever take filler.
         filler_only = sum(loc.progress_type == LocationProgressType.EXCLUDED for loc in unfilled)
         slots = len(unfilled) - filler_only
-        names, self.start_items = names[:slots], names[slots:]
+        cut = len(names) if o.overflow_to_pool else slots  # on: nothing becomes start inventory
+        names, self.start_items = names[:cut], names[cut:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
         # Room left: up to half as many more crystals (random), then half more SSR
         # cards (still even by stat), half filler; the excluded checks get filler.
-        room = slots - len(names)
+        room = max(0, slots - len(names))
         more = min(room, self.random.randint(0, self.crystals() // 2))
         names += [CRYSTAL] * more
         room -= more

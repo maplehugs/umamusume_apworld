@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.12
+- New option `overflow_to_pool` (default false, nothing changes). On, the items
+  that do not fit in the slot's own checks go into the item pool and land in
+  other players' checks instead of becoming start inventory. Useful in a big
+  multiworld; generation fails if the rest of it has no free checks for them.
+  Only the APWorld changes: the server and DLL are the same as 0.16.11.
+
 ## 0.16.11
 - The panel's Archipelago > Game setup **Fix** now installs Hachimi Edge (pinned
   v0.33.1, checked against its SHA-256; your game's `cri_mana_vpx.dll` is kept as
