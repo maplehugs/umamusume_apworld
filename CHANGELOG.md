@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.15
+- `overflow_to_pool`: the items that no check can take now move to start inventory
+  in `fill_hook`, with the exact free checks of the whole multiworld. In 0.16.14 a
+  world that locks checks later in `pre_fill` could still leave 2 items of other
+  players unplaced (they were dropped with a warning). APWorld only.
+
 ## 0.16.14
 - `overflow_to_pool` is now on by default: the items that do not fit in a slot's
   own checks are sent to other players, and only the ones the whole multiworld

@@ -2,6 +2,7 @@
 which applies the items and reports the checks. tables.py holds
 every id; the server mirrors it, so both sides agree on every id."""
 
+import logging
 from BaseClasses import Item, ItemClassification as IC, Location, LocationProgressType, Region
 from worlds.AutoWorld import World
 
@@ -349,7 +350,7 @@ class UmamusumeWorld(World):
         names, self.start_items = names[:cut], names[cut:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
-        # overflow_to_pool: the names past our checks, least wanted last; pre_fill
+        # overflow_to_pool: the names past our checks, least wanted last; fill_hook
         # takes back to start inventory whatever the whole multiworld has no check for.
         self.overflow = names[slots:] if o.overflow_to_pool else []
         # Room left: up to half as many more crystals (random), then half more SSR
@@ -364,14 +365,24 @@ class UmamusumeWorld(World):
         names += [self.get_filler_item_name() for _ in range(room - len(extra) + filler_only)]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
-    def pre_fill(self) -> None:
-        """Every world has finished its items (after all generate_basic): the ones of ours
-        that the multiworld has no free check for become start inventory, the rest stay."""
-        mw = self.multiworld
-        take = min(max(0, len(mw.itempool) - len(mw.get_unfilled_locations())), len(self.overflow))
+    def fill_hook(self, progitempool, usefulitempool, filleritempool, fill_locations) -> None:
+        """Last look before the fill, with the exact free checks of every world: the
+        overflow items that no check can take become start inventory, the rest stay."""
+        pools = (progitempool, usefulitempool, filleritempool)
+        total = sum(map(len, pools))
+        take = min(max(0, total - len(fill_locations)), len(self.overflow))
+        if self.overflow:
+            logging.info(f"{self.player_name}: {len(self.overflow)} items do not fit in its checks; "
+                         f"the multiworld has {len(fill_locations)} free checks for {total} items, "
+                         f"so {len(self.overflow) - take} go to other players and {take} to start inventory")
         for n in self.overflow[len(self.overflow) - take:]:
-            mw.itempool.remove(self.create_item(n))
-            mw.push_precollected(self.create_item(n))
+            item = self.create_item(n)
+            pool = next((p for p in pools if item in p), None)
+            if pool is None:  # already placed (early item): leave it
+                continue
+            pool.remove(item)
+            self.multiworld.itempool.remove(item)
+            self.multiworld.push_precollected(item)
             self.start_items.append(n)
 
     def fill_slot_data(self) -> dict:
