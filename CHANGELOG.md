@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.17.0
+- New options `fan_check_step` and `fan_check_max`: a fan check every N fans up
+  to M (default every 250k up to 3M, as before). 100000 and 5000000 give 50 fan
+  checks instead of 12, so big YAMLs have room for their items. Needs the new
+  server too (it reads the seed's fan checks from slot data); older seeds keep
+  working.
+
 ## 0.16.15
 - `overflow_to_pool`: the items that no check can take now move to start inventory
   in `fill_hook`, with the exact free checks of the whole multiworld. In 0.16.14 a

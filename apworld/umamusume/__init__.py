@@ -21,7 +21,7 @@ LOCATION_GROUPS = {
     "Scenario ranks": {T.rank_location(s, tier) for s in T.SCENARIOS for tier, _ in T.RANK_TIERS},
     "Global ranks": {T.global_rank_location(tier) for tier, _ in T.GLOBAL_RANKS},
     "Different races": {T.unique_races_location(n) for n in T.UNIQUE_RACE_MILESTONES},
-    "Fans": {T.fans_location(n) for n in T.FAN_MILESTONES},
+    "Fans": {T.fans_location(n) for n in range(T.FAN_UNIT, T.FAN_LIMIT + 1, T.FAN_UNIT)},
     "Legend Race": {T.legend_location(tier) for tier, *_ in T.LEGEND_LADDER},
     "Team Trials": {T.team_trials_location(n) for n in range(1, T.TEAM_TRIALS_CHECKS + 1)},
     "Trainees": {T.trainee_location(c) for c in T.TRAINEES},
@@ -193,6 +193,9 @@ class UmamusumeWorld(World):
             + max(self.scenario_bonus(sid, cards, crystals) for sid in ([scenario] if scenario else tables.SCENARIOS))
         )
 
+    def fans(self) -> tuple:
+        return tables.fan_milestones(self.options.fan_check_step.value, self.options.fan_check_max.value)
+
     def crystals(self) -> int:
         return 0 if self.options.maxed_supports else self.options.uncap_crystals.value
 
@@ -249,7 +252,7 @@ class UmamusumeWorld(World):
                 add(tables.legend_location(tier),
                     lambda s, need=need, i=i: self.reaches(s, need) and self.legend_ok(s, i))
         if o.fan_checks:  # ~250k fans per career
-            for n in tables.FAN_MILESTONES:
+            for n in self.fans():
                 add(tables.fans_location(n), lambda s, n=n: self.reaches(s, tables.fans_logic(n)))
         # One race won per check, in the multiworld like any other; with
         # team_trials_roulette, our own filler instead (team_trials_trap_percentage
@@ -409,4 +412,5 @@ class UmamusumeWorld(World):
             "deck_needs": True,  # the tracker applies tables.DECK_NEEDS and LEGEND_NEEDS
             "awakenings": self.awakenings(),
             "duplicate_supports": bool(o.duplicate_supports),
+            "fan_milestones": list(self.fans()) if o.fan_checks else [],
         }

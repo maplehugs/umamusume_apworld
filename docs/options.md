@@ -41,7 +41,9 @@ Turn whole groups off to make a shorter seed:
 | `global_rank_ladder` | on | 7: rank B+, A+, S+, SS+, UG1, UG2, UG3 in any scenario |
 | `unique_race_checks` | on | 15: win 5, 10, 15 ... 75 different races |
 | `legend_ladder` | on | 10: beat the C, C+, B, B+, A, A+, S, S+, SS and SS+ rivals in Legend Race, in turn (free entries on the Archipelago save) |
-| `fan_checks` | on | 12: reach 250k, 500k, 750k ... 3M fans over all your careers (~250k per career) |
+| `fan_checks` | on | Reach N fans over all your careers (~250k per career): every `fan_check_step` up to `fan_check_max` (default 250k to 3M = 12 checks) |
+| `fan_check_step` | **250000** | Fans between two fan checks (rounded down to a multiple of 50000). Smaller = more checks. |
+| `fan_check_max` | **3000000** | The last fan check (up to 10000000). 100000 and 5000000 give 50 fan checks; a career brings ~250k fans. |
 | `team_trials_checks` | 50 (0-100) | win your 1st, 2nd... Team Trials race (each match has 5; a lost match's wins count too); 0 turns Team Trials checks off. They hold multiworld items like any other check (or your own filler with `team_trials_roulette`). Adds up to 3 Progressive RP Recovery items. |
 | `team_trials_filler_only` | **true** | Team Trials checks hold only filler and traps from the multiworld, never an item anyone needs (a match against an even team is close to a coin flip). false: they can hold anything. |
 | `team_trials_roulette` | **false** | true: Team Trials checks hold your own good filler and traps instead of multiworld items (never progression). |

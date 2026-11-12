@@ -600,7 +600,7 @@ def on_career_finished(full_state: dict, chara_info: dict | None, record: dict |
     if reached_end and chara_info.get("card_id") in tables.TRAINEES:
         _check(st, tables.trainee_location(chara_info["card_id"]))
     st["fans"] = st.get("fans", 0) + int(chara_info.get("fans") or 0)
-    for n in tables.FAN_MILESTONES:
+    for n in st["slot_data"].get("fan_milestones") or tables.FAN_MILESTONES:  # older seeds: the default
         if st["fans"] >= n:
             _check(st, tables.fans_location(n))
     kind = st["slot_data"].get("goal", "rank_score")
@@ -710,7 +710,8 @@ def tracker(full_state: dict) -> list:
     group("Rank ladder", [(tables.global_rank_location(t), reaches(sc)) for t, sc in tables.GLOBAL_RANKS])
     group("Different races",
           [(tables.unique_races_location(n), reaches(9000 + 100 * n)) for n in tables.UNIQUE_RACE_MILESTONES])
-    group("Fans", [(tables.fans_location(n), reaches(tables.fans_logic(n))) for n in tables.FAN_MILESTONES])
+    group("Fans", [(tables.fans_location(n), reaches(tables.fans_logic(n)))
+                   for n in st["slot_data"].get("fan_milestones") or tables.FAN_MILESTONES])
     group("Team Trials", [(tables.team_trials_location(n), reaches(11000 + 300 * min(n // 3, 10))) for n in range(1, tables.TEAM_TRIALS_CHECKS + 1)])
     group("Legend Race", [(tables.legend_location(t), reaches(tables.LEGEND_RANK_SCORE[rank]) and legend_ok(st, i))
                           for i, (t, rank, _row, _stats) in enumerate(tables.LEGEND_LADDER)])

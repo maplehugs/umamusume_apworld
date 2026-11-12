@@ -124,10 +124,29 @@ class TraineeAwakenings(NamedRange):
 
 
 class FanChecks(DefaultOnToggle):
-    """Checks for fans summed over every finished career, every 250k up to 3M
-    (12; a career brings ~250k)."""
+    """Checks for fans summed over every finished career, every fan_check_step up to
+    fan_check_max (default every 250k up to 3M = 12; a career brings ~250k)."""
 
     display_name = "Fan Checks"
+
+
+class FanCheckStep(Range):
+    """Fans between two fan checks (rounded down to a multiple of 50000). Smaller =
+    more checks: 100000 up to 5000000 is 50."""
+
+    display_name = "Fan Check Step"
+    range_start = 50_000
+    range_end = 1_000_000
+    default = 250_000
+
+
+class FanCheckMax(Range):
+    """The last fan check. A career brings ~250k fans, so 5000000 is ~20 careers."""
+
+    display_name = "Fan Check Max"
+    range_start = 250_000
+    range_end = 10_000_000
+    default = 3_000_000
 
 
 class TraineeCount(Range):
@@ -329,6 +348,8 @@ class UmaOptions(PerGameCommonOptions):
     team_trials_roulette: TeamTrialsRoulette
     team_trials_trap_percentage: TeamTrialsTrapPercentage
     fan_checks: FanChecks
+    fan_check_step: FanCheckStep
+    fan_check_max: FanCheckMax
     trap_percentage: TrapPercentage
     trap_cap: TrapCap
     spicy_traps: SpicyTraps

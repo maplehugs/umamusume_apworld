@@ -10,7 +10,7 @@ GAME = "Umamusume Pretty Derby"
 
 # The apworld release these tables ship with (the server's Archipelago mod and the
 # world are released together: a newer apworld needs the matching server).
-APWORLD_VERSION = "0.16.8"
+APWORLD_VERSION = "0.17.0"
 APWORLD_REPO = "maplehugs/umamusume_apworld"
 
 SCENARIOS = {1: "URA Finale", 2: "Unity Cup", 3: "Grand Live", 4: "Trackblazer"}
@@ -498,7 +498,10 @@ GLOBAL_RANKS = (
 # "Win N different races" across all careers (any race, distinct race ids).
 UNIQUE_RACE_MILESTONES = tuple(range(5, 80, 5))  # 5, 10 ... 75
 # Fans summed over every finished career on the save (~250k per career).
-FAN_MILESTONES = tuple(range(250_000, 3_000_001, 250_000))  # every 250k to 3M
+FAN_MILESTONES = tuple(range(250_000, 3_000_001, 250_000))  # the default: every 250k to 3M
+# fan_check_step/fan_check_max pick any multiple of FAN_UNIT up to FAN_LIMIT.
+FAN_UNIT = 50_000
+FAN_LIMIT = 10_000_000
 # Legend Race rival ladder: (tier, single_mode_rank id, legend_race row, boss stats
 # speed/stamina/power/guts/wit). One rival per tier, each a real legend race row
 # (its own boss, longer each step); beating a tier is a check and opens the next.
@@ -626,7 +629,8 @@ RANK_LOCATION_BASE = 300  # + scenario * 10 + tier index
 UNIQUE_RACES_LOCATION_BASE = 400  # + index in UNIQUE_RACE_MILESTONES
 GLOBAL_RANK_LOCATION_BASE = 450  # + index in GLOBAL_RANKS
 TEAM_TRIALS_LOCATION_BASE = 600  # + races won - 1
-FAN_LOCATION_BASE = 700  # + index in FAN_MILESTONES
+FAN_LOCATION_BASE = 700  # + index in FAN_MILESTONES (kept: older seeds use these ids)
+FAN_EXTRA_LOCATION_BASE = 10_000  # + fans // FAN_UNIT, for the other milestones
 LEGEND_LOCATION_BASE = 500  # + index in LEGEND_LADDER
 G1_SCENARIO_LOCATION_BASE = 2000  # + scenario * 100 + index in G1_RACES
 TRAINEE_LOCATION_BASE = 1_000_000  # + card_id
@@ -664,6 +668,18 @@ def g1_scenario_location(name: str, scenario_id: int) -> str:
     return f"Win {name} in {SCENARIOS[scenario_id]}"
 
 
+def fan_milestones(step: int, top: int) -> tuple:
+    """The fan checks of a seed: every step (rounded down to FAN_UNIT) up to top."""
+    step = max(FAN_UNIT, step // FAN_UNIT * FAN_UNIT)
+    return tuple(range(step, min(top, FAN_LIMIT) + 1, step))
+
+
+def fans_location_id(fans: int) -> int:
+    if fans in FAN_MILESTONES:
+        return FAN_LOCATION_BASE + FAN_MILESTONES.index(fans)
+    return FAN_EXTRA_LOCATION_BASE + fans // FAN_UNIT
+
+
 def fans_logic(fans: int) -> int:
     """The rank score logic expects before a fan milestone (~250k per career)."""
     return 9000 + fans // 1500
@@ -691,8 +707,8 @@ def location_name_to_id() -> dict:
         table[legend_location(tier)] = LEGEND_LOCATION_BASE + i
     for n in range(1, TEAM_TRIALS_CHECKS + 1):
         table[team_trials_location(n)] = TEAM_TRIALS_LOCATION_BASE + n - 1
-    for i, n in enumerate(FAN_MILESTONES):
-        table[fans_location(n)] = FAN_LOCATION_BASE + i
+    for n in range(FAN_UNIT, FAN_LIMIT + 1, FAN_UNIT):
+        table[fans_location(n)] = fans_location_id(n)
     for sid in SCENARIOS:
         for i, n in enumerate(G1_RACES):
             table[g1_scenario_location(n, sid)] = G1_SCENARIO_LOCATION_BASE + sid * 100 + i
