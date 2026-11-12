@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.14
+- `overflow_to_pool` is now on by default: the items that do not fit in a slot's
+  own checks are sent to other players, and only the ones the whole multiworld
+  has no free check for become start inventory. Set it to false for the old
+  behaviour (all of them start inventory). The fallback now runs in `pre_fill`,
+  after every world has finished its items: in 0.16.13 a room could still end with
+  2 items unplaced. APWorld only.
+
 ## 0.16.13
 - `overflow_to_pool` no longer fails when the multiworld has no room: the items
   that no check can take (a solo seed, a small room) go to start inventory and

@@ -25,7 +25,7 @@ brackets.
 | `trainee_count` | 0-103 [**15**] | Trainees shuffled in. Each one adds a "Finish a career with ..." check. |
 | `support_count` | 0-122 [**30**] | SSR support cards at least, dealt evenly by stat (30 = 6 of each; Friend/Group only past 100). Spare checks deal more: 1 card per 2 (51 with the defaults, every SSR at 358 checks). |
 | `maxed_supports` | **false** | true: support cards arrive maxed (limit break 4, top level) and there are no crystals. false: they arrive at limit break 0; Rainbow Uncap Crystals uncap them, and the Archipelago save has Support Pt and Monies to the cap, so leveling is free. |
-| `overflow_to_pool` | **false** | false: items that do not fit in this slot's checks become start inventory. true: they go in the item pool and land in other players' checks; whatever the whole multiworld has no free check for (a solo seed, a small room) still becomes start inventory, so it always generates. |
+| `overflow_to_pool` | **true** | true: items that do not fit in this slot's checks go in the item pool and land in other players' checks; whatever the whole multiworld has no free check for (a solo seed, a small room) still becomes start inventory, so it always generates. false: they all become start inventory. |
 | `uncap_crystals` | 0-200 [**24**] | Rainbow Uncap Crystals at least (4 max one SSR: 24 = a deck of 6). Spare checks add up to half as many more at random. |
 
 ## Checks

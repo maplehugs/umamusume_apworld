@@ -349,7 +349,7 @@ class UmamusumeWorld(World):
         names, self.start_items = names[:cut], names[cut:]
         for n in self.start_items:
             self.multiworld.push_precollected(self.create_item(n))
-        # overflow_to_pool: the names past our checks, least wanted last; generate_basic
+        # overflow_to_pool: the names past our checks, least wanted last; pre_fill
         # takes back to start inventory whatever the whole multiworld has no check for.
         self.overflow = names[slots:] if o.overflow_to_pool else []
         # Room left: up to half as many more crystals (random), then half more SSR
@@ -364,9 +364,9 @@ class UmamusumeWorld(World):
         names += [self.get_filler_item_name() for _ in range(room - len(extra) + filler_only)]
         self.multiworld.itempool += [self.create_item(n) for n in names]
 
-    def generate_basic(self) -> None:
-        """Every world has made its items: the ones of ours that the multiworld has no
-        free check for (a solo seed, a small room) become start inventory, the rest stay."""
+    def pre_fill(self) -> None:
+        """Every world has finished its items (after all generate_basic): the ones of ours
+        that the multiworld has no free check for become start inventory, the rest stay."""
         mw = self.multiworld
         take = min(max(0, len(mw.itempool) - len(mw.get_unfilled_locations())), len(self.overflow))
         for n in self.overflow[len(self.overflow) - take:]:

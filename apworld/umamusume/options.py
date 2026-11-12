@@ -160,11 +160,11 @@ class MaxedSupports(Toggle):
     display_name = "Maxed Support Cards"
 
 
-class OverflowToPool(Toggle):
-    """What to do with items that do not fit in this slot's checks. Off (default):
-    they become start inventory. On: they go in the item pool and land in other
-    players' checks; whatever the whole multiworld has no free check for (a solo
-    seed, a small room) still becomes start inventory, so it always generates."""
+class OverflowToPool(DefaultOnToggle):
+    """What to do with items that do not fit in this slot's checks. On (default): they
+    go in the item pool and land in other players' checks; whatever the whole
+    multiworld has no free check for (a solo seed, a small room) still becomes start
+    inventory, so it always generates. Off: they all become start inventory."""
 
     display_name = "Overflow Items To Multiworld"
 
