@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.13
+- `overflow_to_pool` no longer fails when the multiworld has no room: the items
+  that no check can take (a solo seed, a small room) go to start inventory and
+  the rest are still sent to other players. APWorld only again.
+
 ## 0.16.12
 - New option `overflow_to_pool` (default false, nothing changes). On, the items
   that do not fit in the slot's own checks go into the item pool and land in

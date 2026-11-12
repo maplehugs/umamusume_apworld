@@ -162,9 +162,9 @@ class MaxedSupports(Toggle):
 
 class OverflowToPool(Toggle):
     """What to do with items that do not fit in this slot's checks. Off (default):
-    they become start inventory, so any YAML generates alone. On: they all go in
-    the item pool and land in other players' checks; generation fails if the rest
-    of the multiworld has no free checks for them."""
+    they become start inventory. On: they go in the item pool and land in other
+    players' checks; whatever the whole multiworld has no free check for (a solo
+    seed, a small room) still becomes start inventory, so it always generates."""
 
     display_name = "Overflow Items To Multiworld"
 
