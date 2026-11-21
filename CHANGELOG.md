@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.17.1
+- Team Trials: a match interrupted on the results screen (game closed or frozen)
+  can be resumed. The replayed `start` response came back without the team and
+  opponent copies, so the client failed and Team Trials stayed locked for the
+  rest of the seed.
+- Team Trials: filler runners get unique ids, the runners carry the same
+  `npc_type` and `single_mode_chara_id` as on the official server, and the MVP
+  is the top scorer's character on a win and nobody on a loss.
+- Career races: the filler runners wear their own outfit (`mob_data.dress_id`)
+  instead of a placeholder. Server only: the APWorld and the plugin are the
+  0.17.0 ones.
+
 ## 0.17.0
 - New options `fan_check_step` and `fan_check_max`: a fan check every N fans up
   to M (default every 250k up to 3M, as before). 100000 and 5000000 give 50 fan

@@ -236,7 +236,13 @@ def _build_race_horse_entry(chara: dict, frame_order: int, final_grade: int, pop
     mob_id = chara.get("mob_id") or 0
     if mob_id:
         chara_id, card_id = 1, 0
-        race_dress_id = chara.get("race_dress_id") or 1
+        # The mob's own outfit is mob_data.dress_id (8/11/12): every mob in 708
+        # official career races carries exactly that, never the placeholder 1.
+        race_dress_id = chara.get("race_dress_id")
+        if not race_dress_id or race_dress_id == 1:   # 1 = the callers' old placeholder
+            from .. import master_data
+            mob = master_data.query_one("SELECT dress_id FROM mob_data WHERE mob_id=?", (mob_id,))
+            race_dress_id = (mob["dress_id"] if mob else 0) or 1
     else:
         from .. import master_data
         row = master_data.query_one("SELECT chara_id FROM card_data WHERE id=?", (card_id,))

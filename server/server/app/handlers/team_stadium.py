@@ -368,12 +368,15 @@ def _fill_race_npcs(horses, team_ids, ris, rng):
         for key in _STATS:
             chara[key] = max(1, int(row["pow" if key == "power" else key] * scale))
         chara["pow"] = chara["power"]
-        chara.update({"trained_chara_id": 0, "viewer_id": 0, "team_id": 0, "team_member_id": 0,
+        # A field NPC has its own id (official: small, unique per horse, the
+        # same in race_horse_data and chara_result_array) -- never 0 for all.
+        npc_id = 20 + gate
+        chara.update({"trained_chara_id": npc_id, "viewer_id": 0, "team_id": 0, "team_member_id": 0,
                       "running_style": rng.randint(1, 4), "motivation": rng.randint(1, 5),
                       "skill_array": single_mode_team._npc_skills(row)})
         horses.append(chara)
         team_ids.append(0)
-        ris.append({"viewer_id": 0, "member_id": 0, "trained_chara_id": 0,
+        ris.append({"viewer_id": 0, "member_id": 0, "trained_chara_id": npc_id,
                     "running_style": chara["running_style"], "motivation": chara["motivation"],
                     "frame_order": gate})
 
@@ -1191,9 +1194,13 @@ def _team_race_horse_array(horses: list, ris: list) -> list:
     for i, chara in enumerate(horses):
         chara = dict(chara)
         chara["viewer_id"] = ris[i]["viewer_id"]
+        # Official: 11 for the player's team, 20 for the opposing one, 0 field.
+        chara.setdefault("npc_type", {1: 11, 2: 20}.get(chara.get("team_id"), 0))
         entry = practice_race._build_race_horse_entry(
             chara, frame_order=ris[i]["frame_order"], final_grade=chara.get("rank", 1),
             popularity=pop[i], popularity_mark_rank_array=[pop[i], sta[i], pw[i]])
+        # single_mode_chara_id mirrors trained_chara_id on every official row
+        entry["trained_chara_id"] = entry["single_mode_chara_id"] = ris[i]["trained_chara_id"]
         entry["item_id_array"] = chara.get("item_id_array", [])
         entry["motivation_change_flag"] = int(116 in entry["item_id_array"])
         out.append(entry)
@@ -1533,6 +1540,17 @@ def handle_start(payload: dict) -> dict:
     if match.get("start_response"):
         response = copy.deepcopy(match["start_response"])
         response["last_checked_round"] = match.get("last_checked_round", 0)
+        # A replayed start is the client RECOVERING the match after a restart
+        # (index said race_status 2): it has no decide_frame_order reply in
+        # memory, so it builds both teams from these copies. Left empty/null
+        # as in a first start, TeamStadiumViewController.RecoveryRaceList
+        # throws NullReferenceException in OpponentData..ctor and Team Trials
+        # can never be opened again.
+        selection = match.get("selection_response") or {}
+        for key in ("user_team_data_array_copy", "user_trained_chara_array_copy",
+                    "opponent_info_copy", "opponent_chara_info_array_latest_copy"):
+            if selection.get(key):
+                response[key] = copy.deepcopy(selection[key])
         return _ok(response)
     if match.get("rounds"):
         return _refuse()  # Legacy completed rounds must be settled, never charged again.
@@ -1833,6 +1851,9 @@ def handle_all_race_end(payload: dict) -> dict:
     my_roster = _roster_by_id(viewer_id)
     love_charas = []
     selected_roster = _index_roster(match.get("user_roster") or list(my_roster.values()))
+    # Official sends the top scorer's chara_id (not trained_chara_id), and 0 on a loss.
+    mvp_chara_id = (bond.chara_id_for_card((selected_roster.get(mvp_chara_id) or {}).get("card_id") or 0)
+                    if match_won else 0)
     for result in (h for r in rounds for h in r["chara_result_array"] if h["team_id"] == 1):
         record = selected_roster.get(result["trained_chara_id"])
         chara_id = bond.chara_id_for_card(record.get("card_id") or 0) if record else 0
