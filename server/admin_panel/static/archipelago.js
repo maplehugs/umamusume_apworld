@@ -315,14 +315,19 @@ export const archipelagoWin = {
 
     // Game setup: the Hachimi plugins, config.json and master.mdb, with a Fix
     // that installs Hachimi Edge and the plugins and lists them in config.json.
-    async function checkSetup(btn, fix) {
-      const r = await act(btn, fix ? "Fixing the game setup" : "Checking the game setup",
-        () => call(fix ? "archipelago.setup_fix" : "archipelago.setup", {}, GL), fix ? "Fix done: (re)start the game once, then press Check files again" : null);
+    async function checkSetup(btn, fix, dir) {
+      const r = dir !== undefined
+        ? await act(btn, "Saving the game folder", () => call("archipelago.set_game_dir", { path: dir }, GL), "Game folder saved")
+        : await act(btn, fix ? "Fixing the game setup" : "Checking the game setup",
+          () => call(fix ? "archipelago.setup_fix" : "archipelago.setup", {}, GL), fix ? "Fix done: (re)start the game once, then press Check files again" : null);
       const box = $("#ap-setup");
       if (!r || !box) return;
       box.innerHTML = `<ul class="ap-list">${r.rows.map((x) => `<li><span class="ap-dot ${x.ok ? "ap-logic" : "ap-locked"}"></span>
           <b>${esc(x.name)}</b> <span class="faint">${esc(x.detail)}</span></li>`).join("")}</ul>
         ${r.rows.every((x) => x.ok || x.name === "master.mdb") ? `<p><b>All good.</b> Start the game; on the title screen press the Right Arrow key, open Hachimi's menu and set the redirect server to https://127.0.0.1:8443</p>` : `<p class="faint">1) Close Umamusume and press Fix. 2) Open the game, wait for the title screen, close it. 3) Press Check files, then Fix again. All dots green = done.</p>`}
+        ${!r.game_found || r.game_dir ? `<div class="row"><input class="grow" id="ap-game-dir" type="text" value="${esc(r.game_dir)}"
+          placeholder="Game folder (the one with the .exe); empty = auto-detect">
+          <button class="btn sm" type="button" data-a="setup-dir">Save</button></div>` : ""}
         ${r.fixable ? `<div class="row"><b>Close the game fully first.</b><span class="grow"></span>
           <button class="btn primary sm" type="button" data-a="setup-fix">Fix</button></div>` : ""}`;
     }
@@ -343,6 +348,7 @@ export const archipelagoWin = {
       if (b.dataset.a === "check") return checkArchipelago();
       if (b.dataset.a === "setup") return checkSetup(b);
       if (b.dataset.a === "setup-fix") return checkSetup(b, true);
+      if (b.dataset.a === "setup-dir") return checkSetup(b, false, $("#ap-game-dir").value);
       if (b.dataset.a === "hint") return askHint(b);
       if (b.dataset.a === "save") {
         const r = await act(b, "Saving Archipelago settings", () => call("archipelago.set", { values: values() }, GL), "Archipelago settings saved");

@@ -29,10 +29,12 @@ When it's up, the web panel opens at <http://localhost:8189>.
 **Fix** (close the game first). It installs Hachimi Edge, `hachimi_redirect.dll` and `umapd_archipelago.dll`
 for you. Then start the game once (wait for the title screen, close it), press **Check files** and **Fix** again so
 `config.json` lists the plugins, and go on to step 5 below (the in-game Hachimi menu). Windows Defender may delete
-these mod DLLs: if a row stays red, add the game folder to its exclusions and press Fix again. The manual steps:
+these mod DLLs: if a row stays red, add the game folder to its exclusions and press Fix again. If it says
+**game not found** (and there is no Fix button), paste the game's folder in the box under the list and press
+**Save**: Steam > right-click the game > Manage > Browse local files. The manual steps:
 
 1. Install Hachimi Edge and start the game once, so `<game>/hachimi/` exists.
-2. Download `hachimi_redirect.dll` from [UmamusumePS's plugin release](https://github.com/systemless10/UmamusumePS/releases/tag/plugin)
+2. Download `hachimi_redirect.dll` from the [latest release](https://github.com/maplehugs/umamusume_apworld/releases/latest)
    (or build it from `server/plugin/hachimi_redirect`) and copy it into `<game>/hachimi/`.
 3. **Required:** `umapd_archipelago.dll` in `<game>/hachimi/`. Easiest: once the server
    is running, the panel's Archipelago page > **Game setup** checks your files and its

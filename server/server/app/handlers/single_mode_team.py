@@ -3527,15 +3527,28 @@ def _build_race_condition_array(chara_info: dict, turn, race_history=()) -> list
     # dropped races this trainee never had as a goal at all.
     #
     # This reproduces 1966 of the ~1970 real multi-entry captures exactly. The
-    # two known residuals, both left as-is: the November-H1 random_group_id
-    # programs (1024-1026), where the real server substitutes one randomly
-    # chosen variant group (1110-1118) per career, and a handful of very
-    # high-fan G1s real listed to a trainee below their need_fan_count.
+    # known residual, left as-is: a handful of very high-fan G1s real listed to
+    # a trainee below their need_fan_count.
     rows = master_data.query(
         "SELECT id FROM single_mode_program WHERE month=? AND half=? AND need_fan_count<=? "
         f"AND race_permission IN {_year_permissions(turn)} AND base_program_id=0",
         (trow["month"], trow["half"], fans))
-    return [_race_condition_entry(r["id"], chara_info) for r in rows]
+    # The November-H1 random_group_id programs (1024-1026, the JBC races): the
+    # real server lists this career's VARIANT ids here (official traces: turn 45
+    # -> 1113/1114/1115), the same ids race_random_program_array announces and
+    # the client enters. Listing the base id left the entered program without a
+    # weather/ground entry and the client froze going into the paddock.
+    group = _RANDOM_PROGRAM_GROUPS.get(turn)
+    variants = {r["base_program_id"]: r["id"] for r in master_data.query(
+        "SELECT id, base_program_id FROM single_mode_program WHERE random_group_id=?",
+        (group,))} if group else {}
+    return [_race_condition_entry(variants.get(r["id"], r["id"]), chara_info) for r in rows]
+
+
+# turn -> random_group_id of the variants the career start's (fixed)
+# race_random_program_array names: turn 45 -> 1113-1115, turn 69 -> 1110-1112.
+# ponytail: one fixed venue per year; read the career's own array if it is ever randomized.
+_RANDOM_PROGRAM_GROUPS = {45: 10104, 69: 10103}
 
 
 RESERVED_RACES_KEY = "reserved_races"  # PER-CAREER deck_num=0 ("Currently Scheduled Races")
@@ -16331,9 +16344,11 @@ def handle_race_analyze(payload: dict) -> dict:
     show the player the horses they are about to run against, and rolling a
     fresh field here would show a race that never happens.
 
-    An unresolved or mismatched program is answered with an EMPTY array rather
-    than 205 -- the client treats the screen as "no data yet" and moves on,
-    where a refusal leaves it on a spinner."""
+    The race list's Predictions button asks BEFORE any entry, so there is no
+    ctx yet: the field is simulated for the asked program and nothing is
+    stored. An empty array here locked the client (live-reported: after
+    Predictions no command worked until a restart) -- its analysis compares the
+    player's horse against the field and there was neither."""
     viewer_id = payload["viewer_id"]
     full_state = state_store.get_state(viewer_id) or {}
     ctx = full_state.get(RACE_CTX_KEY) or {}
@@ -16341,6 +16356,16 @@ def handle_race_analyze(payload: dict) -> dict:
     horses = []
     if ctx and (program_id in (None, 0) or ctx.get("program_id") == program_id):
         horses = copy.deepcopy((ctx.get("race_start_info") or {}).get("race_horse_data") or [])
+    chara_info = _career_chara_info(viewer_id)
+    race_info = _race_info_for_program(program_id) if program_id else None
+    if not horses and chara_info and race_info and race_info.get("race_instance_id"):
+        # ponytail: a preview field, re-rolled at entry; store it on the ctx if
+        # the previewed rivals ever have to be the ones actually raced.
+        sim = _simulate_career_race(
+            chara_info, viewer_id, race_info["race_instance_id"],
+            running_style=_player_running_style(full_state, chara_info),
+            program_id=program_id)
+        horses = (sim or {}).get("race_horse_data") or []
     return {"response_code": 1,
             "data_headers": {"result_code": 1, "notifications": {}},
             "data": {"race_horse_data_array": horses}}

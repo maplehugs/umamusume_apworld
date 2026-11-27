@@ -29,8 +29,10 @@ DLLS = ("hachimi_redirect.dll", "umapd_archipelago.dll")
 # these steps were tested with; it goes in as the game's cri_mana_vpx.dll (source_code_dll/README.md).
 HACHIMI_URL = "https://github.com/kairusds/Hachimi-Edge/releases/download/v0.33.1/hachimi.dll"
 HACHIMI_SHA256 = "293ebab44bf98798a1ab91188cca5e4ebcc6919863d7d309a9a3de49997efb4a"
-REDIRECT_URL = "https://github.com/systemless10/UmamusumePS/releases/download/plugin/hachimi_redirect.dll"
-REDIRECT_SHA256 = "a4de623a493f74b9d129903d2a20b15d4b3694a9ff7117c00b0dc3e36ade3a4f"  # if upstream updates it, Fix fails until this is bumped
+# Shipped in the server package too (server/package.py); the download is for a repo checkout.
+BUNDLED_REDIRECT = BUNDLED_DLL.with_name("hachimi_redirect.dll")
+REDIRECT_URL = "https://github.com/maplehugs/umamusume_apworld/releases/latest/download/hachimi_redirect.dll"
+REDIRECT_SHA256 = "a4de623a493f74b9d129903d2a20b15d4b3694a9ff7117c00b0dc3e36ade3a4f"  # built from server/plugin/hachimi_redirect
 LOADER = "cri_mana_vpx.dll"
 
 
@@ -167,7 +169,7 @@ def setup(viewer, args):
             if not _has_hachimi(game) else "Hachimi is installed: start the game once so it creates the folder")
         fixable |= not _has_hachimi(game)
     else:
-        row(False, "Hachimi folder", f"game not found at {game}. Steam > right-click the game > Manage > Browse local files, then run start-global.bat with --game-dir \"that folder\"")
+        row(False, "Hachimi folder", f"game not found at {game}. Steam > right-click the game > Manage > Browse local files, then paste that folder below and press Save")
     if hachimi.is_dir() and can_install:
         ok = _has_hachimi(game)
         row(ok, LOADER, "Hachimi" if ok else "the game's own file (a game update or Steam verify restores it): Fix reinstalls Hachimi")
@@ -205,7 +207,27 @@ def setup(viewer, args):
             "" if days <= 14 else ": old game data. Start Umamusume once, wait for the title screen, then Check files again"))
     except OSError:
         row(False, "master.mdb", f"{mdb} not found")
-    return {"rows": rows, "fixable": fixable and (can_install or hachimi.is_dir())}  # Fix needs the game folder
+    return {"rows": rows, "fixable": fixable and (can_install or hachimi.is_dir()),  # Fix needs the game folder
+            "game_dir": _read().get("game_dir") or "", "game_found": can_install or hachimi.is_dir()}
+
+
+@op("archipelago.set_game_dir")
+def set_game_dir(viewer, args):
+    """The game's folder (the one with the .exe), for an install the launcher
+    can't find. Empty goes back to auto-detect. Saved in client_config.json."""
+    text = str(args.get("path") or "").strip().strip('"').strip()
+    data = _read()
+    if not text:
+        data.pop("game_dir", None)
+    else:
+        game = Path(text).expanduser()
+        if game.is_file():  # the .exe itself was pasted
+            game = game.parent
+        if not (game / LOADER).is_file():
+            raise OpError(f"{game} isn't the game's folder: it has no {LOADER}. Steam > right-click the game > Manage > Browse local files, and paste that folder.")
+        data["game_dir"] = str(game)
+    _write(data)
+    return setup(viewer, args)
 
 
 @op("archipelago.setup_fix")
@@ -216,7 +238,7 @@ def setup_fix(viewer, args):
     hachimi = archipelago.hachimi_dir()
     game = hachimi.parent
     if hachimi.name != "hachimi" or not (game / LOADER).is_file():
-        raise OpError(f"The game isn't at {game}: run start-global.bat with --game-dir \"the game's folder\" (Steam > right-click the game > Manage > Browse local files).")
+        raise OpError(f"The game isn't at {game}: set the game folder in Game setup (Steam > right-click the game > Manage > Browse local files).")
     if not _has_hachimi(game):  # also after a game update or Steam verify put the game's own file back
         orig = game / (LOADER + ".orig")  # the game's own file: how you undo this
         if not orig.exists():
@@ -226,7 +248,13 @@ def setup_fix(viewer, args):
         _fetch(HACHIMI_URL, game / LOADER, HACHIMI_SHA256)
     hachimi.mkdir(exist_ok=True)
     if not (hachimi / DLLS[0]).is_file():
-        _fetch(REDIRECT_URL, hachimi / DLLS[0], REDIRECT_SHA256)
+        if BUNDLED_REDIRECT.is_file():
+            try:
+                shutil.copyfile(BUNDLED_REDIRECT, hachimi / DLLS[0])
+            except OSError as e:
+                raise OpError(f"Could not copy {DLLS[0]} (close the game first; Windows Defender can block these mod DLLs): {e}") from e
+        else:
+            _fetch(REDIRECT_URL, hachimi / DLLS[0], REDIRECT_SHA256)
     plugin = hachimi / DLLS[1]
     if BUNDLED_DLL.is_file() and not (plugin.is_file() and _sha(plugin) == _sha(BUNDLED_DLL)):
         try:

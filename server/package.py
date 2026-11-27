@@ -70,6 +70,11 @@ dll = ROOT / "dist" / "umapd_archipelago.dll"
 if not dll.is_file():
     sys.exit("dist/umapd_archipelago.dll is missing: run python apworld/build.py first")
 engines["server/plugin/umapd_archipelago.dll"] = dll
+# Upstream's download is gone, so the package carries it (source: server/plugin/hachimi_redirect).
+redirect = ROOT / "dist" / "hachimi_redirect.dll"
+if not redirect.is_file():
+    sys.exit("dist/hachimi_redirect.dll is missing: build server/plugin/hachimi_redirect or copy it from a game install")
+engines["server/plugin/hachimi_redirect.dll"] = redirect
 
 def portable_python() -> tarfile.TarFile:
     """The pinned build, downloaded once into dist/.cache and checked."""

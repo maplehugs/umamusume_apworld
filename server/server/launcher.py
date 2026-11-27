@@ -328,6 +328,12 @@ def find_game(info: dict) -> Path | None:
     override = os.environ.get("UMA_GAME_DIR")
     if override:
         return Path(override)
+    try:  # the panel's Game folder setting (Archipelago > Game setup)
+        saved = json.loads((SERVER / "client_config.json").read_text(encoding="utf-8")).get("game_dir")
+    except (OSError, ValueError):
+        saved = None
+    if saved and (Path(saved) / info["exe"]).exists():
+        return Path(saved)
     for lib in steam_roots():
         game = lib / "steamapps" / "common" / info["install"]
         if (game / info["exe"]).exists():

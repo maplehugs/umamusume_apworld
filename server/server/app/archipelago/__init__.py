@@ -37,7 +37,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-from .. import accounts, master_data, region
+from .. import accounts, config, master_data, region
 from .. import state as state_store
 from . import tables
 
@@ -91,8 +91,12 @@ def start_seed(viewer_id, seed: str) -> bool:
 
 
 def hachimi_dir() -> Path:
-    """The game's hachimi/ folder: the launcher's, else from
+    """The game's hachimi/ folder: the panel's Game folder setting
+    (client_config.json game_dir), else the launcher's, else from
     <game>/<x>_Data/Persistent/master/master.mdb."""
+    game_dir = config.get("game_dir")
+    if game_dir:
+        return Path(game_dir) / "hachimi"
     mdb = master_data.MASTER_MDB_PATH
     return Path(os.environ.get("UMA_HACHIMI_DIR") or (mdb.parents[3] if len(mdb.parents) > 3 else Path(".")) / "hachimi")
 

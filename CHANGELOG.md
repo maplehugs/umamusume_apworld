@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.17.2
+- Game setup: Fix failed with "HTTP Error 404" on `hachimi_redirect.dll` because
+  the upstream download is gone. The server package now carries the file, and a
+  repo checkout downloads it from this project's release.
+- Game setup: when the panel says "game not found", a Game folder box lets you
+  paste the game's folder instead of starting the server with `--game-dir`.
+- Career: the JBC races (Ladies' Classic, Sprint, Classic) are listed with the
+  venue's own program ids, like the official server. Entering one froze the game
+  and the career could not be resumed.
+- Career: the Predictions button on the race list got an empty field and left
+  the turn stuck until a restart. It now shows a simulated field. Server only:
+  the APWorld and the plugin are the 0.17.0 ones.
+
 ## 0.17.1
 - Team Trials: a match interrupted on the results screen (game closed or frozen)
   can be resumed. The replayed `start` response came back without the team and
